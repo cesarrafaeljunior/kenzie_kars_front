@@ -1,4 +1,6 @@
+import { Box } from "@chakra-ui/react";
 import Head from "next/head";
+
 
 export default function Home() {
     return (
@@ -6,7 +8,8 @@ export default function Home() {
             <Head>
                 <title>Create Next App</title>
             </Head>
-            <main>Projeto fica aqui</main>
+           <main>  <Box> Projeto fica aqui </Box></main>
+           
         </>
     );
 }
