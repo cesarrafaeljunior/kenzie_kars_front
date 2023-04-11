@@ -1,6 +1,7 @@
+import { iInput, iSelect, iTextArea } from "@/interfaces/components.interfaces";
 import { FormLabel, Input, Select, Text, Textarea } from "@chakra-ui/react";
 
-const InputField = ({ label, type, name, placeholder }: any) => {
+const InputField = ({ label, type, name, placeholder }: iInput) => {
   return (
     <FormLabel>
       <Text
@@ -29,7 +30,7 @@ const InputField = ({ label, type, name, placeholder }: any) => {
   );
 };
 
-const TextField = ({ label, name, placeholder }: any) => {
+const TextField = ({ label, name, placeholder }: iTextArea) => {
   return (
     <FormLabel>
       <Text
@@ -58,7 +59,7 @@ const TextField = ({ label, name, placeholder }: any) => {
   );
 };
 
-const SelectField = ({ label, children }: any) => {
+const SelectField = ({ label, children }: iSelect) => {
   return (
     <FormLabel>
       <Text
