@@ -1,16 +1,16 @@
-export const ModalVehicleImage = () => {};
+const ModalVehicleImage = () => {};
 
-export const ModalSuccessAccunt = () => {};
+const ModalSuccessAccunt = () => {};
 
-export const ModalEditAddress = () => {};
+const ModalEditAddress = () => {};
 
-export const ModalCreateAd = () => {};
+const ModalCreateAd = () => {};
 
-export const ModalEditAd = () => {};
+const ModalEditAd = () => {};
 
-export const ModalSuccessAd = () => {};
+const ModalSuccessAd = () => {};
 
-export const ModalRemoveAdConfirmation = () => {};
+const ModalRemoveAdConfirmation = () => {};
 
 export const Modal = {
   ModalVehicleImage,
