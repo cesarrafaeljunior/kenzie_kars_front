@@ -11,7 +11,10 @@ const Home = () => {
       minHeight={"100vh"}
       width={"100%"}
     >
-      <Form.EditAddress />
+      {/* <Form.EditAddress /> */}
+      {/* <Form.CreateAd /> */}
+      {/* <Form.EditProfile /> */}
+      <Form.EditAd />
     </Flex>
   );
 };

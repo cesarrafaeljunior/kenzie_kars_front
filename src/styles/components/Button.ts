@@ -76,6 +76,7 @@ export const ButtonStyle: ComponentStyleConfig = {
       bg: "#FDFDFD",
       color: "#0B0D0D",
       _hover: { bg: "#212529", borderColor: "#212529", color: "#FDFDFD" },
+      _focus: { bg: "#4529E6", borderColor: "#4529E6", color: "#ffff" },
     },
     outlineBrand: {
       borderColor: "#4529E6",
