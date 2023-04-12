@@ -1,4 +1,5 @@
 import { Form } from "@/components/Form";
+import { ModalContainer } from "@/components/Modal";
 import { Flex } from "@chakra-ui/react";
 import "@fontsource/Inter/400.css";
 import "@fontsource/Inter/700.css";
@@ -14,7 +15,8 @@ const Home = () => {
       {/* <Form.EditAddress /> */}
       {/* <Form.CreateAd /> */}
       {/* <Form.EditProfile /> */}
-      <Form.EditAd />
+      {/* <Form.EditAd /> */}
+      <ModalContainer.ModalVehicleImage />
     </Flex>
   );
 };
