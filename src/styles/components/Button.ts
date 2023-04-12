@@ -52,6 +52,7 @@ export const ButtonStyle: ComponentStyleConfig = {
       borderColor: "#EDEAFD",
       bg: "#EDEAFD",
       color: "#4529E6",
+      _hover: { bg: "#B0A6F0", borderColor: "#B0A6F0" },
     },
     light: {
       borderColor: "#FDFDFD",
