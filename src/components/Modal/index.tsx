@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Img } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { Form } from "../Form";
 
 const ModalVehicleImage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -80,7 +81,26 @@ const ModalSuccessAccunt = () => {
   );
 };
 
-const ModalEditAddress = () => {};
+const ModalEditAddress = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button onClick={onOpen}>Editar anúncio</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Editar endereço
+          </ModalHeader>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalBody paddingBottom={"28px"}>
+            <Form.EditAddress />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const ModalCreateAd = () => {};
 

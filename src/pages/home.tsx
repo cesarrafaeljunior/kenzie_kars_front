@@ -19,6 +19,7 @@ const Home = () => {
       {/* <ModalContainer.ModalVehicleImage /> */}
       {/* <ModalContainer.ModalSuccessAccunt />
       <ModalContainer.ModalSuccessAd /> */}
+      <ModalContainer.ModalEditAddress />
     </Flex>
   );
 };
