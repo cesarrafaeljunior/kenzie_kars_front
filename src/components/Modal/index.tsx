@@ -102,7 +102,26 @@ const ModalEditAddress = () => {
   );
 };
 
-const ModalCreateAd = () => {};
+const ModalCreateAd = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button onClick={onOpen}>Criar anúncio</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Criar anúncio
+          </ModalHeader>
+          <ModalBody paddingBottom={"28px"}>
+            <Form.CreateAd />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const ModalEditAd = () => {};
 

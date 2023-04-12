@@ -20,6 +20,7 @@ const Home = () => {
       {/* <ModalContainer.ModalSuccessAccunt />
       <ModalContainer.ModalSuccessAd /> */}
       <ModalContainer.ModalEditAddress />
+      <ModalContainer.ModalCreateAd />
     </Flex>
   );
 };
