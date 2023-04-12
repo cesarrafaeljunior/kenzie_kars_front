@@ -85,7 +85,7 @@ const ModalEditAddress = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen}>Editar anúncio</Button>
+      <Button onClick={onOpen}>Editar Endereço</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -123,7 +123,26 @@ const ModalCreateAd = () => {
   );
 };
 
-const ModalEditAd = () => {};
+const ModalEditAd = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button onClick={onOpen}>Editar anúncio</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Editar anúncio
+          </ModalHeader>
+          <ModalBody paddingBottom={"28px"}>
+            <Form.EditAd />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const ModalSuccessAd = () => {
   const toast = useToast();

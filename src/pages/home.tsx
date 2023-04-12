@@ -21,6 +21,7 @@ const Home = () => {
       <ModalContainer.ModalSuccessAd /> */}
       <ModalContainer.ModalEditAddress />
       <ModalContainer.ModalCreateAd />
+      <ModalContainer.ModalEditAd />
     </Flex>
   );
 };
