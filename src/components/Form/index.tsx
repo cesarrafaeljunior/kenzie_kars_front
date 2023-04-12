@@ -6,7 +6,6 @@ const EditProfile = () => {
     <Box
       as={"h2"}
       maxWidth={"520px"}
-      padding="30px 24px"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -66,7 +65,6 @@ const EditAddress = () => {
     <Box
       as={"h2"}
       maxWidth={"520px"}
-      padding="30px 24px"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -131,7 +129,6 @@ const CreateAd = () => {
     <Box
       as={"h2"}
       maxWidth={"520px"}
-      padding="30px 24px"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -237,7 +234,6 @@ const EditAd = () => {
     <Box
       as={"h2"}
       maxWidth={"520px"}
-      padding="30px 24px"
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
