@@ -16,7 +16,9 @@ const Home = () => {
       {/* <Form.CreateAd /> */}
       {/* <Form.EditProfile /> */}
       {/* <Form.EditAd /> */}
-      <ModalContainer.ModalVehicleImage />
+      {/* <ModalContainer.ModalVehicleImage /> */}
+      {/* <ModalContainer.ModalSuccessAccunt />
+      <ModalContainer.ModalSuccessAd /> */}
     </Flex>
   );
 };
