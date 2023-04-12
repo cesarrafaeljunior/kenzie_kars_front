@@ -49,7 +49,7 @@ const globalTheme = {
   },
   fonts: {
     body: {
-      fontFamilys: "Inter",
+      fontFamilys: "Inter, sans-serif",
       fontSizes: {
         1: "16px",
         2: "14x",
