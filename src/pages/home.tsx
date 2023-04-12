@@ -22,6 +22,7 @@ const Home = () => {
       <ModalContainer.ModalEditAddress />
       <ModalContainer.ModalCreateAd />
       <ModalContainer.ModalEditAd />
+      <ModalContainer.ModalRemoveAdConfirmation />
     </Flex>
   );
 };

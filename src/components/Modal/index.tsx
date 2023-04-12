@@ -3,17 +3,23 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
   Box,
   Button,
   Text,
+  AlertDialogBody,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialog,
+  AlertDialogFooter,
 } from "@chakra-ui/react";
 import { Img } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { Form } from "../Form";
+import { useRef } from "react";
 
 const ModalVehicleImage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,7 +30,7 @@ const ModalVehicleImage = () => {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalHeader as={"h2"} fontSize={"16px"}>
             Imagem do veículo
           </ModalHeader>
@@ -60,6 +66,7 @@ const ModalSuccessAccunt = () => {
                 padding={"18px 34px 16px 24px"}
                 backgroundColor={"grey.7"}
                 borderRadius={"8px"}
+                fontFamily={"Inte, sans-serif"}
               >
                 <Text as="h2" color={"grey.1"} fontSize={"16px"}>
                   <strong>Sucesso!</strong>
@@ -88,7 +95,7 @@ const ModalEditAddress = () => {
       <Button onClick={onOpen}>Editar Endereço</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalHeader as={"h2"} fontSize={"16px"}>
             Editar endereço
           </ModalHeader>
@@ -109,7 +116,7 @@ const ModalCreateAd = () => {
       <Button onClick={onOpen}>Criar anúncio</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalHeader as={"h2"} fontSize={"16px"}>
             Criar anúncio
@@ -130,7 +137,7 @@ const ModalEditAd = () => {
       <Button onClick={onOpen}>Editar anúncio</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalHeader as={"h2"} fontSize={"16px"}>
             Editar anúncio
@@ -166,6 +173,7 @@ const ModalSuccessAd = () => {
                 padding={"18px 34px 16px 24px"}
                 backgroundColor={"grey.7"}
                 borderRadius={"8px"}
+                fontFamily={"Inte, sans-serif"}
               >
                 <Text as="h2" color={"grey.1"} fontSize={"16px"}>
                   <strong>Sucesso!</strong>
@@ -187,7 +195,57 @@ const ModalSuccessAd = () => {
   );
 };
 
-const ModalRemoveAdConfirmation = () => {};
+const ModalRemoveAdConfirmation = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<any>();
+  return (
+    <>
+      <Button colorScheme="red" onClick={onOpen}>
+        Delete Customer
+      </Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent fontFamily={"Inte, sans-serif"}>
+            <AlertDialogHeader fontSize="lg" fontWeight="semiBold">
+              Ecluir anúncio
+            </AlertDialogHeader>
+
+            <AlertDialogBody
+              display={"flex"}
+              flexDirection={"column"}
+              gap={"25px"}
+            >
+              <Text>
+                <strong>Tem certeza que deseja remover este anúncio?</strong>
+              </Text>
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
+              conta e removerá seus dados de nossos servidores.
+            </AlertDialogBody>
+
+            <AlertDialogFooter marginTop={"40px"}>
+              <Button ref={cancelRef} onClick={onClose} variant={"negative"}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={onClose}
+                ml={3}
+                variant={"alert"}
+              >
+                Sim, excluir anúncio
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </>
+  );
+};
 
 export const ModalContainer = {
   ModalVehicleImage,
