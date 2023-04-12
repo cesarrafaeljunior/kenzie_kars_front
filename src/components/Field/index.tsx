@@ -3,7 +3,12 @@ import { FormLabel, Input, Select, Text, Textarea } from "@chakra-ui/react";
 
 const InputField = ({ label, type, name, placeholder }: iInput) => {
   return (
-    <FormLabel>
+    <FormLabel
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"8px"}
+    >
       <Text
         fontFamily="Inter, sans-serif"
         fontSize="14px"
@@ -22,7 +27,7 @@ const InputField = ({ label, type, name, placeholder }: iInput) => {
         border="solid 1px transparent"
         borderColor="#E9ECEF"
         _focus={{ border: "solid 1.5px #5126EA" }}
-        _hover={{ bg: "#F1F3F5", borderColor: "#F1F3F5" }}
+        _hover={{ bg: "#F1F3F5" }}
         variant={{ outline: "none" }}
         fontFamily="Inter, sans-serif"
       />
