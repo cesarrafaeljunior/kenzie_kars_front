@@ -30,7 +30,6 @@ const InputField = ({ label, type, name, placeholder }: iInput) => {
 const TextField = ({ label, name, placeholder }: iTextArea) => {
     return (
         <FormControl>
-            {" "}
             <FormLabel display={"flex"} flexDirection={"column"} justifyContent={"center"} gap={"8px"}>
                 <Text fontFamily="Inter, sans-serif" fontSize="14px" fontWeight="600" color="#212529">
                     {label}
