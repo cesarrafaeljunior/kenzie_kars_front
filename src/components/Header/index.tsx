@@ -2,7 +2,6 @@ import {
   Box,
   Center,
   Flex,
-  Image,
   Img,
   Menu,
   MenuButton,
@@ -69,7 +68,7 @@ export const Header = () => {
                         : ""
                     }`}
                   </Center>
-                  <Text>{user.name}</Text>
+                  <Text color={"grey.2"}>{user.name}</Text>
                 </Flex>
               </MenuButton>
               <MenuList
@@ -106,7 +105,14 @@ export const Header = () => {
                 {!user ? (
                   <>
                     <MenuItem>
-                      <Link href={"/"}>Fazer Login</Link>
+                      <Link
+                        href={"/"}
+                        bgColor={"transparent"}
+                        border={"none"}
+                        justifyContent={"flex-start"}
+                      >
+                        Fazer Login
+                      </Link>
                     </MenuItem>
                     <MenuItem>
                       <Link
