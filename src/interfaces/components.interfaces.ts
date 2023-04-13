@@ -19,3 +19,8 @@ export interface iLinkProps extends LinkProps {
   href: string;
   children: ReactNode;
 }
+
+export interface iModalVehicleImage {
+  isOpen: boolean;
+  onClose: () => void;
+}
