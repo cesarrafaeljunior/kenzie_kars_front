@@ -4,7 +4,7 @@ import NextLink from "next/link";
 
 export const Link = ({ href, children, ...args }: iLinkProps) => {
   return (
-    <NextLink href={href}>
+    <NextLink href={href} style={{ width: "inherit" }}>
       <ChakraLink as={"p"} {...args}>
         {children}
       </ChakraLink>
