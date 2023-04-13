@@ -13,7 +13,7 @@ export const Footer = () => {
             fontFamily={"Inter, sans-serif"}
             fontSize={"sm"}
         >
-            <Img src="/imgs/motor_shop.png" alt="logo" objectFit={"contain"} />
+            <Img src="/imgs/motors_shop.png" alt="logo" objectFit={"contain"} />
             <Text color={"grey.whiteFixed"}>@2022 - Todos os direitos reservados</Text>
             <IconButton
                 bg="grey.1"
