@@ -3,6 +3,7 @@ import {
   Center,
   Flex,
   Image,
+  Img,
   Menu,
   MenuButton,
   MenuItem,
@@ -30,7 +31,7 @@ export const Header = () => {
         bgColor={"grey.10"}
       >
         <Box flex={"1 1 auto"}>
-          <Image src={"imgs/motors_shop_colored.png"} alt="Logo" />
+          <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
         </Box>
         <Flex
           pl={{ base: "14px", md: "28px", lg: "44px" }}
