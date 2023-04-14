@@ -12,9 +12,19 @@ export const Footer = () => {
       justifyContent={"space-between"}
       fontFamily={"Inter, sans-serif"}
       fontSize={"sm"}
+      flexDirection={{ base: "column", lg: "unset" }}
+      gap={{ base: "20px", lg: "unset" }}
     >
-      <Img src="/imgs/motors_shop.png" alt="logo" objectFit={"contain"} />
-      <Text color={"grey.whiteFixed"}>
+      <Img
+        marginTop={{ base: "40px", lg: "unset" }}
+        src="/imgs/motor_shop.png"
+        alt="logo"
+        objectFit={"contain"}
+      />
+      <Text
+        textAlign={{ base: "center", lg: "unset" }}
+        color={"grey.whiteFixed"}
+      >
         @2022 - Todos os direitos reservados
       </Text>
       <IconButton
@@ -23,7 +33,8 @@ export const Footer = () => {
         icon={<ChevronUpIcon />}
         _focus={{ bg: "grey.1" }}
         _hover={{ bg: "grey.2" }}
-        size={"lg"}
+        size={{ lg: "lg", base: "sm" }}
+        marginBottom={{ base: "10px", lg: "unset" }}
       />
     </Flex>
   );
