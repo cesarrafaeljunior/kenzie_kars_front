@@ -1,6 +1,11 @@
 import { extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/Button";
 import { Link } from "./components/Link";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/lexend/700.css";
+import "@fontsource/lexend/600.css";
+import "@fontsource/lexend/500.css";
 
 const globalTheme = {
   colors: {
@@ -48,65 +53,23 @@ const globalTheme = {
     },
   },
   fonts: {
-    body: {
-      fontFamilys: "Inter, sans-serif",
-      fontSizes: {
-        1: "16px",
-        2: "14x",
-      },
-      fontWeights: {
-        400: "400",
-        600: "600",
-      },
-    },
-    heading: {
-      fontFamilys: "Lexend",
-      fontSizes: {
-        1: "44px",
-        2: "36px",
-        3: "32px",
-        4: "28px",
-        5: "24px",
-        6: "20px",
-        7: "16px",
-      },
-      fontWeights: {
-        400: "400",
-        600: "600",
-        700: "700",
-      },
-    },
-    button: {
-      fontFamilys: "Inter",
-      fontWeights: "600",
-      fontSizes: {
-        big: "16px",
-        medium: "14px",
-      },
-      imput: {
-        fontFamilys: "Inter",
-        fontWeights: "600",
-        fontSizes: {
-          big: "16px",
-          medium: "14px",
-        },
-      },
-    },
+    heading: "Lexend",
+    body: "Inter",
   },
-  buttons: {
-    radius: "4px",
-    size: {
-      big: {
-        height: "48px",
-        width: "146px",
-        border: "1.5px",
-      },
-      medium: {
-        height: "38px",
-        width: "119px",
-        border: "1.5px",
-      },
-    },
+  fontSizes: {
+    1: "44px",
+    2: "36px",
+    3: "32px",
+    4: "28px",
+    5: "24px",
+    6: "20px",
+    7: "16px",
+    8: "14px",
+  },
+  fontWeights: {
+    400: "400",
+    600: "600",
+    700: "700",
   },
   components: {
     Button,
