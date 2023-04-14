@@ -1,9 +1,9 @@
 import { ListItem, Box, Image, Heading, Text } from "@chakra-ui/react";
 
+
 export const ProductCard = (advertData: any) => {
-  console.log(advertData);
   return (
-    <ListItem maxWidth={"320px"}>
+    <ListItem maxWidth={"340px"} minWidth={"340px"}>
       <Box backgroundColor={"grey.7"}>
         <Image src={advertData.advertData.coverImage}></Image>
       </Box>
@@ -36,6 +36,7 @@ export const ProductCard = (advertData: any) => {
           height={"32px"}
           width={"32px"}
           borderRadius={"50%"}
+          objectFit={"cover"}
         ></Image>
         <Text fontWeight={"medium"}>
           {advertData.advertData.adverter.adverterName}
