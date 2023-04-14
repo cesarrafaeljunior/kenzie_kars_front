@@ -71,37 +71,6 @@ const globalTheme = {
     600: "600",
     700: "700",
   },
-  button: {
-    fontFamilys: "Inter",
-    fontWeights: "600",
-    fontSizes: {
-      big: "16px",
-      medium: "14px",
-    },
-    imput: {
-      fontFamilys: "Inter",
-      fontWeights: "600",
-      fontSizes: {
-        big: "16px",
-        medium: "14px",
-      },
-    },
-  },
-  buttons: {
-    radius: "4px",
-    size: {
-      big: {
-        height: "48px",
-        width: "146px",
-        border: "1.5px",
-      },
-      medium: {
-        height: "38px",
-        width: "119px",
-        border: "1.5px",
-      },
-    },
-  },
   components: {
     Button,
     Link,
