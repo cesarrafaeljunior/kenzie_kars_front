@@ -17,7 +17,7 @@ export const Footer = () => {
     >
       <Img
         marginTop={{ base: "40px", lg: "unset" }}
-        src="/imgs/motor_shop.png"
+        src="/imgs/motors_shop.png"
         alt="logo"
         objectFit={"contain"}
       />
