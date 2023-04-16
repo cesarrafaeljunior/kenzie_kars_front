@@ -37,10 +37,11 @@ export const ButtonStyle: ComponentStyleConfig = {
       color: "#495057",
       _hover: { bg: "#CED4DA", borderColor: "#CED4DA" },
     },
-    disable: {
+    disabled: {
       borderColor: "#CED4DA",
       bg: "#CED4DA",
       color: "#FFFFFF",
+      cursor: "no-drop",
     },
     brand1: {
       borderColor: "#4529E6",
