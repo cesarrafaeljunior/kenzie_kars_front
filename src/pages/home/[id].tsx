@@ -12,12 +12,12 @@ import {
   SimpleGrid,
   Spacer,
   Text,
-  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ModalContainer } from "../../components/Modal";
 import { useAdvertContext } from "@/contexts/advert.context";
+import { Textarea } from "@/components/Textarea";
 
 export default () => {
   const router = useRouter();
@@ -34,12 +34,14 @@ export default () => {
       <Header />
       <ModalContainer.ModalVehicleImage isOpen={isOpen} onClose={onClose} />
       <SimpleGrid
-        gridTemplateColumns={"2fr 1fr"}
+        as={"main"}
+        gridTemplateColumns={{ base: "1fr", md: "2fr 1fr" }}
         spacingX={"46px"}
         mx={{ base: "16px", md: "32px", lg: "60px" }}
         my={"40px"}
+        minH={"calc(100vh - 80px - 140px - 80px)"}
       >
-        <Box as={"main"} minH={"calc(100vh - 80px - 140px - 80px)"}>
+        <Box as={"section"}>
           <Center
             bgColor={"grey.10"}
             borderRadius={"4px"}
@@ -118,6 +120,8 @@ export default () => {
               type and scrambled it to make a type specimen book.
             </Text>
           </Box>
+        </Box>
+        <Box as={"section"}>
           <Box
             bgColor={"grey.10"}
             borderRadius={"4px"}
@@ -188,56 +192,15 @@ export default () => {
                 Thomas Schreiner
               </Text>
             </Flex>
-            <Textarea
-              placeholder={
-                "Carro muito confortável, foi uma ótima experiência de compra..."
-              }
-              mb={"15px"}
-              fontSize={"14px"}
-              color={"grey.1"}
-            />
-            <Flex alignItems={"center"} gap={"8px"}>
-              <Center
-                as={"span"}
-                h={"24px"}
-                fontWeight={"medium"}
-                fontSize={"12px"}
-                color={"grey.3"}
-                bgColor={"grey.7"}
-                px={"12px"}
-                borderRadius={"24px"}
-              >
-                Gostei muito!
-              </Center>
-              <Center
-                as={"span"}
-                h={"24px"}
-                fontWeight={"medium"}
-                fontSize={"12px"}
-                color={"grey.3"}
-                bgColor={"grey.7"}
-                px={"12px"}
-                borderRadius={"24px"}
-              >
-                Incrível
-              </Center>
-              <Center
-                as={"span"}
-                h={"24px"}
-                fontWeight={"medium"}
-                fontSize={"12px"}
-                color={"grey.3"}
-                bgColor={"grey.7"}
-                px={"12px"}
-                borderRadius={"24px"}
-              >
-                Recomendarei para meus amigos!
-              </Center>
-            </Flex>
+            <Textarea />
           </Box>
         </Box>
 
-        <Box as={"aside"}>
+        <Box
+          as={"aside"}
+          gridRow={{ base: "2", md: "1" }}
+          gridColumn={{ base: "unset", md: "2" }}
+        >
           <Box
             bgColor={"grey.10"}
             borderRadius={"4px"}
@@ -301,6 +264,7 @@ export default () => {
             borderRadius={"4px"}
             px={"44px"}
             py={"36px"}
+            mb={"18px"}
           >
             <Center
               as={"p"}
