@@ -24,6 +24,36 @@ export default () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
 
+  const user = {
+    id: "ebdd9cd1-a28a-4ff5-af05-40e9e18a113d",
+    name: "Thomas Schreiner",
+    email: "thom@mail.com",
+    cpf: "12345678910",
+    phone_number: "54981215552",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+    is_seller: true,
+  };
+
+  const advert = {
+    id: "d17a9765-5167-40bd-9323-8b65a5c0dba1",
+    title: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200",
+    mileage: 0,
+    price: 80000,
+    year: 2013,
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+    location: "97010080",
+    is_avaliable: true,
+    galery: [
+      { id: 1, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
+      { id: 2, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
+      { id: 3, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
+      { id: 4, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
+    ],
+  };
+
   return (
     <Box
       bgGradient={
@@ -48,10 +78,7 @@ export default () => {
             p={"40px"}
             mb={"16px"}
           >
-            <Img
-              src={"/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png"}
-              alt={"Cover Image"}
-            />
+            <Img src={advert.cover_image} alt={"Cover Image"} />
           </Center>
           <Box
             bgColor={"grey.10"}
@@ -66,7 +93,7 @@ export default () => {
               fontSize={"20px"}
               color={"grey.1"}
             >
-              Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200{" "}
+              {advert.title}
             </Heading>
             <Flex gap={"12px"} mb={"24px"}>
               <Text
@@ -78,7 +105,7 @@ export default () => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                2013
+                {advert.year}
               </Text>
               <Text
                 fontWeight={"medium"}
@@ -89,11 +116,11 @@ export default () => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                0 KM
+                {advert.mileage} KM
               </Text>
               <Spacer />
               <Text fontWeight={"medium"} fontSize={"16px"} color={"grey.1"}>
-                R$ 00.000,00
+                {`R$ ${advert.price},00`}
               </Text>
             </Flex>
             <Button size={"sm"}>Comprar</Button>
@@ -113,12 +140,7 @@ export default () => {
             >
               Descrição
             </Text>
-            <Text color={"grey.2"}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Text>
+            <Text color={"grey.2"}>{advert.description}</Text>
           </Box>
         </Box>
         <Box as={"section"}>
@@ -189,7 +211,7 @@ export default () => {
                 TS
               </Center>
               <Text fontWeight={"medium"} fontSize={"14px"} color={"grey.1"}>
-                Thomas Schreiner
+                {user.name}
               </Text>
             </Flex>
             <Textarea />
@@ -226,9 +248,9 @@ export default () => {
               spacingY={"32px"}
               listStyleType={"none"}
             >
-              {[1, 2, 3, 4].map((number) => (
+              {advert.galery.map(({ id, image }, index) => (
                 <Center
-                  key={number}
+                  key={id}
                   as={"li"}
                   bgColor={"grey.7"}
                   borderRadius={"4px"}
@@ -236,9 +258,7 @@ export default () => {
                 >
                   <Button
                     onClick={() => {
-                      setModalVehicleImage(
-                        "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png"
-                      );
+                      setModalVehicleImage(image);
                       onOpen();
                     }}
                     variant={"unstyled"}
@@ -246,12 +266,7 @@ export default () => {
                     h={"100%"}
                     title="Exibir"
                   >
-                    <Img
-                      src={
-                        "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png"
-                      }
-                      alt={`Image ${number}`}
-                    />
+                    <Img src={image} alt={`Image ${index}`} />
                   </Button>
                 </Center>
               ))}
@@ -279,12 +294,9 @@ export default () => {
               TS
             </Center>
             <Text fontWeight={"semibold"} fontSize={"20px"} color={"grey.1"}>
-              Thomas Schreiner
+              {user.name}
             </Text>
-            <Text color={"grey.2"}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's
-            </Text>
+            <Text color={"grey.2"}>{user.description}</Text>
             <Button variant={"grey1"}>Ver todos anuncios</Button>
           </Center>
         </Box>
