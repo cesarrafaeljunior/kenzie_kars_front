@@ -22,23 +22,32 @@ import { Img } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { Form } from "../Form";
 import { useRef } from "react";
+import { useAdvertContext } from "@/contexts/advert.context";
+import { iModalVehicleImage } from "@/interfaces/components.interfaces";
 
-const ModalVehicleImage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const ModalVehicleImage = ({ isOpen, onClose }: iModalVehicleImage) => {
+  const { modalVehicleImage } = useAdvertContext();
+
   return (
     <>
-      <Box onClick={onOpen}>
-        <Img src="/imgs/mock_car.png" alt="Car" />
-      </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalHeader as={"h2"} fontSize={"16px"}>
             Imagem do veículo
           </ModalHeader>
-          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalCloseButton
+            border={"transparent"}
+            outline={"none"}
+            color={"grey.4"}
+          />
           <ModalBody paddingBottom={"28px"}>
-            <Img src="/imgs/mock_car.png" alt="Car" />
+            <Img
+              src={modalVehicleImage}
+              alt="Car"
+              bgColor={"grey.7"}
+              borderRadius={"4px"}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>

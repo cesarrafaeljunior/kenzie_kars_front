@@ -12,17 +12,17 @@ export const Footer = () => {
       justifyContent={"space-between"}
       fontFamily={"Inter, sans-serif"}
       fontSize={"sm"}
-      flexDirection={{ base: "column", lg: "unset" }}
-      gap={{ base: "20px", lg: "unset" }}
+      flexDirection={{ base: "column", md: "unset" }}
+      gap={{ base: "20px", md: "unset" }}
     >
       <Img
-        marginTop={{ base: "40px", lg: "unset" }}
-        src="/imgs/motor_shop.png"
+        marginTop={{ base: "40px", md: "unset" }}
+        src="/imgs/motors_shop.png"
         alt="logo"
         objectFit={"contain"}
       />
       <Text
-        textAlign={{ base: "center", lg: "unset" }}
+        textAlign={{ base: "center", md: "unset" }}
         color={"grey.whiteFixed"}
       >
         @2022 - Todos os direitos reservados
@@ -34,7 +34,7 @@ export const Footer = () => {
         _focus={{ bg: "grey.1" }}
         _hover={{ bg: "grey.2" }}
         size={{ lg: "lg", base: "sm" }}
-        marginBottom={{ base: "10px", lg: "unset" }}
+        marginBottom={{ base: "10px", md: "unset" }}
       />
     </Flex>
   );

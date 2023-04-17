@@ -2,7 +2,7 @@ import {
   Box,
   Center,
   Flex,
-  Image,
+  Img,
   Menu,
   MenuButton,
   MenuItem,
@@ -30,7 +30,7 @@ export const Header = () => {
         bgColor={"grey.10"}
       >
         <Box flex={"1 1 auto"}>
-          <Image src={"imgs/motors_shop_colored.png"} alt="Logo" />
+          <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
         </Box>
         <Flex
           pl={{ base: "14px", md: "28px", lg: "44px" }}
@@ -68,7 +68,7 @@ export const Header = () => {
                         : ""
                     }`}
                   </Center>
-                  <Text>{user.name}</Text>
+                  <Text color={"grey.2"}>{user.name}</Text>
                 </Flex>
               </MenuButton>
               <MenuList
@@ -105,7 +105,14 @@ export const Header = () => {
                 {!user ? (
                   <>
                     <MenuItem>
-                      <Link href={"/"}>Fazer Login</Link>
+                      <Link
+                        href={"/"}
+                        bgColor={"transparent"}
+                        border={"none"}
+                        justifyContent={"flex-start"}
+                      >
+                        Fazer Login
+                      </Link>
                     </MenuItem>
                     <MenuItem>
                       <Link
