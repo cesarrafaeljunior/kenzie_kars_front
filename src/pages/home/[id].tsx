@@ -18,39 +18,60 @@ import { useRouter } from "next/router";
 import { ModalContainer } from "../../components/Modal";
 import { useAdvertContext } from "@/contexts/advert.context";
 import { Textarea } from "@/components/Textarea";
+import { useUserContext } from "@/contexts/user.context";
 
 export default () => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
+  const { user } = useUserContext();
+  // console.log(router.query.id);
 
-  const user = {
-    id: "ebdd9cd1-a28a-4ff5-af05-40e9e18a113d",
+  const seller = {
+    id: "af8a1c69-424c-4769-8bec-01bcae520e1b",
     name: "Thomas Schreiner",
     email: "thom@mail.com",
     cpf: "12345678910",
     phone_number: "54981215552",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+    birthdate: "1999-11-27",
+    description: "Digamos que aqui tenha uma descrição incrível!...",
     is_seller: true,
-  };
-
-  const advert = {
-    id: "d17a9765-5167-40bd-9323-8b65a5c0dba1",
-    title: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200",
-    mileage: 0,
-    price: 80000,
-    year: 2013,
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
-    location: "97010080",
-    is_avaliable: true,
-    galery: [
-      { id: 1, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
-      { id: 2, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
-      { id: 3, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
-      { id: 4, image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png" },
+    created_at: "2023-04-11T18:54:16.819Z",
+    updated_at: "2023-04-11T20:11:58.604Z",
+    adverts: [
+      {
+        id: "e0641cd9-1ab4-4880-bd25-164994f192e6",
+        title: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200",
+        mileage: 0,
+        price: "80000.00",
+        year: 2013,
+        model: "Cruze",
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+        location: "97010530",
+        is_avaliable: true,
+        created_at: "2023-04-17T21:47:44.404Z",
+        updated_at: "2023-04-17T21:47:44.404Z",
+        galery: [
+          {
+            id: 1,
+            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+          },
+          {
+            id: 2,
+            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+          },
+          {
+            id: 3,
+            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+          },
+          {
+            id: 4,
+            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+          },
+        ],
+      },
     ],
   };
 
@@ -78,7 +99,7 @@ export default () => {
             p={"40px"}
             mb={"16px"}
           >
-            <Img src={advert.cover_image} alt={"Cover Image"} />
+            <Img src={seller.adverts[0].cover_image} alt={"Cover Image"} />
           </Center>
           <Box
             bgColor={"grey.10"}
@@ -93,7 +114,7 @@ export default () => {
               fontSize={"20px"}
               color={"grey.1"}
             >
-              {advert.title}
+              {seller.adverts[0].title}
             </Heading>
             <Flex gap={"12px"} mb={"24px"}>
               <Text
@@ -105,7 +126,7 @@ export default () => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                {advert.year}
+                {seller.adverts[0].year}
               </Text>
               <Text
                 fontWeight={"medium"}
@@ -116,11 +137,11 @@ export default () => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                {advert.mileage} KM
+                {seller.adverts[0].mileage} KM
               </Text>
               <Spacer />
               <Text fontWeight={"medium"} fontSize={"16px"} color={"grey.1"}>
-                {`R$ ${advert.price},00`}
+                {`R$ ${seller.adverts[0].price}`}
               </Text>
             </Flex>
             <Button size={"sm"}>Comprar</Button>
@@ -140,7 +161,7 @@ export default () => {
             >
               Descrição
             </Text>
-            <Text color={"grey.2"}>{advert.description}</Text>
+            <Text color={"grey.2"}>{seller.adverts[0].description}</Text>
           </Box>
         </Box>
         <Box as={"section"}>
@@ -211,7 +232,7 @@ export default () => {
                 TS
               </Center>
               <Text fontWeight={"medium"} fontSize={"14px"} color={"grey.1"}>
-                {user.name}
+                {user?.name || "Usuário"}
               </Text>
             </Flex>
             <Textarea />
@@ -248,7 +269,7 @@ export default () => {
               spacingY={"32px"}
               listStyleType={"none"}
             >
-              {advert.galery.map(({ id, image }, index) => (
+              {seller.adverts[0].galery.map(({ id, image }, index) => (
                 <Center
                   key={id}
                   as={"li"}
@@ -294,9 +315,9 @@ export default () => {
               TS
             </Center>
             <Text fontWeight={"semibold"} fontSize={"20px"} color={"grey.1"}>
-              {user.name}
+              {seller.name}
             </Text>
-            <Text color={"grey.2"}>{user.description}</Text>
+            <Text color={"grey.2"}>{seller.description}</Text>
             <Button variant={"grey1"}>Ver todos anuncios</Button>
           </Center>
         </Box>
