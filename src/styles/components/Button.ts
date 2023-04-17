@@ -4,6 +4,7 @@ export const ButtonStyle: ComponentStyleConfig = {
   baseStyle: {
     fontWeight: "semibold",
     borderRadius: "4px",
+    borderWidth: "2px",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
