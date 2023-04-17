@@ -29,6 +29,7 @@ export const Footer = () => {
       </Text>
       <IconButton
         bg="grey.1"
+        borderColor={"transparent"}
         aria-label="Footer"
         icon={<ChevronUpIcon />}
         _focus={{ bg: "grey.1" }}
