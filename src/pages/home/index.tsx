@@ -1,10 +1,9 @@
-import { Box, Button, Center, Flex, Input } from "@chakra-ui/react";
-import Head from "next/head";
-import { Breadcrumb, Image, Img, Heading, Text, List } from "@chakra-ui/react";
-import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ModalContainer } from "@/components/Modal";
+import { ProductCard } from "@/components/ProductCard";
+import { Box, Button, Center, Input } from "@chakra-ui/react";
+import { Image, Heading, Text, List } from "@chakra-ui/react";
 
 export default function Home() {
   const advertsData = [
@@ -102,7 +101,7 @@ export default function Home() {
 
   return (
     <>
-      <Header></Header>
+      <Header />
       <Center>
         <Center
           bgGradient="linear(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%)"
@@ -657,7 +656,7 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }
