@@ -1,11 +1,17 @@
-import { ListItem, Box, Image, Heading, Text } from "@chakra-ui/react";
+import { iAdvert } from "@/interfaces/advert.interfaces";
+import { iUser } from "@/interfaces/user.interfaces";
+import { ListItem, Box, Image, Heading, Text, Center } from "@chakra-ui/react";
 
+interface iProductCard {
+  advertData: iAdvert;
+  seller?: iUser | null;
+}
 
-export const ProductCard = (advertData: any) => {
+export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
   return (
     <ListItem maxWidth={"340px"} minWidth={"340px"}>
       <Box backgroundColor={"grey.7"}>
-        <Image src={advertData.advertData.coverImage}></Image>
+        <Image src={advertData.cover_image} />
       </Box>
       <Heading
         color={"grey.1"}
@@ -13,7 +19,7 @@ export const ProductCard = (advertData: any) => {
         fontSize={"16px"}
         fontWeight={"semibold"}
       >
-        {advertData.advertData.model}
+        {advertData.model}
       </Heading>
       <Text
         marginTop={"15px"}
@@ -23,25 +29,34 @@ export const ProductCard = (advertData: any) => {
         textOverflow={"ellipsis"}
         paddingRight={"10px"}
       >
-        {advertData.advertData.description}
+        {advertData.description}
       </Text>
-      <Box
-        gap={"8px"}
-        marginTop={"20px"}
-        alignItems={"center"}
-        display={"flex"}
-      >
-        <Image
-          src={advertData.advertData.adverter.profileImage}
-          height={"32px"}
-          width={"32px"}
-          borderRadius={"50%"}
-          objectFit={"cover"}
-        ></Image>
-        <Text fontWeight={"medium"}>
-          {advertData.advertData.adverter.adverterName}
-        </Text>
-      </Box>
+      {seller && (
+        <Box
+          gap={"8px"}
+          marginTop={"20px"}
+          alignItems={"center"}
+          display={"flex"}
+        >
+          <Center
+            as={"p"}
+            bg={"brand.2"}
+            minW={"32px"}
+            boxSize={"32px"}
+            borderRadius={"50%"}
+            fontWeight={"bold"}
+            fontSize={"14px"}
+            color={"white"}
+          >
+            {`${seller.name[0]}${
+              seller.name.split(" ").length > 1
+                ? seller.name.split(" ", 2)[1][0]
+                : ""
+            }`}
+          </Center>
+          <Text fontWeight={"medium"}>{seller.name}</Text>
+        </Box>
+      )}
       <Box marginTop={"15px"} display={"flex"} justifyContent={"space-between"}>
         <Box display={"flex"} gap={"8px"}>
           <Text
@@ -52,7 +67,7 @@ export const ProductCard = (advertData: any) => {
             padding={"4px"}
             borderRadius={"4px"}
           >
-            {advertData.advertData.mileage}
+            {`${advertData.mileage} KM`}
           </Text>
           <Text
             fontWeight={"medium"}
@@ -62,7 +77,7 @@ export const ProductCard = (advertData: any) => {
             padding={"4px"}
             borderRadius={"4px"}
           >
-            {advertData.advertData.year}
+            {advertData.year}
           </Text>
         </Box>
         <Text
@@ -71,7 +86,7 @@ export const ProductCard = (advertData: any) => {
           color={"grey.1"}
           textDecoration={""}
         >
-          {advertData.advertData.price}
+          {`R$ ${advertData.price}`}
         </Text>
       </Box>
     </ListItem>
