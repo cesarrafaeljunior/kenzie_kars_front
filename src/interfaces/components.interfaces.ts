@@ -1,11 +1,13 @@
 import { LinkProps } from "@chakra-ui/react";
 import { HTMLInputTypeAttribute, ReactNode } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 export interface iInput {
   label: string;
   type: HTMLInputTypeAttribute;
   name: string;
   placeholder: string;
+  register: UseFormRegisterReturn;
 }
 
 export type iTextArea = Omit<iInput, "type">;

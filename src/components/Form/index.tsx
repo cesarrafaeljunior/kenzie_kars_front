@@ -1,5 +1,198 @@
-import { Box, Button, Flex, FormLabel, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, FormLabel, Text, Heading } from "@chakra-ui/react";
 import { Field } from "../Field";
+import { useState } from "react";
+import api from "@/services/api";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { ModalContainer } from "../Modal";
+
+const CreateProfile = () => {
+  const formSchema = yup.object().shape({
+    name: yup.string().max(100).required(),
+    email: yup.string().email().max(100).required(),
+    cpf: yup.string().length(11).required(),
+    phone_number: yup.string().length(11).required(),
+    birthdate: yup.date().required(),
+    description: yup.string().required(),
+    password: yup.string().required(),
+    is_seller: yup.boolean().required(),
+    confrimPassword: yup.string().oneOf([yup.ref("password")]),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const submitFunction = async (data: any) => {
+    await api
+      .post("/users", data)
+      .then((resp) => {
+        toast.success("conta criada com sucesso");
+      })
+      .catch((err) => {
+        toast.error("ops algo deu errado");
+      });
+  };
+  console.log(errors);
+  return (
+    <Box
+      as={"form"}
+      maxWidth={"420px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      backgroundColor={"grey.whiteFixed"}
+      padding={"45px"}
+      marginTop={"90px"}
+      marginBottom={"90px"}
+      onSubmit={handleSubmit(submitFunction)}
+    >
+      <Heading fontSize={"24px"}>Cadastro</Heading>
+      <Text>Informações pessoais</Text>
+      <Field.InputField
+        label="Nome"
+        type="text"
+        placeholder="Samuel leão"
+        name="name"
+        register={register("name")}
+      />
+      <Field.InputField
+        label="Email"
+        type="email"
+        name="email"
+        register={register("email")}
+        placeholder="samuelleao@gmail.com"
+      />
+      <Field.InputField
+        label="CPF"
+        type="text"
+        name="cpf"
+        register={register("cpf")}
+        placeholder="900.080.090-0"
+      />
+      <Field.InputField
+        label="Celular"
+        type="tel"
+        name="phone_number"
+        register={register("phone_number")}
+        placeholder="(084) 90909-9092"
+      />
+      <Field.InputField
+        label="Data de nascimento"
+        type="date"
+        name="birthdate"
+        register={register("birthdate")}
+        placeholder=""
+      />
+      <Field.TextField
+        label="Descrição"
+        name="description"
+        register={register("description")}
+        placeholder="Insira a descrição do usuário..."
+      />
+      <Box
+        maxWidth={"520px"}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        gap={"14px"}
+        borderRadius={"8px"}
+      >
+        <Text>Informações de endereço</Text>
+        <Field.InputField
+          label="Cep"
+          type="text"
+          name="cep"
+          register={register("cep")}
+          placeholder="37517000"
+        />
+        <Flex>
+          <Field.InputField
+            label="Estado"
+            type="text"
+            name="state"
+            register={register("state")}
+            placeholder="MG"
+          />
+          <Field.InputField
+            label="Cidade"
+            type="text"
+            name="city"
+            register={register("city")}
+            placeholder="Formigas"
+          />
+        </Flex>
+        <Field.InputField
+          label="Rua"
+          type="text"
+          name="street"
+          register={register("street")}
+          placeholder="Rua das macieiras"
+        />
+        <Flex>
+          <Field.InputField
+            label="Número"
+            type="number"
+            name="number"
+            register={register("number")}
+            placeholder="25"
+          />
+          <Field.InputField
+            label="Complemento"
+            type="text"
+            name="complement"
+            register={register("complement")}
+            placeholder="Casa"
+          />
+        </Flex>
+        <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
+          <Button
+            width={"45%"}
+            value={"false"}
+            variant={"brand1"}
+            {...register("is_seller")}
+          >
+            Comprador
+          </Button>
+          <Button
+            width={"45%"}
+            value={"true"}
+            variant={"outline"}
+            {...register("is_seller")}
+          >
+            Anunciante
+          </Button>
+        </Flex>
+        <Field.InputField
+          label="Senha"
+          type="text"
+          name="password"
+          register={register("password")}
+          placeholder="Insira a senha do usuário..."
+        />
+        <Field.InputField
+          label="Confirme a senha"
+          type="text"
+          name="confirmPassword"
+          register={register("confirmPassword")}
+          placeholder="Confirme a senha do usuário..."
+        />
+        <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
+          <Button type="submit" width={"98%"} variant={"brand1"}>
+            Finalizar cadastro
+          </Button>
+        </Flex>
+      </Box>
+    </Box>
+  );
+};
 
 const EditProfile = () => {
   return (
@@ -344,4 +537,10 @@ const EditAd = () => {
   );
 };
 
-export const Form = { EditProfile, EditAddress, CreateAd, EditAd };
+export const Form = {
+  EditProfile,
+  EditAddress,
+  CreateAd,
+  EditAd,
+  CreateProfile,
+};
