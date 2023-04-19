@@ -1,6 +1,15 @@
 import { iAdvert } from "@/interfaces/advert.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
-import { ListItem, Box, Image, Heading, Text, Center } from "@chakra-ui/react";
+import {
+  ListItem,
+  Box,
+  Image,
+  Heading,
+  Text,
+  Center,
+  Button,
+  Flex,
+} from "@chakra-ui/react";
 
 interface iProductCard {
   advertData: iAdvert;
@@ -9,9 +18,9 @@ interface iProductCard {
 
 export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
   return (
-    <ListItem maxWidth={"340px"} minWidth={"340px"}>
-      <Box backgroundColor={"grey.7"}>
-        <Image src={advertData.cover_image} />
+    <ListItem maxWidth={"312px"} minWidth={"312px"} p={"16px"}>
+      <Box backgroundColor={"grey.7"} w="max-content">
+        <Image src={advertData.cover_image} width={{ base: "300px" }} />
       </Box>
       <Heading
         color={"grey.1"}
@@ -57,7 +66,12 @@ export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
           <Text fontWeight={"medium"}>{seller.name}</Text>
         </Box>
       )}
-      <Box marginTop={"15px"} display={"flex"} justifyContent={"space-between"}>
+      <Box
+        marginTop={"15px"}
+        display={"flex"}
+        flexDirection="column"
+        justifyContent={"space-between"}
+      >
         <Box display={"flex"} gap={"8px"}>
           <Text
             fontWeight={"medium"}
@@ -88,6 +102,14 @@ export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
         >
           {`R$ ${advertData.price}`}
         </Text>
+        <Flex gap={"16px"} m="16px 0 0 0">
+          <Button h="38px" variant={"outline"}>
+            Edtar
+          </Button>
+          <Button h="38px" variant={"outline"}>
+            Ver detalhes
+          </Button>
+        </Flex>
       </Box>
     </ListItem>
   );
