@@ -8,7 +8,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-const InputField = ({ label, type, name, placeholder }: iInput) => {
+const InputField = ({ label, type, name, placeholder, register }: iInput) => {
   return (
     <FormControl>
       <FormLabel
@@ -28,7 +28,6 @@ const InputField = ({ label, type, name, placeholder }: iInput) => {
         <Input
           type={type}
           placeholder={placeholder}
-          name={name}
           w="100%"
           height="48px"
           color="#868E96"
@@ -38,13 +37,14 @@ const InputField = ({ label, type, name, placeholder }: iInput) => {
           _hover={{ bg: "#F1F3F5" }}
           variant={{ outline: "none" }}
           fontFamily="Inter, sans-serif"
+          {...register}
         />
       </FormLabel>
     </FormControl>
   );
 };
 
-const TextField = ({ label, name, placeholder }: iTextArea) => {
+const TextField = ({ label, name, placeholder, register }: iTextArea) => {
   return (
     <FormControl>
       <FormLabel
@@ -63,7 +63,7 @@ const TextField = ({ label, name, placeholder }: iTextArea) => {
         </Text>
         <Textarea
           placeholder={placeholder}
-          name={name}
+          {...register}
           w="100%"
           height="48px"
           color="#868E96"
