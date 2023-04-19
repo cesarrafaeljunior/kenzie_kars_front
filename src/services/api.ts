@@ -5,5 +5,5 @@ export const apiSearchCEP = async (cep: string) =>
 
 export const api = axios.create({
   baseURL: "https://localhost:3001",
-  timeout: 5000
-})
+  timeout: 5000,
+});
