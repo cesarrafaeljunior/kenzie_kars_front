@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ModalContainer } from "@/components/Modal";
+import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
 import { Box, Button, Center, Input } from "@chakra-ui/react";
 import { Image, Heading, Text, List } from "@chakra-ui/react";
@@ -636,24 +637,7 @@ export default function Home() {
           <Center>
             <ModalContainer.ModalMobileFilters />
           </Center>
-          <Box
-            width={"100%"}
-            justifyContent={"center"}
-            paddingRight={{ lg: "65px", base: "0px" }}
-            gap={"30px"}
-            fontSize={"24px"}
-            display={"flex"}
-            flexDirection={{ lg: "unset", base: "column" }}
-            alignItems={{ lg: "unset", base: "center" }}
-            fontWeight={"bold"}
-            marginTop={"80px"}
-          >
-            <Box display={"flex"}>
-              <Text color={"grey.3"}>1 </Text>
-              <Text color={"grey.4"}> de 2</Text>
-            </Box>
-            <Text color={"brand.1"}>Seguinte {">"}</Text>
-          </Box>
+          <PaginationNumbers />
         </Box>
       </Box>
       <Footer />

@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
 export const AdvertProvider = ({ children }: iContextProps) => {
-  const [modalVehicleImage, setModalVehicleImage] = useState("");
+  const [modalVehicleImage, setModalVehicleImage] = useState<string>("");
 
   return (
     <AdvertContext.Provider value={{ modalVehicleImage, setModalVehicleImage }}>
