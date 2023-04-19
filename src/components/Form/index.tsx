@@ -8,22 +8,23 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { Field } from "../Field";
-import api from "@/services/api";
+import { api } from "@/services/api";
 import { toast } from "react-toastify";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { ModalContainer } from "../Modal";
+import {
+  iLogin,
+  iLoginResponse,
+  iUser,
+  iUserRequest,
+} from "@/interfaces/user.interfaces";
+import { loginSchema } from "@/schemas/login.schemas";
+import { createUserSchema } from "@/schemas/user.schemas";
 
 const Login = () => {
-  const formSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  });
-
-  const submitFunction = async (data: any) => {
+  const submitFunction = async (data: iLogin) => {
     await api
-      .post("/login", data)
+      .post<iLoginResponse>("/login", data)
       .then((resp) => {
         toast.success("login realizado");
       })
@@ -36,8 +37,8 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
+  } = useForm<iLogin>({
+    resolver: yupResolver(loginSchema),
   });
   return (
     <Box
@@ -89,28 +90,17 @@ const Login = () => {
 };
 
 const CreateProfile = () => {
-  const formSchema = yup.object().shape({
-    name: yup.string().max(100).required(),
-    email: yup.string().email().max(100).required(),
-    cpf: yup.string().length(11).required(),
-    phone_number: yup.string().length(11).required(),
-    birthdate: yup.date().required(),
-    description: yup.string().required(),
-    password: yup.string().required(),
-    is_seller: yup.boolean().required(),
-    confrimPassword: yup.string().oneOf([yup.ref("password")]),
-  });
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
+  } = useForm<iUserRequest>({
+    resolver: yupResolver(createUserSchema),
   });
 
-  const submitFunction = async (data: any) => {
+  const submitFunction = async (data: iUserRequest) => {
     await api
-      .post("/users", data)
+      .post<iUser>("/users", data)
       .then((resp) => {
         toast.success("conta criada com sucesso");
       })
