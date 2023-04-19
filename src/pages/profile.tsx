@@ -56,7 +56,7 @@ export default () => {
   return (
     <Box
       bgGradient={
-        "linear-gradient(180deg, brand.1 31.25%, grey.8 31.26%, grey.8 100%)"
+        "linear-gradient(to bottom, var(--chakra-colors-brand-1) 350px, var(--chakra-colors-grey-8) 350px)"
       }
       minH={"100vh"}
     >
@@ -64,7 +64,8 @@ export default () => {
       <Box as={"main"} my={{ base: "65px", md: "75px" }}>
         <Box
           maxW={"1200px"}
-          mx={{ base: "16px", md: "50px" }}
+          w={{ base: "90%" }}
+          m="0 auto"
           bgColor={"grey.10"}
           borderRadius={"4px"}
           p={"40px"}
@@ -108,13 +109,19 @@ export default () => {
         </Box>
 
         <List
-          mx={{ base: "16px", md: "50px" }}
+          w={"90%"}
           display={"flex"}
           flexWrap={"wrap"}
+          justifyContent={"center"}
+          m="0 auto"
           gap={"48px"}
         >
           {user.adverts.map((advert, index) => (
             <>
+              <ProductCard key={index} advertData={advert} />
+              <ProductCard key={index} advertData={advert} />
+              <ProductCard key={index} advertData={advert} />
+              <ProductCard key={index} advertData={advert} />
               <ProductCard key={index} advertData={advert} />
               <ProductCard key={index} advertData={advert} />
               <ProductCard key={index} advertData={advert} />
