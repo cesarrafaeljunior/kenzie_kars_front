@@ -1,12 +1,92 @@
-import { Box, Button, Flex, FormLabel, Text, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Text,
+  Heading,
+  Center,
+} from "@chakra-ui/react";
 import { Field } from "../Field";
-import { useState } from "react";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ModalContainer } from "../Modal";
+
+const Login = () => {
+  const formSchema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  });
+
+  const submitFunction = async (data: any) => {
+    await api
+      .post("/login", data)
+      .then((resp) => {
+        toast.success("login realizado");
+      })
+      .catch((err) => {
+        toast.error("ops algo deu errado");
+      });
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+  return (
+    <Box
+      as={"form"}
+      width={"512px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      backgroundColor={"grey.whiteFixed"}
+      padding={"45px"}
+      marginTop={"90px"}
+      marginBottom={"90px"}
+      onSubmit={handleSubmit(submitFunction)}
+    >
+      <Heading fontSize={"24px"}>Login</Heading>
+
+      <Field.InputField
+        label="Email"
+        type="email"
+        placeholder="samuelleão@gmail.com"
+        name="email"
+        register={register("email")}
+      />
+      <Field.InputField
+        label="Senha"
+        type="password"
+        name="password"
+        register={register("password")}
+        placeholder="samuelleao@gmail.com"
+      />
+      <Flex justifyContent={"flex-end"}>
+        <Text color={"grey2"} fontSize={"14px"}>
+          Esqueci minha senha
+        </Text>
+      </Flex>
+      <Button type="submit" variant={"brand1"}>
+        Entrar
+      </Button>
+      <Center>
+        <Text color={"grey2"} fontSize={"14px"}>
+          Ainda não possui uma conta?
+        </Text>
+      </Center>
+      <Button variant={"outline"}>Cadastrar</Button>
+    </Box>
+  );
+};
 
 const CreateProfile = () => {
   const formSchema = yup.object().shape({
@@ -38,7 +118,7 @@ const CreateProfile = () => {
         toast.error("ops algo deu errado");
       });
   };
-  console.log(errors);
+
   return (
     <Box
       as={"form"}
@@ -543,4 +623,5 @@ export const Form = {
   CreateAd,
   EditAd,
   CreateProfile,
+  Login,
 };

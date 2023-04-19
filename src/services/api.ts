@@ -4,7 +4,7 @@ export const searchCEP = async (cep: string) =>
   await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
 const api = axios.create({
-  baseURL: "https://localhost:3000",
+  baseURL: "http://localhost:3001",
   timeout: 5000
 })
 
