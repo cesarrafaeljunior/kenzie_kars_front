@@ -9,6 +9,7 @@ export const ButtonStyle: ComponentStyleConfig = {
     justifyContent: "center",
     alignContent: "center",
     fontFamily: "Inter, sans-serif",
+    
   },
   sizes: {
     sm: {
