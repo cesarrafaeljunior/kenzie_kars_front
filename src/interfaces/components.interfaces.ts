@@ -1,5 +1,10 @@
 import { LinkProps } from "@chakra-ui/react";
-import { HTMLInputTypeAttribute, ReactNode } from "react";
+import {
+  Dispatch,
+  HTMLInputTypeAttribute,
+  ReactNode,
+  SetStateAction,
+} from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 export interface iInput {
@@ -22,7 +27,7 @@ export interface iLinkProps extends LinkProps {
   children: ReactNode;
 }
 
-export interface iModalVehicleImage {
+export interface iModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
