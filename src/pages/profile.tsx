@@ -2,6 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
+import { useRouter } from "next/router";
 import { Badge, Box, Button, Center, Flex, List, Text } from "@chakra-ui/react";
 
 export default () => {
@@ -18,40 +19,99 @@ export default () => {
     updated_at: "2023-04-11T20:11:58.604Z",
     adverts: [
       {
-        id: "e0641cd9-1ab4-4880-bd25-164994f192e6",
-        title: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200",
-        mileage: 0,
-        price: "80000.00",
+        id: "6e6a0f02-b1f0-4361-8679-9c4941eee212",
+        title: "It's a Car",
+        brand: "Chevrolet",
+        model: "Clio",
+        fuel: "Gasolina",
+        color: "Vermelha",
         year: 2013,
-        model: "Cruze",
+        mileage: 0,
+        price: 80000,
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
         cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
         location: "97010530",
         is_avaliable: true,
-        created_at: "2023-04-17T21:47:44.404Z",
-        updated_at: "2023-04-17T21:47:44.404Z",
-        galery: [
-          {
-            id: 1,
-            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
-          },
-          {
-            id: 2,
-            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
-          },
-          {
-            id: 3,
-            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
-          },
-          {
-            id: 4,
-            image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
-          },
-        ],
+        created_at: "2023-04-19T18:41:45.487Z",
+        updated_at: "2023-04-19T18:41:45.487Z",
+        user: {
+          id: "af8a1c69-424c-4769-8bec-01bcae520e1b",
+          name: "Thomas",
+          email: "thom@mail.com",
+          cpf: "12345678910",
+          phone_number: "54981215552",
+          birthdate: "1999-11-27T02:00:00.000Z",
+          description: "Digite aqui uma descrição.",
+          is_seller: true,
+          created_at: "2023-04-11T18:54:16.819Z",
+          updated_at: "2023-04-11T20:11:58.604Z",
+        },
+      },
+      {
+        id: "85bd7380-f4f3-459b-a17f-dac41bfb6913",
+        title: "It's a Car",
+        brand: "Chevrolet",
+        model: "Clio",
+        fuel: "Gasolina",
+        color: "Vermelha",
+        year: 2013,
+        mileage: 0,
+        price: 80000,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+        location: "97010530",
+        is_avaliable: true,
+        created_at: "2023-04-19T20:33:02.755Z",
+        updated_at: "2023-04-19T20:33:02.755Z",
+        user: {
+          id: "af8a1c69-424c-4769-8bec-01bcae520e1b",
+          name: "Thomas",
+          email: "thom@mail.com",
+          cpf: "12345678910",
+          phone_number: "54981215552",
+          birthdate: "1999-11-27T02:00:00.000Z",
+          description: "Digite aqui uma descrição.",
+          is_seller: true,
+          created_at: "2023-04-11T18:54:16.819Z",
+          updated_at: "2023-04-11T20:11:58.604Z",
+        },
+      },
+      {
+        id: "ecb992a6-eb3a-4c80-a2b5-79863739b68e",
+        title: "It's a Car",
+        brand: "Chevrolet",
+        model: "Clio",
+        fuel: "Gasolina",
+        color: "Vermelha",
+        year: 2013,
+        mileage: 0,
+        price: 80000,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        cover_image: "/imgs/EXTERIOR-frontSidePilotNear-1653845164710.png",
+        location: "97010530",
+        is_avaliable: true,
+        created_at: "2023-04-19T21:04:48.684Z",
+        updated_at: "2023-04-19T21:04:48.684Z",
+        user: {
+          id: "af8a1c69-424c-4769-8bec-01bcae520e1b",
+          name: "Thomas",
+          email: "thom@mail.com",
+          cpf: "12345678910",
+          phone_number: "54981215552",
+          birthdate: "1999-11-27T02:00:00.000Z",
+          description: "Digite aqui uma descrição.",
+          is_seller: true,
+          created_at: "2023-04-11T18:54:16.819Z",
+          updated_at: "2023-04-11T20:11:58.604Z",
+        },
       },
     ],
   };
+
+  const router = useRouter();
 
   return (
     <Box
@@ -117,19 +177,13 @@ export default () => {
           gap={"48px"}
         >
           {user.adverts.map((advert, index) => (
-            <>
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-              <ProductCard key={index} advertData={advert} />
-            </>
+            <ProductCard
+              key={index}
+              advertData={advert}
+              isSeller={user.is_seller}
+            />
           ))}
         </List>
-
         <PaginationNumbers />
       </Box>
       <Footer />

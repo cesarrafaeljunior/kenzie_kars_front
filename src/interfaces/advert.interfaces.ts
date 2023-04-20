@@ -7,8 +7,11 @@ export interface iAdvertListByUser extends iUser {
 export interface iAdvert {
   id: string;
   title: string;
+  brand: string;
+  fuel: string;
+  color: string;
   mileage: number;
-  price: string;
+  price: number;
   year: number;
   model: string;
   description: string;
