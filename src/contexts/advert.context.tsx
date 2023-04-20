@@ -10,10 +10,13 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
 
-  const getAdvertiseListByUserId = async () => {
-    await api.get<iAdvertListByUser>("/advertised").then(({ data }) => {
-      setAdvertiseListByUser(data);
-    });
+  const getAdvertiseListByUserId = async (userId: string) => {
+    await api
+      .get<iAdvertListByUser>(`/advertised/users/${userId}`)
+      .then(({ data }) => {
+        setAdvertiseListByUser(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
