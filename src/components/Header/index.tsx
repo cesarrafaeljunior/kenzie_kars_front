@@ -11,13 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "../Link";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useUserContext } from "@/contexts/user.context";
 
 export const Header = () => {
-  // const user = null;
-  const user = {
-    name: "Thomas Schreiner",
-    is_seller: true,
-  };
+  const { user } = useUserContext();
 
   return (
     <header>

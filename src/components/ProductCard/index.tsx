@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/router";
 
 interface iProductCard {
-  advertData: iAdvert;
+  advertData: Omit<iAdvert, "user">;
   seller?: iUser | null;
   isSeller?: boolean;
 }
