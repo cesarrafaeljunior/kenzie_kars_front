@@ -10,13 +10,21 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 interface iProductCard {
   advertData: iAdvert;
   seller?: iUser | null;
+  isSeller?: boolean;
 }
 
-export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
+export const ProductCard = ({
+  advertData,
+  seller = null,
+  isSeller,
+}: iProductCard) => {
+  const router = useRouter();
+
   return (
     <ListItem maxWidth={"312px"} minWidth={"312px"} p={"16px"}>
       <Box backgroundColor={"grey.7"} w="max-content">
@@ -102,14 +110,16 @@ export const ProductCard = ({ advertData, seller = null }: iProductCard) => {
         >
           {`R$ ${advertData.price}`}
         </Text>
-        <Flex gap={"16px"} m="16px 0 0 0">
-          <Button h="38px" variant={"outline"}>
-            Edtar
-          </Button>
-          <Button h="38px" variant={"outline"}>
-            Ver detalhes
-          </Button>
-        </Flex>
+        {router.pathname == "/profile" && isSeller ? (
+          <Flex gap={"16px"} m="16px 0 0 0">
+            <Button h="38px" variant={"outline"}>
+              Editar
+            </Button>
+            <Button h="38px" variant={"outline"}>
+              Ver detalhes
+            </Button>
+          </Flex>
+        ) : null}
       </Box>
     </ListItem>
   );
