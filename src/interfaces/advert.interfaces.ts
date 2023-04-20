@@ -1,3 +1,9 @@
+import { iUser } from "./user.interfaces";
+
+export interface iAdvertListByUser extends iUser {
+  adverts: Omit<iAdvert, "user">[];
+}
+
 export interface iAdvert {
   id: string;
   title: string;
@@ -12,6 +18,7 @@ export interface iAdvert {
   updated_at: string;
   is_avaliable: boolean;
   galery: iSellerGalery[];
+  user: iUser;
 }
 
 export interface iSellerGalery {
