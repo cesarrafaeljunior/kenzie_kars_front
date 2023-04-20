@@ -2,6 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
+import { useRouter } from "next/router";
 import { Badge, Box, Button, Center, Flex, List, Text } from "@chakra-ui/react";
 
 export default () => {
@@ -110,6 +111,8 @@ export default () => {
     ],
   };
 
+  const router = useRouter();
+
   return (
     <Box
       bgGradient={
@@ -174,10 +177,13 @@ export default () => {
           gap={"48px"}
         >
           {user.adverts.map((advert, index) => (
-            <ProductCard key={index} advertData={advert} />
+            <ProductCard
+              key={index}
+              advertData={advert}
+              isSeller={user.is_seller}
+            />
           ))}
         </List>
-
         <PaginationNumbers />
       </Box>
       <Footer />
