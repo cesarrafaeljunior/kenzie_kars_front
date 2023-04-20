@@ -18,9 +18,12 @@ export const UserProvider = ({ children }: iContextProps) => {
 
     if (token) {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
-      await api.get<iUser>("/users/profile").then(({ data }) => {
-        setUser(data);
-      });
+      await api
+        .get<iUser>("/users/profile")
+        .then(({ data }) => {
+          setUser(data);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
