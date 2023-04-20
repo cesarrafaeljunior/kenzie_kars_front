@@ -9,7 +9,8 @@ export interface iUserRequest {
   description: string;
   password: string;
   is_seller: boolean;
-  // address: iAddressRequest;
+  address: iAddressRequest;
+  confirm_password: string;
 }
 
 export interface iUser {
