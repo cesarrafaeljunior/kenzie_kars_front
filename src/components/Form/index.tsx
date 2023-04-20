@@ -19,7 +19,7 @@ import {
   iUserRequest,
 } from "@/interfaces/user.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
-import { createUserSchema } from "@/schemas/user.schemas";
+import { userRequestSchema } from "@/schemas/user.schemas";
 
 const Login = () => {
   const submitFunction = async (data: iLogin) => {
@@ -95,7 +95,7 @@ const CreateProfile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<iUserRequest>({
-    resolver: yupResolver(createUserSchema),
+    resolver: yupResolver(userRequestSchema),
   });
 
   const submitFunction = async (data: iUserRequest) => {
@@ -180,7 +180,7 @@ const CreateProfile = () => {
           label="Cep"
           type="text"
           name="cep"
-          register={register("cep")}
+          register={register("address.cep")}
           placeholder="37517000"
         />
         <Flex>
@@ -188,14 +188,14 @@ const CreateProfile = () => {
             label="Estado"
             type="text"
             name="state"
-            register={register("state")}
+            register={register("address.state")}
             placeholder="MG"
           />
           <Field.InputField
             label="Cidade"
             type="text"
             name="city"
-            register={register("city")}
+            register={register("address.city")}
             placeholder="Formigas"
           />
         </Flex>
@@ -203,7 +203,7 @@ const CreateProfile = () => {
           label="Rua"
           type="text"
           name="street"
-          register={register("street")}
+          register={register("address.street")}
           placeholder="Rua das macieiras"
         />
         <Flex>
@@ -211,14 +211,14 @@ const CreateProfile = () => {
             label="Número"
             type="number"
             name="number"
-            register={register("number")}
+            register={register("address.number")}
             placeholder="25"
           />
           <Field.InputField
             label="Complemento"
             type="text"
             name="complement"
-            register={register("complement")}
+            register={register("address.complement")}
             placeholder="Casa"
           />
         </Flex>
@@ -251,7 +251,7 @@ const CreateProfile = () => {
           label="Confirme a senha"
           type="text"
           name="confirmPassword"
-          register={register("confirmPassword")}
+          register={register("confirm_password")}
           placeholder="Confirme a senha do usuário..."
         />
         <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
@@ -276,7 +276,7 @@ const EditProfile = () => {
       borderRadius={"8px"}
     >
       <Text>Informações pessoais</Text>
-      <Field.InputField
+      {/* <Field.InputField
         label="Nome"
         type="text"
         name="text"
@@ -310,7 +310,7 @@ const EditProfile = () => {
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do usuário..."
-      />
+      /> */}
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar
@@ -335,7 +335,7 @@ const EditAddress = () => {
       borderRadius={"8px"}
     >
       <Text>Informações de endereço</Text>
-      <Field.InputField
+      {/* <Field.InputField
         label="Cep"
         type="text"
         name="text"
@@ -373,8 +373,8 @@ const EditAddress = () => {
           type="text"
           name="text"
           placeholder="Casa"
-        />
-      </Flex>
+        /> */}
+      {/* </Flex> */}
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar
@@ -399,7 +399,7 @@ const CreateAd = () => {
       borderRadius={"8px"}
     >
       <Text>Informações de veículo</Text>
-      <Field.InputField
+      {/* <Field.InputField
         label="Marca"
         type="text"
         name="text"
@@ -476,7 +476,7 @@ const CreateAd = () => {
         type="text"
         name="text"
         placeholder="https://image.com"
-      />
+      /> */}
       <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
         Adicionar campo para imagem da galeria
       </Button>
@@ -504,7 +504,7 @@ const EditAd = () => {
       borderRadius={"8px"}
     >
       <Text>Informações de veículo</Text>
-      <Field.InputField
+      {/* <Field.InputField
         label="Marca"
         type="text"
         name="text"
@@ -591,7 +591,7 @@ const EditAd = () => {
         type="text"
         name="text"
         placeholder="https://image.com"
-      />
+      /> */}
       <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
         Adicionar campo para imagem da galeria
       </Button>
