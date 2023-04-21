@@ -18,7 +18,6 @@ const registerPage = () => {
     <>
       <Header />
       <Center backgroundColor={"grey.8"}>
-        <Button onClick={onOpen}>Abrir modal</Button>
         <ModalContainer.ModalSuccessAccount isOpen={isOpen} onClose={onClose} />
         <Form.CreateProfile onOpen={onOpen} />
       </Center>

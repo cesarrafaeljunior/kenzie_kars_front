@@ -13,6 +13,12 @@ export interface iInput {
   name: string;
   placeholder: string;
   register: UseFormRegisterReturn;
+  borderColor?: string;
+}
+
+export interface iInputPassword extends iInput {
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
 }
 
 export type iTextArea = Omit<iInput, "type">;
@@ -30,4 +36,5 @@ export interface iLinkProps extends LinkProps {
 export interface iModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpen?: () => void;
 }
