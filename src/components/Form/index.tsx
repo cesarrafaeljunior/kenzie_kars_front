@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { Field } from "../Field";
-import { api } from "@/services/api";
+import { api, apiSearchCEP } from "@/services/api";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -25,9 +25,10 @@ import { userRequestSchema } from "@/schemas/user.schemas";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Link } from "../Link";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { iModalProps, onOpenF } from "@/interfaces/components.interfaces";
+import { iAddressResponse } from "@/interfaces/address.interfaces";
 
 const Login = () => {
   const router = useRouter();
@@ -112,6 +113,22 @@ const Login = () => {
 const CreateProfile = ({ onOpen }: onOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [cepInfos, setCepInfos] = useState<iAddressResponse>(
+    {} as iAddressResponse
+  );
+
+  const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length == 8) {
+      apiSearchCEP(e.target.value)
+        .then((resp) => {
+          setCepInfos(resp.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -128,7 +145,7 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("ops algo deu errado");
+        toast.error(err.data.message);
       });
   };
 
@@ -216,14 +233,15 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
         <Text>Informações de endereço</Text>
         <Field.InputField
           label="Cep"
-          type="text"
+          type="number"
           name="cep"
-          register={register("address.cep")}
+          register={register("address.cep", { onChange: requestCep })}
           borderColor={errors.address?.cep ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Informe seu Cep"
         />
         <Flex>
           <Field.InputField
+            value={cepInfos.uf && cepInfos.uf !== "" ? cepInfos.uf : undefined}
             label="Estado"
             type="text"
             name="state"
@@ -233,6 +251,11 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           />
 
           <Field.InputField
+            value={
+              cepInfos.localidade && cepInfos.localidade !== ""
+                ? cepInfos.localidade
+                : undefined
+            }
             label="Cidade"
             type="text"
             name="city"
@@ -242,6 +265,11 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           />
         </Flex>
         <Field.InputField
+          value={
+            cepInfos.logradouro && cepInfos.logradouro !== ""
+              ? cepInfos.logradouro
+              : undefined
+          }
           label="Rua"
           type="text"
           name="street"
@@ -260,6 +288,11 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
             placeholder="Número"
           />
           <Field.InputField
+            value={
+              cepInfos.complemento && cepInfos.complemento !== ""
+                ? cepInfos.complemento
+                : undefined
+            }
             label="Complemento"
             type="text"
             name="complement"
