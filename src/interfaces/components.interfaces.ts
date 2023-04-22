@@ -36,5 +36,8 @@ export interface iLinkProps extends LinkProps {
 export interface iModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOpen?: () => void;
 }
+
+export type onOpenF = {
+  onOpen: () => void;
+};
