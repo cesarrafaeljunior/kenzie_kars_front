@@ -2,12 +2,10 @@ import {
   Box,
   Button,
   Flex,
-  FormLabel,
   Text,
   Heading,
   Center,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
@@ -28,8 +26,8 @@ import { setCookie } from "nookies";
 import { useRouter } from "next/router";
 import { Link } from "../Link";
 import { useState } from "react";
-import { ViewIcon } from "@chakra-ui/icons";
-import { iModalProps } from "@/interfaces/components.interfaces";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { iModalProps, onOpenF } from "@/interfaces/components.interfaces";
 
 const Login = () => {
   const router = useRouter();
@@ -111,7 +109,9 @@ const Login = () => {
   );
 };
 
-const CreateProfile = ({ onOpen }: iModalProps) => {
+const CreateProfile = ({ onOpen }: onOpenF) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -132,8 +132,6 @@ const CreateProfile = ({ onOpen }: iModalProps) => {
       });
   };
 
-  const [show, setShow] = useState(false);
-  const [namePassword, setNamePassword] = useState("");
   return (
     <Box
       as={"form"}
@@ -292,33 +290,72 @@ const CreateProfile = ({ onOpen }: iModalProps) => {
             Anunciante
           </Button>
         </Flex>
-        <Field.InputFieldPassword
-          id="password"
-          show={show}
-          setShow={setShow}
-          label="Senha"
-          type={show && namePassword == "password" ? "text" : "password"}
-          name="password"
-          register={register("password")}
-          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
-          placeholder="Insira uma senha."
-          namePassword={namePassword}
-          setNamePassword={setNamePassword}
-        />
+        <InputGroup h={"100%"}>
+          <InputRightElement h={"100%"}>
+            <IconButton
+              top="10px"
+              right={"16px"}
+              h={"100%"}
+              bg="transparent"
+              size={"md"}
+              color={"black"}
+              border="none"
+              aria-label="Search database"
+              _hover={{ bg: "none", border: "none", color: "grey.2" }}
+              icon={
+                showPassword ? (
+                  <ViewIcon w={6} h={6} />
+                ) : (
+                  <ViewOffIcon w={6} h={6} />
+                )
+              }
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </InputRightElement>
+          <Field.InputField
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            register={register("password")}
+            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+            placeholder="Insira uma senha"
+          />
+        </InputGroup>
+
         <Text color="feedback.alert1">{errors.password?.message}</Text>
-        <Field.InputFieldPassword
-          id="confirmPassword"
-          show={show}
-          setShow={setShow}
-          label="Confirme a senha"
-          type={show && namePassword == "confirmPassword" ? "text" : "password"}
-          name="confirmPassword"
-          register={register("confirm_password")}
-          borderColor={errors.confirm_password ? "feedback.alert1" : "#E9ECEF"}
-          placeholder="Confirme sua senha"
-          namePassword={namePassword}
-          setNamePassword={setNamePassword}
-        />
+        <InputGroup>
+          <InputRightElement h={"100%"}>
+            <IconButton
+              top="10px"
+              right={"16px"}
+              h={"100%"}
+              bg="transparent"
+              size={"md"}
+              color={"black"}
+              border="none"
+              aria-label="Search database"
+              _hover={{ bg: "none", border: "none", color: "grey.2" }}
+              icon={
+                showConfirmPassword ? (
+                  <ViewIcon w={6} h={6} />
+                ) : (
+                  <ViewOffIcon w={6} h={6} />
+                )
+              }
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            />
+          </InputRightElement>
+          <Field.InputField
+            label="Confirme a senha"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            register={register("confirm_password")}
+            borderColor={
+              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
+            }
+            placeholder="Confirme sua senha"
+          />
+        </InputGroup>
         <Text color="feedback.alert1">{errors.confirm_password?.message}</Text>
         <Flex
           alignContent={"center"}
