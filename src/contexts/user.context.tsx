@@ -1,6 +1,7 @@
 import { iContextProps, iUserContext } from "@/interfaces/context.interfaces";
 import { iUser, iUserRequest } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
+import { parseCookies } from "nookies";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -14,8 +15,8 @@ export const UserProvider = ({ children }: iContextProps) => {
   }, []);
 
   const getUserProfile = async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODIwMTM1NjEsImV4cCI6MTY4MjA0MjM2MSwic3ViIjoiYWY4YTFjNjktNDI0Yy00NzY5LThiZWMtMDFiY2FlNTIwZTFiIn0.u6s241uWDO3e3ETcxa-C7ETryeGdpM6evtaJAlYNUrU";
+    const cookies = parseCookies();
+    const token = cookies["ms.token"];
 
     if (token) {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
