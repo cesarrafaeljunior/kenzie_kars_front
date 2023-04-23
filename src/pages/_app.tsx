@@ -11,13 +11,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <ToastContainer />
-      <AuthProvider>
-        <UserProvider>
+      <UserProvider>
+        <AuthProvider>
           <AdvertProvider>
             <Component {...pageProps} />
           </AdvertProvider>
-        </UserProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </UserProvider>
     </ChakraProvider>
   );
 }
