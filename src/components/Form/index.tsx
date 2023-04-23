@@ -31,6 +31,7 @@ import { iModalProps, onOpenF } from "@/interfaces/components.interfaces";
 import { iAddressResponse } from "@/interfaces/address.interfaces";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const submitFunction = async (data: iLogin) => {
@@ -46,7 +47,7 @@ const Login = () => {
         router.push("/profile");
       })
       .catch((err) => {
-        toast.error("ops algo deu errado");
+        toast.error(err.message);
       });
   };
 
@@ -79,15 +80,43 @@ const Login = () => {
         type="email"
         placeholder="Digite seu email"
         name="email"
+        borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         register={register("email")}
       />
-      <Field.InputField
-        label="Senha"
-        type="password"
-        placeholder="Digite sua senha"
-        name="password"
-        register={register("password")}
-      />
+
+      <Text color="feedback.alert1">{errors.email?.message}</Text>
+      <InputGroup h={"100%"}>
+        <InputRightElement h={"100%"}>
+          <IconButton
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            border="none"
+            aria-label="Search database"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </InputRightElement>
+        <Field.InputField
+          label="Senha"
+          type={showPassword ? "text" : "password"}
+          placeholder="Digite sua senha"
+          name="password"
+          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("password")}
+        />
+      </InputGroup>
+      <Text color="feedback.alert1">{errors.password?.message}</Text>
       <Flex justifyContent={"flex-end"}>
         <Text color={"grey2"} fontSize={"14px"}>
           Esqueci minha senha
