@@ -29,6 +29,7 @@ import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
 import { Link } from "../Link";
+import { useUserContext } from "@/contexts/user.context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -145,6 +146,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [cepInfos, setCepInfos] = useState<iAddressResponse>(
     {} as iAddressResponse
   );
+  const { createUser } = useUserContext();
 
   const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length == 8) {
@@ -166,16 +168,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
     resolver: yupResolver(userRequestSchema),
   });
 
-  const submitFunction = async (data: iUserRequest) => {
-    await api
-      .post<iUser>("/users", data)
-      .then((resp) => {
-        onOpen();
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.data.message);
-      });
+  const onSubmit = async (data: iUserRequest) => {
+    await createUser(data, onOpen);
   };
 
   return (
@@ -192,7 +186,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
       padding="25px"
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Heading fontSize={"24px"}>Cadastro</Heading>
       <Text>Informações pessoais</Text>

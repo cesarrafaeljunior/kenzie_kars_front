@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { iUser } from "./user.interfaces";
+import { iUser, iUserRequest } from "./user.interfaces";
 import { iAdvert, iAdvertListByUser } from "./advert.interfaces";
 
 export interface iContextProps {
@@ -17,4 +17,5 @@ export interface iUserContext {
   user: iUser | null;
   setUser: Dispatch<SetStateAction<iUser | null>>;
   getUserProfile: () => Promise<void>;
+  createUser: (data: iUserRequest, onOpen: () => void) => Promise<void>;
 }

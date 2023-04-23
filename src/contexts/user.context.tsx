@@ -1,7 +1,8 @@
 import { iContextProps, iUserContext } from "@/interfaces/context.interfaces";
-import { iUser } from "@/interfaces/user.interfaces";
+import { iUser, iUserRequest } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const UserContext = createContext<iUserContext>({} as iUserContext);
 
@@ -27,8 +28,20 @@ export const UserProvider = ({ children }: iContextProps) => {
     }
   };
 
+  const createUser = async (data: iUserRequest, onOpen: () => void) => {
+    await api
+      .post<iUser>("/users", data)
+      .then((resp) => {
+        onOpen();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.data.message);
+      });
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, getUserProfile }}>
+    <UserContext.Provider value={{ user, setUser, getUserProfile, createUser }}>
       {children}
     </UserContext.Provider>
   );
