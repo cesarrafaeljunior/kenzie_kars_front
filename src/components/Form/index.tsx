@@ -22,6 +22,7 @@ import {
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
 import { ModalContainer } from "../Modal";
+import { iCreateProfileProps } from "@/interfaces/components.interfaces";
 
 const Login = () => {
   const submitFunction = async (data: iLogin) => {
@@ -91,7 +92,7 @@ const Login = () => {
   );
 };
 
-const CreateProfile = ({ onOpen }: { onOpen: () => void }) => {
+const CreateProfile = ({ onOpen }: iCreateProfileProps) => {
   const {
     register,
     handleSubmit,
