@@ -10,19 +10,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { destroyCookie } from "nookies";
 import { useUserContext } from "@/contexts/user.context";
 import { Link } from "../Link";
-import { useRouter } from "next/router";
+import { useAuthContext } from "@/contexts/auth.context";
 
 export const Header = () => {
-  const router = useRouter();
   const { user } = useUserContext();
-
-  const logout = () => {
-    destroyCookie(null, "ms.token");
-    router.push("/login");
-  };
+  const { logout } = useAuthContext();
 
   return (
     <header>
