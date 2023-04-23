@@ -24,7 +24,7 @@ import {
   iUser,
   iUserRequest,
 } from "@/interfaces/user.interfaces";
-import { onOpenF } from "@/interfaces/components.interfaces";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
@@ -139,7 +139,7 @@ const Login = () => {
   );
 };
 
-const CreateProfile = ({ onOpen }: onOpenF) => {
+const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [cepInfos, setCepInfos] = useState<iAddressResponse>(

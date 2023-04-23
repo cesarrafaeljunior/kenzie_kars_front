@@ -39,6 +39,6 @@ export interface iModalProps {
   onClose: () => void;
 }
 
-export interface onOpenF {
+export interface iOnOpenF {
   onOpen: () => void;
 }
