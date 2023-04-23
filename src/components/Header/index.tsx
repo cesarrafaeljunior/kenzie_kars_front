@@ -9,12 +9,20 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "../Link";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { destroyCookie } from "nookies";
 import { useUserContext } from "@/contexts/user.context";
+import { Link } from "../Link";
+import { useRouter } from "next/router";
 
 export const Header = () => {
+  const router = useRouter();
   const { user } = useUserContext();
+
+  const logout = () => {
+    destroyCookie(null, "ms.token");
+    router.push("/login");
+  };
 
   return (
     <header>
@@ -76,7 +84,7 @@ export const Header = () => {
                 <MenuItem>Editar Perfil</MenuItem>
                 <MenuItem>Editar Endereço</MenuItem>
                 {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
-                <MenuItem>Sair</MenuItem>
+                <MenuItem onClick={() => logout()}>Sair</MenuItem>
               </MenuList>
             </Menu>
           )}
@@ -126,7 +134,7 @@ export const Header = () => {
                     <MenuItem>Editar Perfil</MenuItem>
                     <MenuItem>Editar Endereço</MenuItem>
                     {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
-                    <MenuItem>Sair</MenuItem>
+                    <MenuItem onClick={() => logout()}>Sair</MenuItem>
                   </>
                 )}
               </MenuList>

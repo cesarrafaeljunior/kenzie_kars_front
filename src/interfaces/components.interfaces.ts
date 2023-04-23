@@ -1,5 +1,10 @@
 import { LinkProps } from "@chakra-ui/react";
-import { HTMLInputTypeAttribute, ReactNode } from "react";
+import {
+  Dispatch,
+  HTMLInputTypeAttribute,
+  ReactNode,
+  SetStateAction,
+} from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 export interface iInput {
@@ -8,6 +13,13 @@ export interface iInput {
   name: string;
   placeholder: string;
   register: UseFormRegisterReturn;
+  borderColor?: string;
+  value?: string;
+}
+
+export interface iInputPassword extends iInput {
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
 }
 
 export type iTextArea = Omit<iInput, "type">;
@@ -27,6 +39,6 @@ export interface iModalProps {
   onClose: () => void;
 }
 
-export interface iCreateProfileProps {
+export interface iOnOpenF {
   onOpen: () => void;
 }
