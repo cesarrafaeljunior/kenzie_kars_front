@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { iUser, iUserRequest } from "./user.interfaces";
+import { iLogin, iUser, iUserRequest } from "./user.interfaces";
 import { iAdvertListByUser } from "./advert.interfaces";
 
 export interface iContextProps {
@@ -21,5 +21,6 @@ export interface iUserContext {
 }
 
 export interface iAuthContext {
+  login: (data: iLogin) => Promise<void>;
   logout: () => void;
 }

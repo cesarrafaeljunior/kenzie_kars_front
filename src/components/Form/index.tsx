@@ -30,27 +30,11 @@ import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
 import { Link } from "../Link";
 import { useUserContext } from "@/contexts/user.context";
+import { useAuthContext } from "@/contexts/auth.context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-
-  const submitFunction = async (data: iLogin) => {
-    await api
-      .post<iLoginResponse>("/login", data)
-      .then((resp) => {
-        toast.success("login realizado");
-        console.log(resp);
-        setCookie(null, "ms.token", resp.data.token, {
-          maxAge: 60 * 30,
-          path: "/",
-        });
-        router.push("/profile");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
+  const { login } = useAuthContext();
 
   const {
     register,
@@ -72,7 +56,7 @@ const Login = () => {
       padding={"45px"}
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(login)}
     >
       <Heading fontSize={"24px"}>Login</Heading>
 
