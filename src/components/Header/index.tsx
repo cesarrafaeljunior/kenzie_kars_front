@@ -40,7 +40,7 @@ export const Header = () => {
         >
           {!user ? (
             <>
-              <Link href={"/"}>Fazer Login</Link>
+              <Link href={"/login"}>Fazer Login</Link>
               <Link href={"/register"} variant={"outline2"}>
                 Cadastrar
               </Link>
@@ -103,7 +103,7 @@ export const Header = () => {
                   <>
                     <MenuItem>
                       <Link
-                        href={"/"}
+                        href={"/login"}
                         bgColor={"transparent"}
                         border={"none"}
                         justifyContent={"flex-start"}
