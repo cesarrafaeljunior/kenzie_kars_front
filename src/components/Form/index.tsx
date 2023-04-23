@@ -9,26 +9,26 @@ import {
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
-import { Field } from "../Field";
-import { api, apiSearchCEP } from "@/services/api";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ChangeEvent, useState } from "react";
+import { setCookie } from "nookies";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { api, apiSearchCEP } from "@/services/api";
+import { Field } from "../Field";
 import {
   iLogin,
   iLoginResponse,
   iUser,
   iUserRequest,
 } from "@/interfaces/user.interfaces";
+import { onOpenF } from "@/interfaces/components.interfaces";
+import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
-import { setCookie } from "nookies";
-import { useRouter } from "next/router";
 import { Link } from "../Link";
-import { ChangeEvent, useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { iModalProps, onOpenF } from "@/interfaces/components.interfaces";
-import { iAddressResponse } from "@/interfaces/address.interfaces";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
