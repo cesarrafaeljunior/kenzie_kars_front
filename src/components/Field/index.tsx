@@ -1,4 +1,5 @@
 import { iInput, iSelect, iTextArea } from "@/interfaces/components.interfaces";
+import { apiSearchCEP } from "@/services/api";
 import {
   FormControl,
   FormLabel,
@@ -8,7 +9,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-const InputField = ({ label, type, name, placeholder, register }: iInput) => {
+const InputField = ({
+  label,
+  type,
+  placeholder,
+  register,
+  borderColor,
+  value,
+}: iInput) => {
   return (
     <FormControl>
       <FormLabel
@@ -26,13 +34,14 @@ const InputField = ({ label, type, name, placeholder, register }: iInput) => {
           {label}
         </Text>
         <Input
+          value={value}
           type={type}
           placeholder={placeholder}
           w="100%"
           height="48px"
-          color="#868E96"
+          _placeholder={{ color: "#868E96" }}
           border="solid 1px transparent"
-          borderColor="#E9ECEF"
+          borderColor={borderColor}
           _focus={{ border: "solid 1.5px #5126EA" }}
           _hover={{ bg: "#F1F3F5" }}
           variant={{ outline: "none" }}
@@ -44,7 +53,12 @@ const InputField = ({ label, type, name, placeholder, register }: iInput) => {
   );
 };
 
-const TextField = ({ label, name, placeholder, register }: iTextArea) => {
+const TextField = ({
+  label,
+  placeholder,
+  register,
+  borderColor,
+}: iTextArea) => {
   return (
     <FormControl>
       <FormLabel
@@ -68,7 +82,7 @@ const TextField = ({ label, name, placeholder, register }: iTextArea) => {
           height="48px"
           color="#868E96"
           border="solid 1px transparent"
-          borderColor="#E9ECEF"
+          borderColor={borderColor}
           _focus={{ border: "solid 1.5px #5126EA" }}
           _hover={{ bg: "#F1F3F5" }}
           variant={{ outline: "none" }}
