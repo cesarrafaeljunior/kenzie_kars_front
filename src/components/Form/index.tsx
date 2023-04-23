@@ -6,6 +6,7 @@ import {
   Text,
   Heading,
   Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Field } from "../Field";
 import { api } from "@/services/api";
@@ -20,6 +21,8 @@ import {
 } from "@/interfaces/user.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
+import { ModalContainer } from "../Modal";
+import { iCreateProfileProps } from "@/interfaces/components.interfaces";
 
 const Login = () => {
   const submitFunction = async (data: iLogin) => {
@@ -89,7 +92,7 @@ const Login = () => {
   );
 };
 
-const CreateProfile = () => {
+const CreateProfile = ({ onOpen }: iCreateProfileProps) => {
   const {
     register,
     handleSubmit,
@@ -102,9 +105,10 @@ const CreateProfile = () => {
     await api
       .post<iUser>("/users", data)
       .then((resp) => {
-        toast.success("conta criada com sucesso");
+        onOpen();
       })
       .catch((err) => {
+        console.log(err);
         toast.error("ops algo deu errado");
       });
   };

@@ -22,7 +22,11 @@ export interface iLinkProps extends LinkProps {
   children: ReactNode;
 }
 
-export interface iModalVehicleImage {
+export interface iModalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+export interface iCreateProfileProps {
+  onOpen: () => void;
 }

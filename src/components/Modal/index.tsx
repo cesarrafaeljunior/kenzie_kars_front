@@ -17,15 +17,17 @@ import {
   AlertDialogFooter,
   Heading,
   Input,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { Img } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { Form } from "../Form";
 import { useRef } from "react";
 import { useAdvertContext } from "@/contexts/advert.context";
-import { iModalVehicleImage } from "@/interfaces/components.interfaces";
+import { iModalProps } from "@/interfaces/components.interfaces";
+import { Link } from "../Link";
 
-const ModalVehicleImage = ({ isOpen, onClose }: iModalVehicleImage) => {
+const ModalVehicleImage = ({ isOpen, onClose }: iModalProps) => {
   const { modalVehicleImage } = useAdvertContext();
 
   return (
@@ -55,47 +57,32 @@ const ModalVehicleImage = ({ isOpen, onClose }: iModalVehicleImage) => {
   );
 };
 
-const ModalSuccessAccunt = () => {
-  const toast = useToast();
-  const id = "toast";
-
+const ModalSuccessAccount = ({ isOpen, onClose }: iModalProps) => {
   return (
-    <Button
-      onClick={() => {
-        if (!toast.isActive(id)) {
-          toast({
-            id,
-            position: "top",
-            duration: 3000,
-            render: () => (
-              <Box
-                width={"100%"}
-                maxWidth={"520px"}
-                display={"flex"}
-                flexWrap={"wrap"}
-                flexDirection={"column"}
-                padding={"18px 34px 16px 24px"}
-                backgroundColor={"grey.7"}
-                borderRadius={"8px"}
-                fontFamily={"Inte, sans-serif"}
-              >
-                <Text as="h2" color={"grey.1"} fontSize={"16px"}>
-                  <strong>Sucesso!</strong>
-                </Text>
-                <Text color={"grey.1"} fontSize={"16px"}>
-                  <strong>Sua conta foi criada com sucesso!</strong>
-                </Text>
-                <Text color={"grey.2"} fontSize={"16px"}>
-                  Agora você poderá ver seu negócio crescendo em grande escala
-                </Text>
-              </Box>
-            ),
-          });
-        }
-      }}
-    >
-      Finalizar cadastro
-    </Button>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent fontFamily={"Inte, sans-serif"}>
+        <ModalHeader fontSize={"16px"}>
+          <Text as="h2" color={"grey.1"} fontSize={"16px"}>
+            <strong>Sucesso!</strong>
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton border={"transparent"} outline={"none"} />
+        <ModalBody paddingBottom={"28px"}>
+          <Text color={"grey.1"} fontSize={"16px"}>
+            <strong>Sua conta foi criada com sucesso!</strong>
+          </Text>
+          <Text color={"grey.2"} fontSize={"16px"}>
+            Agora você poderá ver seu negócio crescendo em grande escala
+          </Text>
+        </ModalBody>
+        <ModalFooter display={"flex"} justifyContent={"flex-start"}>
+          <Link href="/login" variant={"brand1"}>
+            Ir para login
+          </Link>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 
@@ -162,47 +149,27 @@ const ModalEditAd = () => {
   );
 };
 
-const ModalSuccessAd = () => {
-  const toast = useToast();
-  const id = "toast";
-
+const ModalSuccessAd = ({ isOpen, onClose }: iModalProps) => {
   return (
-    <Button
-      onClick={() => {
-        if (!toast.isActive(id)) {
-          toast({
-            id,
-            position: "top",
-            duration: 3000,
-            render: () => (
-              <Box
-                width={"100%"}
-                maxWidth={"520px"}
-                display={"flex"}
-                flexWrap={"wrap"}
-                flexDirection={"column"}
-                padding={"18px 34px 16px 24px"}
-                backgroundColor={"grey.7"}
-                borderRadius={"8px"}
-                fontFamily={"Inte, sans-serif"}
-              >
-                <Text as="h2" color={"grey.1"} fontSize={"16px"}>
-                  <strong>Sucesso!</strong>
-                </Text>
-                <Text color={"grey.1"} fontSize={"16px"}>
-                  <strong>Seu anúncio foi criado com sucesso!</strong>
-                </Text>
-                <Text color={"grey.2"} fontSize={"16px"}>
-                  Agora você poderá ver seu negócio crescendo em grande escala
-                </Text>
-              </Box>
-            ),
-          });
-        }
-      }}
-    >
-      Criar anúncio
-    </Button>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent fontFamily={"Inte, sans-serif"}>
+        <ModalHeader fontSize={"16px"}>
+          <Text as="h2" color={"grey.1"} fontSize={"16px"}>
+            <strong>Sucesso!</strong>
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton border={"transparent"} outline={"none"} />
+        <ModalBody paddingBottom={"28px"}>
+          <Text color={"grey.1"} fontSize={"16px"}>
+            <strong>Seu anúncio foi criado com sucesso!</strong>
+          </Text>
+          <Text color={"grey.2"} fontSize={"16px"}>
+            Agora você poderá ver seu negócio crescendo em grande escala
+          </Text>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 
@@ -755,7 +722,7 @@ const ModalMobileFilters = () => {
 
 export const ModalContainer = {
   ModalVehicleImage,
-  ModalSuccessAccunt,
+  ModalSuccessAccount,
   ModalEditAddress,
   ModalCreateAd,
   ModalEditAd,

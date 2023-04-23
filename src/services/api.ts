@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const apiSearchCEP = async (cep: string) =>
+export const apiSearchCEP = async (cep: number) =>
   await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
 export const api = axios.create({
