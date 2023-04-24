@@ -43,6 +43,12 @@ export const LinkStyle: ComponentStyleConfig = {
         textDecoration: "none",
       },
     },
+    brand1: {
+      borderColor: "#4529E6",
+      bg: "#4529E6",
+      color: "#FFFFFF",
+      _hover: { bg: "#5126EA", borderColor: "#5126EA" },
+    },
   },
   defaultProps: {
     size: "md",
