@@ -32,8 +32,8 @@ export const userRequestSchema: ObjectSchema<any> = yup.object().shape({
     .oneOf([yup.ref("password")])
     .required(),
   address: yup.object().shape({
-    cep: yup.string().min(8).max(8).required(),
-    state: yup.string().min(2).max(2).required(),
+    cep: yup.string().length(8).required(),
+    state: yup.string().length(8).required(),
     city: yup.string().max(50).required(),
     street: yup.string().max(80).required(),
     number: yup.string().max(10).required(),
