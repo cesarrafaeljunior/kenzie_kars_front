@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  Center,
-  Text,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
+import { Center, useDisclosure } from "@chakra-ui/react";
 import { Form } from "@/components/Form";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ModalContainer } from "@/components/Modal";
 
-const registerPage = () => {
+export default () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -25,5 +18,3 @@ const registerPage = () => {
     </>
   );
 };
-
-export default registerPage;

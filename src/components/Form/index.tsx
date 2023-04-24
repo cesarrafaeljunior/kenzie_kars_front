@@ -9,25 +9,32 @@ import {
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
-import { Field } from "../Field";
-import { api, apiSearchCEP } from "@/services/api";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ChangeEvent, useState } from "react";
+import { setCookie } from "nookies";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { api, apiSearchCEP } from "@/services/api";
+import { Field } from "../Field";
 import {
   iLogin,
   iLoginResponse,
   iUser,
   iUserRequest,
 } from "@/interfaces/user.interfaces";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
+import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
-import { setCookie } from "nookies";
-import { useRouter } from "next/router";
 import { Link } from "../Link";
+<<<<<<< HEAD
 import { ChangeEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { onOpenF } from "@/interfaces/components.interfaces";
+=======
+>>>>>>> 85040be11571182a6ddce6e9bcb93b8a8f537e74
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -137,7 +144,7 @@ const Login = () => {
   );
 };
 
-const CreateProfile = ({ onOpen }: onOpenF) => {
+const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 

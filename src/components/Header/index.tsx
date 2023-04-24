@@ -9,18 +9,15 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "../Link";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
+import { useUserContext } from "@/contexts/user.context";
+import { Link } from "../Link";
+import { useRouter } from "next/router";
 
 export const Header = () => {
   const router = useRouter();
-  // const user = null;
-  const user = {
-    name: "Thomas Schreiner",
-    is_seller: true,
-  };
+  const { user } = useUserContext();
 
   const logout = () => {
     destroyCookie(null, "ms.token");
