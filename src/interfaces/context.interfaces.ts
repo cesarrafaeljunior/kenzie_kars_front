@@ -9,6 +9,7 @@ export interface iContextProps {
 export interface iAdvertContext {
   modalVehicleImage: string;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
+  advertsList: iAdvert[]
   getAdvertiseListByUserId: (userId: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
 }
