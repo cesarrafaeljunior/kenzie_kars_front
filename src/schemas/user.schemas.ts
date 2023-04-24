@@ -33,7 +33,7 @@ export const userRequestSchema: ObjectSchema<any> = yup.object().shape({
     .required(),
   address: yup.object().shape({
     cep: yup.string().length(8).required(),
-    state: yup.string().length(8).required(),
+    state: yup.string().length(2).required(),
     city: yup.string().max(50).required(),
     street: yup.string().max(80).required(),
     number: yup.string().max(10).required(),
