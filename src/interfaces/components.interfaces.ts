@@ -14,7 +14,6 @@ export interface iInput {
   placeholder: string;
   register: UseFormRegisterReturn;
   borderColor?: string;
-  value?: string;
 }
 
 export interface iInputPassword extends iInput {
