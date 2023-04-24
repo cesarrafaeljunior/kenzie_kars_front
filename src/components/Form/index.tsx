@@ -25,16 +25,9 @@ import {
   iUserRequest,
 } from "@/interfaces/user.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
-import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
 import { userRequestSchema } from "@/schemas/user.schemas";
 import { Link } from "../Link";
-<<<<<<< HEAD
-import { ChangeEvent, useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { onOpenF } from "@/interfaces/components.interfaces";
-=======
->>>>>>> 85040be11571182a6ddce6e9bcb93b8a8f537e74
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
