@@ -1,6 +1,7 @@
 import { iInput, iSelect, iTextArea } from "@/interfaces/components.interfaces";
 import { apiSearchCEP } from "@/services/api";
 import {
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -15,6 +16,7 @@ const InputField = ({
   placeholder,
   register,
   borderColor,
+  errors,
 }: iInput) => {
   return (
     <FormControl>
@@ -32,20 +34,25 @@ const InputField = ({
         >
           {label}
         </Text>
-        <Input
-          type={type}
-          placeholder={placeholder}
-          w="100%"
-          height="48px"
-          _placeholder={{ color: "#868E96" }}
-          border="solid 1px transparent"
-          borderColor={borderColor}
-          _focus={{ border: "solid 1.5px #5126EA" }}
-          _hover={{ bg: "#F1F3F5" }}
-          variant={{ outline: "none" }}
-          fontFamily="Inter, sans-serif"
-          {...register}
-        />
+        <Flex flexDirection={"column"}>
+          <Input
+            type={type}
+            placeholder={placeholder}
+            w="100%"
+            height="48px"
+            _placeholder={{ color: "#868E96" }}
+            border="solid 1px transparent"
+            borderColor={borderColor}
+            _focus={{ border: "solid 1.5px #5126EA" }}
+            _hover={{ bg: "#F1F3F5" }}
+            variant={{ outline: "none" }}
+            fontFamily="Inter, sans-serif"
+            {...register}
+          />
+          <Text color="feedback.alert1" fontSize={"14px"}>
+            {errors}
+          </Text>
+        </Flex>
       </FormLabel>
     </FormControl>
   );
@@ -56,6 +63,7 @@ const TextField = ({
   placeholder,
   register,
   borderColor,
+  errors,
 }: iTextArea) => {
   return (
     <FormControl>
@@ -73,26 +81,31 @@ const TextField = ({
         >
           {label}
         </Text>
-        <Textarea
-          placeholder={placeholder}
-          {...register}
-          w="100%"
-          height="48px"
-          color="#868E96"
-          border="solid 1px transparent"
-          borderColor={borderColor}
-          _focus={{ border: "solid 1.5px #5126EA" }}
-          _hover={{ bg: "#F1F3F5" }}
-          variant={{ outline: "none" }}
-          fontFamily="Inter, sans-serif"
-          resize="none"
-        />
+        <Flex flexDirection={"column"}>
+          <Textarea
+            placeholder={placeholder}
+            {...register}
+            w="100%"
+            height="48px"
+            color="#868E96"
+            border="solid 1px transparent"
+            borderColor={borderColor}
+            _focus={{ border: "solid 1.5px #5126EA" }}
+            _hover={{ bg: "#F1F3F5" }}
+            variant={{ outline: "none" }}
+            fontFamily="Inter, sans-serif"
+            resize="none"
+          />
+          <Text color="feedback.alert1" fontSize={"14px"}>
+            {errors}
+          </Text>
+        </Flex>
       </FormLabel>
     </FormControl>
   );
 };
 
-const SelectField = ({ label, children }: iSelect) => {
+const SelectField = ({ label, children, errors }: iSelect) => {
   return (
     <FormControl>
       <FormLabel
@@ -109,20 +122,25 @@ const SelectField = ({ label, children }: iSelect) => {
         >
           {label}
         </Text>
-        <Select
-          placeholder="Selecione uma opção"
-          w="100%"
-          height="48px"
-          color="#868E96"
-          borderColor="#E9ECEF"
-          border="solid 1px transparent"
-          _focus={{ border: "solid 1.5px #5126EA" }}
-          _hover={{ bg: "#F1F3F5" }}
-          variant={{ outline: "none" }}
-          fontFamily="Inter, sans-serif"
-        >
-          {children}
-        </Select>
+        <Flex flexDirection={"column"}>
+          <Select
+            placeholder="Selecione uma opção"
+            w="100%"
+            height="48px"
+            color="#868E96"
+            borderColor="#E9ECEF"
+            border="solid 1px transparent"
+            _focus={{ border: "solid 1.5px #5126EA" }}
+            _hover={{ bg: "#F1F3F5" }}
+            variant={{ outline: "none" }}
+            fontFamily="Inter, sans-serif"
+          >
+            {children}
+          </Select>
+          <Text color="feedback.alert1" fontSize={"14px"}>
+            {errors}
+          </Text>
+        </Flex>
       </FormLabel>
     </FormControl>
   );
