@@ -15,7 +15,6 @@ const InputField = ({
   placeholder,
   register,
   borderColor,
-  value,
 }: iInput) => {
   return (
     <FormControl>
@@ -34,7 +33,6 @@ const InputField = ({
           {label}
         </Text>
         <Input
-          value={value}
           type={type}
           placeholder={placeholder}
           w="100%"

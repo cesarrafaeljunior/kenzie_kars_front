@@ -27,8 +27,7 @@ import { useRouter } from "next/router";
 import { Link } from "../Link";
 import { ChangeEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { iModalProps, onOpenF } from "@/interfaces/components.interfaces";
-import { iAddressResponse } from "@/interfaces/address.interfaces";
+import { onOpenF } from "@/interfaces/components.interfaces";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +38,6 @@ const Login = () => {
       .post<iLoginResponse>("/login", data)
       .then((resp) => {
         toast.success("login realizado");
-        console.log(resp);
         setCookie(null, "ms.token", resp.data.token, {
           maxAge: 60 * 30,
           path: "/",
@@ -142,29 +140,30 @@ const Login = () => {
 const CreateProfile = ({ onOpen }: onOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [cepInfos, setCepInfos] = useState<iAddressResponse>(
-    {} as iAddressResponse
-  );
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iUserRequest>({
+    resolver: yupResolver(userRequestSchema),
+  });
 
   const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length == 8) {
       apiSearchCEP(e.target.value)
         .then((resp) => {
-          setCepInfos(resp.data);
+          setValue("address.city", resp.data.localidade);
+          setValue("address.state", resp.data.uf);
+          setValue("address.street", resp.data.logradouro);
+          setValue("address.complement", resp.data.complemento);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iUserRequest>({
-    resolver: yupResolver(userRequestSchema),
-  });
 
   const submitFunction = async (data: iUserRequest) => {
     await api
@@ -268,9 +267,9 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           borderColor={errors.address?.cep ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Informe seu Cep"
         />
+        <Text color="feedback.alert1">{errors.address?.cep?.message}</Text>
         <Flex>
           <Field.InputField
-            value={cepInfos.uf && cepInfos.uf !== "" ? cepInfos.uf : undefined}
             label="Estado"
             type="text"
             name="state"
@@ -278,13 +277,7 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
             borderColor={errors.address?.state ? "feedback.alert1" : "#E9ECEF"}
             placeholder="Estado"
           />
-
           <Field.InputField
-            value={
-              cepInfos.localidade && cepInfos.localidade !== ""
-                ? cepInfos.localidade
-                : undefined
-            }
             label="Cidade"
             type="text"
             name="city"
@@ -294,11 +287,6 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           />
         </Flex>
         <Field.InputField
-          value={
-            cepInfos.logradouro && cepInfos.logradouro !== ""
-              ? cepInfos.logradouro
-              : undefined
-          }
           label="Rua"
           type="text"
           name="street"
@@ -306,7 +294,7 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           borderColor={errors.address?.street ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Logradouro"
         />
-
+        <Text color="feedback.alert1">{errors.address?.street?.message}</Text>
         <Flex>
           <Field.InputField
             label="Número"
@@ -317,11 +305,6 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
             placeholder="Número"
           />
           <Field.InputField
-            value={
-              cepInfos.complemento && cepInfos.complemento !== ""
-                ? cepInfos.complemento
-                : undefined
-            }
             label="Complemento"
             type="text"
             name="complement"
@@ -410,7 +393,7 @@ const CreateProfile = ({ onOpen }: onOpenF) => {
           <Field.InputField
             label="Confirme a senha"
             type={showConfirmPassword ? "text" : "password"}
-            name="confirmPassword"
+            name="confirm_password"
             register={register("confirm_password")}
             borderColor={
               errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
