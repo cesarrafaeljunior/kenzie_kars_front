@@ -202,8 +202,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         name="name"
         borderColor={errors.name ? "feedback.alert1" : "#E9ECEF"}
         register={register("name")}
+        errors={errors.name?.message}
       />
-      <Text color="feedback.alert1">{errors.name?.message}</Text>
       <Field.InputField
         label="Email"
         type="email"
@@ -211,8 +211,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("email")}
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe seu email"
+        errors={errors.email?.message}
       />
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <Field.InputField
         label="CPF"
         type="text"
@@ -220,8 +220,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("cpf")}
         borderColor={errors.cpf ? "feedback.alert1" : "#E9ECEF"}
         placeholder="9000800900900"
+        errors={errors.cpf?.message}
       />
-      <Text color="feedback.alert1">{errors.cpf?.message}</Text>
       <Field.InputField
         label="Celular"
         type="tel"
@@ -229,8 +229,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("phone_number")}
         borderColor={errors.phone_number ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe o telefone com DDD"
+        errors={errors.phone_number?.message}
       />
-      <Text color="feedback.alert1">{errors.phone_number?.message}</Text>
       <Field.InputField
         label="Data de nascimento"
         type="date"
@@ -238,18 +238,20 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("birthdate")}
         borderColor={errors.birthdate ? "feedback.alert1" : "#E9ECEF"}
         placeholder="mês/dia/ano"
+        errors={
+          errors.birthdate
+            ? "O campo data de nascimento é obrigatório"
+            : undefined
+        }
       />
-      {errors.birthdate ? (
-        <Text color="feedback.alert1">Birthdate is a required Field</Text>
-      ) : null}
       <Field.TextField
         label="Descrição"
         name="description"
         register={register("description")}
         borderColor={errors.description ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Insira a descrição do seu usuário"
+        errors={errors.description?.message}
       />
-      <Text color="feedback.alert1">{errors.description?.message}</Text>
       <Box
         maxWidth={"520px"}
         display={"flex"}
@@ -266,26 +268,35 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           register={register("address.cep", { onChange: requestCep })}
           borderColor={errors.address?.cep ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Informe seu Cep"
+          errors={errors.address?.cep?.message}
         />
-        <Text color="feedback.alert1">{errors.address?.cep?.message}</Text>
         <Flex>
-          <Field.InputField
-            label="Estado"
-            type="text"
-            name="state"
-            register={register("address.state")}
-            borderColor={errors.address?.state ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Estado"
-          />
-          <Field.InputField
-            label="Cidade"
-            type="text"
-            name="city"
-            register={register("address.city")}
-            borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Cidade"
-          />
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Estado"
+              type="text"
+              name="state"
+              register={register("address.state")}
+              borderColor={
+                errors.address?.state ? "feedback.alert1" : "#E9ECEF"
+              }
+              placeholder="Estado"
+              errors={errors.address?.state?.message}
+            />
+          </Flex>
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Cidade"
+              type="text"
+              name="city"
+              register={register("address.city")}
+              borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
+              placeholder="Cidade"
+              errors={errors.address?.city?.message}
+            />
+          </Flex>
         </Flex>
+
         <Field.InputField
           label="Rua"
           type="text"
@@ -293,8 +304,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           register={register("address.street")}
           borderColor={errors.address?.street ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Logradouro"
+          errors={errors.address?.street?.message}
         />
-        <Text color="feedback.alert1">{errors.address?.street?.message}</Text>
         <Flex>
           <Field.InputField
             label="Número"
@@ -303,6 +314,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
             register={register("address.number")}
             borderColor={errors.address?.number ? "feedback.alert1" : "#E9ECEF"}
             placeholder="Número"
+            errors={errors.address?.number?.message}
           />
           <Field.InputField
             label="Complemento"
@@ -313,6 +325,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
               errors.address?.complement ? "feedback.alert1" : "#E9ECEF"
             }
             placeholder="Complemento"
+            errors={errors.address?.complement?.message}
           />
         </Flex>
         <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
@@ -336,6 +349,15 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           </Button>
         </Flex>
         <InputGroup h={"100%"}>
+          <Field.InputField
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            register={register("password")}
+            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+            placeholder="Insira uma senha"
+            errors={errors.password?.message}
+          />
           <InputRightElement h={"100%"}>
             <IconButton
               top="10px"
@@ -355,20 +377,22 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowPassword(!showPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Senha"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            register={register("password")}
-            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Insira uma senha"
-          />
         </InputGroup>
-
-        <Text color="feedback.alert1">{errors.password?.message}</Text>
         <InputGroup>
+          <Field.InputField
+            label="Confirme a senha"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirm_password"
+            register={register("confirm_password")}
+            borderColor={
+              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
+            }
+            placeholder="Confirme sua senha"
+            errors={errors.confirm_password?.message}
+          />
           <InputRightElement h={"100%"}>
             <IconButton
               top="10px"
@@ -388,20 +412,10 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Confirme a senha"
-            type={showConfirmPassword ? "text" : "password"}
-            name="confirm_password"
-            register={register("confirm_password")}
-            borderColor={
-              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
-            }
-            placeholder="Confirme sua senha"
-          />
         </InputGroup>
-        <Text color="feedback.alert1">{errors.confirm_password?.message}</Text>
         <Flex
           alignContent={"center"}
           flexDirection="column"
