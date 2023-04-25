@@ -9,6 +9,7 @@ import {
   InputRightElement,
   IconButton,
   Select,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -542,16 +543,25 @@ const EditAddress = () => {
     </Box>
   );
 };
-//////////////////////////////////////////////////////////////////
+
 const CreateAd = () => {
   const { brandsList, setBrandSelect, modelList, createAdv } =
     useAdvertContext();
-  const { register, handleSubmit, setValue } = useForm<iAdvertisedRequest>();
+  const { user } = useUserContext();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iAdvertisedRequest>({
+    resolver: yupResolver(advertisedRequestSchema),
+  });
   const [modelSelect, setModelSelect] = useState();
   const [fuel, setFuel] = useState<number>();
   const [fuelDescription, setfuelDescription] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [fipe, setFipe] = useState<string>("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const brandSelectOptions = [];
   for (let i = 0; i < brandsList.length; i++) {
@@ -597,11 +607,14 @@ const CreateAd = () => {
       setValue("year", currentModel.year);
       setValue("fipe_price", currentModel.value);
       setValue("fuel", fuelType(currentModel.fuel));
+      setValue("location", user.address.cep);
     }
-  }, [modelSelect]);
+  }, [modelSelect, user]);
 
-  const submit = (data: any) => {
+  const submit = async (data: iAdvertisedRequest) => {
+    await createAdv(data);
     console.log(data);
+    console.log;
   };
 
   return (
@@ -622,13 +635,15 @@ const CreateAd = () => {
         name="title"
         register={register("title")}
         placeholder="Digite um título"
+        errors={errors.title?.message}
       />
 
       <Text fontSize="sm" fontWeight={"semibold"}>
         Marca
       </Text>
       <Select
-        placeholder="Select option"
+        isRequired
+        placeholder="Escolha uma marca"
         onChange={(e: any) => {
           setBrandSelect(e.target.value);
           setValue("brand", e.target.value);
@@ -641,7 +656,8 @@ const CreateAd = () => {
         Modelo
       </Text>
       <Select
-        placeholder="Select model"
+        isRequired
+        placeholder="Escolha um modelo"
         onChange={(e: any) => {
           setModelSelect(e.target.value);
         }}
@@ -655,11 +671,13 @@ const CreateAd = () => {
           type="text"
           name="year"
           placeholder={year ? year : "2023"}
+          errors={errors.year?.message}
         />
         <Field.InputReadyOnlyField
           label="Combustível"
           type="text"
           name="fuel"
+          errors={errors.fuel?.message}
           placeholder={fuelDescription ? fuelDescription : "Gasolina / Etanol"}
         />
       </Flex>
@@ -669,6 +687,7 @@ const CreateAd = () => {
           type="number"
           name="mileage"
           placeholder="30000"
+          errors={errors.mileage?.message}
           register={register("mileage")}
         />
         <Field.InputField
@@ -676,6 +695,7 @@ const CreateAd = () => {
           type="text"
           name="color"
           placeholder="Branco"
+          errors={errors.color?.message}
           register={register("color")}
         />
       </Flex>
@@ -685,12 +705,14 @@ const CreateAd = () => {
           label="Preço tabela FIPE"
           type="string"
           name="fipe"
+          errors={errors.fipe_price?.message}
           placeholder={fipe ? `${fipe}` : "R$ 50.000,00"}
         />
         <Field.InputField
           label="Preço"
           type="number"
           name="price"
+          errors={errors.price?.message}
           register={register("price")}
           placeholder="R$ 50.000,00"
         />
@@ -699,6 +721,7 @@ const CreateAd = () => {
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do produto..."
+        errors={errors.description?.message}
         register={register("description")}
       />
       <Field.InputField
@@ -707,6 +730,7 @@ const CreateAd = () => {
         name="cover_image"
         placeholder="https://image.com"
         register={register("cover_image")}
+        errors={errors.cover_image?.message}
       />
 
       <Field.InputField

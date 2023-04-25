@@ -29,6 +29,7 @@ export default ({ user }: iProfileProps) => {
       minH={"100vh"}
     >
       <Header />
+      <ModalContainer.ModalCreateAd />
       <Box as={"main"} my={{ base: "65px", md: "75px" }}>
         <Box
           maxW={"1200px"}
@@ -77,7 +78,6 @@ export default ({ user }: iProfileProps) => {
           <Text color={"grey.2"} mb={"40px"}>
             {advertiseListByUser.description}
           </Text>
-          <ModalContainer.ModalCreateAd />
         </Box>
 
         <List

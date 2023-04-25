@@ -8,6 +8,7 @@ import { api, apiKenzieKars } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { parseCookies } from "nookies";
+import { iUserRequest } from "@/interfaces/user.interfaces";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
@@ -40,6 +41,9 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const [brandsList, setBrandsList] = useState<Array<string>>([]);
   const [brandSelect, setBrandSelect] = useState<string>("");
   const [modelList, setModelList] = useState<[]>([]);
+  const [location, setLocation] = useState<[]>([]);
+  const cookies = parseCookies();
+  const token = cookies["ms.token"];
 
   useEffect(() => {
     setLoading(true);
@@ -71,8 +75,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   }, [brandSelect]);
 
   const createAdv = async (data: iAdvertisedRequest) => {
-    const cookies = parseCookies();
-    const token = cookies["ms.token"];
     api.defaults.headers.common.authorization = `Bearer ${token}`;
     await api
       .post<iAdvertisedRequest>("/advertised", data)
@@ -89,6 +91,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
     <AdvertContext.Provider
       value={{
         createAdv,
+
         brandsList,
         brandSelect,
         setBrandSelect,
