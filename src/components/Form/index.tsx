@@ -35,26 +35,13 @@ import {
 } from "@/schemas/user.schemas";
 import { Link } from "../Link";
 import { ModalContainer } from "../Modal";
+import { useAuthContext } from "@/contexts/auth.context";
+import { useUserContext } from "@/contexts/user.context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
-  const submitFunction = async (data: iLogin) => {
-    await api
-      .post<iLoginResponse>("/login", data)
-      .then((resp) => {
-        toast.success("login realizado");
-        setCookie(null, "ms.token", resp.data.token, {
-          maxAge: 60 * 30,
-          path: "/",
-        });
-        router.push("/profile");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
+  const { login } = useAuthContext();
 
   const {
     register,
@@ -76,7 +63,7 @@ const Login = () => {
       padding={"45px"}
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(login)}
     >
       <Heading fontSize={"24px"}>Login</Heading>
 
@@ -145,6 +132,7 @@ const Login = () => {
 const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { createUser } = useUserContext();
 
   const {
     register,
@@ -170,16 +158,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
     }
   };
 
-  const submitFunction = async (data: iUserRequest) => {
-    await api
-      .post<iUser>("/users", data)
-      .then((resp) => {
-        onOpen();
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.data.message);
-      });
+  const onSubmit = async (data: iUserRequest) => {
+    await createUser(data, onOpen);
   };
 
   return (
@@ -196,7 +176,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
       padding="25px"
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Heading fontSize={"24px"}>Cadastro</Heading>
       <Text>Informações pessoais</Text>
