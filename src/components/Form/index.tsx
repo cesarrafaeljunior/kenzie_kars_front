@@ -23,17 +23,24 @@ import {
   iLoginResponse,
   iUser,
   iUserRequest,
+  tUserRecoverEmail,
+  tUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
-import { iAddressResponse } from "@/interfaces/address.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
-import { userRequestSchema } from "@/schemas/user.schemas";
+import {
+  userRecoverEmail,
+  userRecoverPassword,
+  userRequestSchema,
+} from "@/schemas/user.schemas";
 import { Link } from "../Link";
-import { useUserContext } from "@/contexts/user.context";
+import { ModalContainer } from "../Modal";
 import { useAuthContext } from "@/contexts/auth.context";
+import { useUserContext } from "@/contexts/user.context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const { login } = useAuthContext();
 
   const {
@@ -67,11 +74,11 @@ const Login = () => {
         name="email"
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         register={register("email")}
+        errors={errors.email?.message}
       />
 
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <InputGroup h={"100%"}>
-        <InputRightElement h={"100%"}>
+        <InputRightElement h={"48px"} top={"20px"}>
           <IconButton
             top="10px"
             right={"16px"}
@@ -99,13 +106,11 @@ const Login = () => {
           name="password"
           borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
           register={register("password")}
+          errors={errors.email?.message}
         />
       </InputGroup>
-      <Text color="feedback.alert1">{errors.password?.message}</Text>
       <Flex justifyContent={"flex-end"}>
-        <Text color={"grey2"} fontSize={"14px"}>
-          Esqueci minha senha
-        </Text>
+        <ModalContainer.ModalRecoverPassword />
       </Flex>
       <Button type="submit" variant={"brand1"}>
         Entrar
@@ -127,30 +132,31 @@ const Login = () => {
 const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [cepInfos, setCepInfos] = useState<iAddressResponse>(
-    {} as iAddressResponse
-  );
   const { createUser } = useUserContext();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iUserRequest>({
+    resolver: yupResolver(userRequestSchema),
+  });
 
   const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length == 8) {
       apiSearchCEP(e.target.value)
         .then((resp) => {
-          setCepInfos(resp.data);
+          setValue("address.city", resp.data.localidade);
+          setValue("address.state", resp.data.uf);
+          setValue("address.street", resp.data.logradouro);
+          setValue("address.complement", resp.data.complemento);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iUserRequest>({
-    resolver: yupResolver(userRequestSchema),
-  });
 
   const onSubmit = async (data: iUserRequest) => {
     await createUser(data, onOpen);
@@ -181,8 +187,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         name="name"
         borderColor={errors.name ? "feedback.alert1" : "#E9ECEF"}
         register={register("name")}
+        errors={errors.name?.message}
       />
-      <Text color="feedback.alert1">{errors.name?.message}</Text>
       <Field.InputField
         label="Email"
         type="email"
@@ -190,8 +196,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("email")}
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe seu email"
+        errors={errors.email?.message}
       />
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <Field.InputField
         label="CPF"
         type="text"
@@ -199,8 +205,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("cpf")}
         borderColor={errors.cpf ? "feedback.alert1" : "#E9ECEF"}
         placeholder="9000800900900"
+        errors={errors.cpf?.message}
       />
-      <Text color="feedback.alert1">{errors.cpf?.message}</Text>
       <Field.InputField
         label="Celular"
         type="tel"
@@ -208,8 +214,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("phone_number")}
         borderColor={errors.phone_number ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe o telefone com DDD"
+        errors={errors.phone_number?.message}
       />
-      <Text color="feedback.alert1">{errors.phone_number?.message}</Text>
       <Field.InputField
         label="Data de nascimento"
         type="date"
@@ -217,18 +223,20 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("birthdate")}
         borderColor={errors.birthdate ? "feedback.alert1" : "#E9ECEF"}
         placeholder="mês/dia/ano"
+        errors={
+          errors.birthdate
+            ? "O campo data de nascimento é obrigatório"
+            : undefined
+        }
       />
-      {errors.birthdate ? (
-        <Text color="feedback.alert1">Birthdate is a required Field</Text>
-      ) : null}
       <Field.TextField
         label="Descrição"
         name="description"
         register={register("description")}
         borderColor={errors.description ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Insira a descrição do seu usuário"
+        errors={errors.description?.message}
       />
-      <Text color="feedback.alert1">{errors.description?.message}</Text>
       <Box
         maxWidth={"520px"}
         display={"flex"}
@@ -245,46 +253,44 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           register={register("address.cep", { onChange: requestCep })}
           borderColor={errors.address?.cep ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Informe seu Cep"
+          errors={errors.address?.cep?.message}
         />
         <Flex>
-          <Field.InputField
-            value={cepInfos.uf && cepInfos.uf !== "" ? cepInfos.uf : undefined}
-            label="Estado"
-            type="text"
-            name="state"
-            register={register("address.state")}
-            borderColor={errors.address?.state ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Estado"
-          />
-
-          <Field.InputField
-            value={
-              cepInfos.localidade && cepInfos.localidade !== ""
-                ? cepInfos.localidade
-                : undefined
-            }
-            label="Cidade"
-            type="text"
-            name="city"
-            register={register("address.city")}
-            borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Cidade"
-          />
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Estado"
+              type="text"
+              name="state"
+              register={register("address.state")}
+              borderColor={
+                errors.address?.state ? "feedback.alert1" : "#E9ECEF"
+              }
+              placeholder="Estado"
+              errors={errors.address?.state?.message}
+            />
+          </Flex>
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Cidade"
+              type="text"
+              name="city"
+              register={register("address.city")}
+              borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
+              placeholder="Cidade"
+              errors={errors.address?.city?.message}
+            />
+          </Flex>
         </Flex>
+
         <Field.InputField
-          value={
-            cepInfos.logradouro && cepInfos.logradouro !== ""
-              ? cepInfos.logradouro
-              : undefined
-          }
           label="Rua"
           type="text"
           name="street"
           register={register("address.street")}
           borderColor={errors.address?.street ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Logradouro"
+          errors={errors.address?.street?.message}
         />
-
         <Flex>
           <Field.InputField
             label="Número"
@@ -293,13 +299,9 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
             register={register("address.number")}
             borderColor={errors.address?.number ? "feedback.alert1" : "#E9ECEF"}
             placeholder="Número"
+            errors={errors.address?.number?.message}
           />
           <Field.InputField
-            value={
-              cepInfos.complemento && cepInfos.complemento !== ""
-                ? cepInfos.complemento
-                : undefined
-            }
             label="Complemento"
             type="text"
             name="complement"
@@ -308,6 +310,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
               errors.address?.complement ? "feedback.alert1" : "#E9ECEF"
             }
             placeholder="Complemento"
+            errors={errors.address?.complement?.message}
           />
         </Flex>
         <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
@@ -331,7 +334,16 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           </Button>
         </Flex>
         <InputGroup h={"100%"}>
-          <InputRightElement h={"100%"}>
+          <Field.InputField
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            register={register("password")}
+            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+            placeholder="Insira uma senha"
+            errors={errors.password?.message}
+          />
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -350,21 +362,23 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowPassword(!showPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Senha"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            register={register("password")}
-            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Insira uma senha"
-          />
         </InputGroup>
-
-        <Text color="feedback.alert1">{errors.password?.message}</Text>
         <InputGroup>
-          <InputRightElement h={"100%"}>
+          <Field.InputField
+            label="Confirme a senha"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirm_password"
+            register={register("confirm_password")}
+            borderColor={
+              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
+            }
+            placeholder="Confirme sua senha"
+            errors={errors.confirm_password?.message}
+          />
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -383,20 +397,10 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Confirme a senha"
-            type={showConfirmPassword ? "text" : "password"}
-            name="confirmPassword"
-            register={register("confirm_password")}
-            borderColor={
-              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
-            }
-            placeholder="Confirme sua senha"
-          />
         </InputGroup>
-        <Text color="feedback.alert1">{errors.confirm_password?.message}</Text>
         <Flex
           alignContent={"center"}
           flexDirection="column"
@@ -406,9 +410,6 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           <Button type="submit" width={"98%"} variant={"brand1"}>
             Finalizar cadastro
           </Button>
-          <Link href="/login" border={"none"} fontWeight={"400"}>
-            Iniciar sessão
-          </Link>
         </Flex>
       </Box>
     </Box>
@@ -758,6 +759,151 @@ const EditAd = () => {
   );
 };
 
+const RecoverySubmitEmail = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverEmail>({
+    resolver: yupResolver(userRecoverEmail),
+  });
+
+  const submitEmail = (data: tUserRecoverEmail) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      maxWidth={"520px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      onSubmit={handleSubmit(submitEmail)}
+    >
+      <Field.InputField
+        label="Email"
+        name="email"
+        placeholder="Informe seu email"
+        borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
+        type="email"
+        errors={errors.email?.message}
+        register={register("email")}
+      />
+      <Button type="submit" variant={"brand1"} w="100%">
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
+const RecoveryPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverPassword>({
+    resolver: yupResolver(userRecoverPassword),
+  });
+
+  const submitPassword = (data: tUserRecoverPassword) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      width={"512px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      backgroundColor={"grey.whiteFixed"}
+      padding={"45px"}
+      marginTop={"90px"}
+      marginBottom={"90px"}
+      onSubmit={handleSubmit(submitPassword)}
+    >
+      <Heading fontSize={"24px"}>Alteração de senha</Heading>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Nova senha"
+          type={showPassword ? "text" : "password"}
+          placeholder="Informe sua senha"
+          name="password"
+          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("password")}
+          errors={errors.password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            border="none"
+            aria-label="Search database"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Confirmar nova senha"
+          type={showConfirmPassword ? "text" : "password"}
+          placeholder="Confirme sua senha"
+          name="confirm_password"
+          borderColor={errors.confirm_password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("confirm_password")}
+          errors={errors.confirm_password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            aria-label="Search database"
+            border="none"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showConfirmPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <Button type="submit" w={"100%"}>
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
 export const Form = {
   EditProfile,
   EditAddress,
@@ -765,4 +911,6 @@ export const Form = {
   EditAd,
   CreateProfile,
   Login,
+  RecoverySubmitEmail,
+  RecoveryPassword,
 };
