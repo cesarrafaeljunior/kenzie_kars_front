@@ -1,4 +1,8 @@
-import { iUserRequest } from "@/interfaces/user.interfaces";
+import {
+  iUserRequest,
+  tUserRecoverEmail,
+  tUserRecoverPassword,
+} from "@/interfaces/user.interfaces";
 import * as yup from "yup";
 import { ObjectSchema } from "yup";
 
@@ -62,4 +66,23 @@ export const userRequestSchema: ObjectSchema<iUserRequest> = yup
         .required("O campo Número é obrigatório"),
       complement: yup.string().required("O campo Complemento é obrigatório"),
     }),
+  });
+
+export const userRecoverEmail: ObjectSchema<tUserRecoverEmail> = yup
+  .object()
+  .shape({
+    email: yup
+      .string()
+      .email("O email precisa ser válido")
+      .required("É preciso enviar um email para recuperar a senha"),
+  });
+
+export const userRecoverPassword: ObjectSchema<tUserRecoverPassword> = yup
+  .object()
+  .shape({
+    password: yup.string().required("O campo senha é obrigatório"),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password"), "As senhas não são iguais"])
+      .required("O campo confirmar senha é obrigatório"),
   });

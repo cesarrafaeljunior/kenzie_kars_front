@@ -12,7 +12,7 @@ export interface iInput {
   type: HTMLInputTypeAttribute;
   name: string;
   placeholder: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   borderColor?: string;
   errors?: string;
 }

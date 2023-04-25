@@ -23,11 +23,18 @@ import {
   iLoginResponse,
   iUser,
   iUserRequest,
+  tUserRecoverEmail,
+  tUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
-import { userRequestSchema } from "@/schemas/user.schemas";
+import {
+  userRecoverEmail,
+  userRecoverPassword,
+  userRequestSchema,
+} from "@/schemas/user.schemas";
 import { Link } from "../Link";
+import { ModalContainer } from "../Modal";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -80,11 +87,11 @@ const Login = () => {
         name="email"
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         register={register("email")}
+        errors={errors.email?.message}
       />
 
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <InputGroup h={"100%"}>
-        <InputRightElement h={"100%"}>
+        <InputRightElement h={"48px"} top={"20px"}>
           <IconButton
             top="10px"
             right={"16px"}
@@ -112,13 +119,11 @@ const Login = () => {
           name="password"
           borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
           register={register("password")}
+          errors={errors.email?.message}
         />
       </InputGroup>
-      <Text color="feedback.alert1">{errors.password?.message}</Text>
       <Flex justifyContent={"flex-end"}>
-        <Text color={"grey2"} fontSize={"14px"}>
-          Esqueci minha senha
-        </Text>
+        <ModalContainer.ModalRecoverPassword />
       </Flex>
       <Button type="submit" variant={"brand1"}>
         Entrar
@@ -358,7 +363,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
             placeholder="Insira uma senha"
             errors={errors.password?.message}
           />
-          <InputRightElement h={"100%"}>
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -393,7 +398,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
             placeholder="Confirme sua senha"
             errors={errors.confirm_password?.message}
           />
-          <InputRightElement h={"100%"}>
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -425,9 +430,6 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           <Button type="submit" width={"98%"} variant={"brand1"}>
             Finalizar cadastro
           </Button>
-          <Link href="/login" border={"none"} fontWeight={"400"}>
-            Iniciar sessão
-          </Link>
         </Flex>
       </Box>
     </Box>
@@ -777,6 +779,151 @@ const EditAd = () => {
   );
 };
 
+const RecoverySubmitEmail = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverEmail>({
+    resolver: yupResolver(userRecoverEmail),
+  });
+
+  const submitEmail = (data: tUserRecoverEmail) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      maxWidth={"520px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      onSubmit={handleSubmit(submitEmail)}
+    >
+      <Field.InputField
+        label="Email"
+        name="email"
+        placeholder="Informe seu email"
+        borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
+        type="email"
+        errors={errors.email?.message}
+        register={register("email")}
+      />
+      <Button type="submit" variant={"brand1"} w="100%">
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
+const RecoveryPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverPassword>({
+    resolver: yupResolver(userRecoverPassword),
+  });
+
+  const submitPassword = (data: tUserRecoverPassword) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      width={"512px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      backgroundColor={"grey.whiteFixed"}
+      padding={"45px"}
+      marginTop={"90px"}
+      marginBottom={"90px"}
+      onSubmit={handleSubmit(submitPassword)}
+    >
+      <Heading fontSize={"24px"}>Alteração de senha</Heading>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Nova senha"
+          type={showPassword ? "text" : "password"}
+          placeholder="Informe sua senha"
+          name="password"
+          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("password")}
+          errors={errors.password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            border="none"
+            aria-label="Search database"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Confirmar nova senha"
+          type={showConfirmPassword ? "text" : "password"}
+          placeholder="Confirme sua senha"
+          name="confirm_password"
+          borderColor={errors.confirm_password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("confirm_password")}
+          errors={errors.confirm_password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            aria-label="Search database"
+            border="none"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showConfirmPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <Button type="submit" w={"100%"}>
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
 export const Form = {
   EditProfile,
   EditAddress,
@@ -784,4 +931,6 @@ export const Form = {
   EditAd,
   CreateProfile,
   Login,
+  RecoverySubmitEmail,
+  RecoveryPassword,
 };
