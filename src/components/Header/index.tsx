@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Flex,
+  Spacer,
   Img,
   Menu,
   MenuButton,
@@ -24,6 +25,7 @@ export const Header = () => {
     onOpen: onOpenProfile,
     onClose: onCloseProfile,
   } = useDisclosure();
+
   return (
     <>
       <ModalContainer.ModalEditProfile
@@ -39,9 +41,12 @@ export const Header = () => {
           borderColor={"grey.6"}
           bgColor={"grey.10"}
         >
-          <Box flex={"1 1 auto"}>
-            <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
+          <Box>
+            <Link href="/" h={"unset"} p={"0"} border={"none"} _hover={{}}>
+              <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
+            </Link>
           </Box>
+          <Spacer />
           <Flex
             pl={{ base: "14px", md: "28px", lg: "44px" }}
             gap={{ base: "14px", md: "26px", lg: "40px" }}
