@@ -1,10 +1,10 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
-import { iLogin, iUser, iUserRequest } from "./user.interfaces";
+import { ReactNode, Dispatch, SetStateAction } from "react";
 import {
+  iAdvertisedRequest,
   iAdvertListByUser,
   iAdvertObject,
-  iAdvertisedRequest,
 } from "./advert.interfaces";
+import { iUser, iUserRequest, iUserUpdate, iLogin } from "./user.interfaces";
 
 export interface iContextProps {
   children: ReactNode;
@@ -28,6 +28,8 @@ export interface iUserContext {
   setUser: Dispatch<SetStateAction<iUser | null>>;
   getUserProfile: () => Promise<void>;
   createUser: (data: iUserRequest, onOpen: () => void) => Promise<void>;
+  updateUser: (data: iUserUpdate, userId: string) => Promise<void>;
+  softDeleteUser: (userId: string) => Promise<void>;
 }
 
 export interface iAuthContext {
