@@ -104,9 +104,7 @@ export default ({ user }: iProfileProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = nookies.get(ctx);
-  // const token = cookies["token"];
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODIwMTM1NjEsImV4cCI6MTY4MjA0MjM2MSwic3ViIjoiYWY4YTFjNjktNDI0Yy00NzY5LThiZWMtMDFiY2FlNTIwZTFiIn0.u6s241uWDO3e3ETcxa-C7ETryeGdpM6evtaJAlYNUrU";
+  const token = cookies["ms.token"];
 
   if (!token) {
     return { redirect: { destination: "/login", permanent: false } };

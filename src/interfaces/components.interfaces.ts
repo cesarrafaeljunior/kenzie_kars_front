@@ -12,8 +12,9 @@ export interface iInput {
   type: HTMLInputTypeAttribute;
   name: string;
   placeholder: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   borderColor?: string;
+  errors?: string;
 }
 
 export interface iInputPassword extends iInput {
@@ -26,6 +27,7 @@ export type iTextArea = Omit<iInput, "type">;
 export interface iSelect {
   label: string;
   children: ReactNode;
+  errors?: string;
 }
 
 export interface iLinkProps extends LinkProps {

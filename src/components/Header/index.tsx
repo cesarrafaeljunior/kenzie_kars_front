@@ -10,19 +10,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { destroyCookie } from "nookies";
 import { useUserContext } from "@/contexts/user.context";
 import { Link } from "../Link";
-import { useRouter } from "next/router";
+import { useAuthContext } from "@/contexts/auth.context";
 
 export const Header = () => {
-  const router = useRouter();
   const { user } = useUserContext();
-
-  const logout = () => {
-    destroyCookie(null, "ms.token");
-    router.push("/login");
-  };
+  const { logout } = useAuthContext();
 
   return (
     <header>
@@ -48,7 +42,7 @@ export const Header = () => {
         >
           {!user ? (
             <>
-              <Link href={"/"}>Fazer Login</Link>
+              <Link href={"/login"}>Fazer Login</Link>
               <Link href={"/register"} variant={"outline2"}>
                 Cadastrar
               </Link>
@@ -111,7 +105,7 @@ export const Header = () => {
                   <>
                     <MenuItem>
                       <Link
-                        href={"/"}
+                        href={"/login"}
                         bgColor={"transparent"}
                         border={"none"}
                         justifyContent={"flex-start"}

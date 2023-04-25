@@ -740,6 +740,44 @@ const ModalMobileFilters = () => {
   );
 };
 
+const ModalRecoverPassword = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button
+        color={"grey2"}
+        fontSize={"14px"}
+        border="none"
+        bg="none"
+        onClick={onOpen}
+        _hover={{ bg: "none", border: "none", textDecoration: "underline" }}
+        fontWeight={"400"}
+        w={"max-content"}
+        h={"max-content"}
+        p={0}
+      >
+        Esqueci minha senha
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent fontFamily={"Inter, sans-serif"}>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Recuperação de senha
+          </ModalHeader>
+          <ModalBody paddingBottom={"28px"}>
+            <Text fontSize={"14px"} color={"grey.3"} marginBottom={"20px"}>
+              Para recuperar sua senha, informe seu endereço de email que nós
+              enviaremos um link para a alteração da senha
+            </Text>
+            <Form.RecoverySubmitEmail />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
 export const ModalContainer = {
   ModalVehicleImage,
   ModalSuccessAccount,
@@ -749,4 +787,5 @@ export const ModalContainer = {
   ModalSuccessAd,
   ModalRemoveAdConfirmation,
   ModalMobileFilters,
+  ModalRecoverPassword,
 };

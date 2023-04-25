@@ -24,31 +24,22 @@ import {
   iUser,
   iUserRequest,
   iUserUpdate,
+  tUserRecoverEmail,
+  tUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
-import { iOnOpenF } from "@/interfaces/components.interfaces";
-import { loginSchema } from "@/schemas/login.schemas";
-import { userRequestSchema, userUpdateSchema } from "@/schemas/user.schemas";
+
 import { Link } from "../Link";
+import { ModalContainer } from "../Modal";
+import { useAuthContext } from "@/contexts/auth.context";
+import { useUserContext } from "@/contexts/user.context";
+import { loginSchema } from "@/schemas/login.schemas";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
+import { userRecoverEmail, userRecoverPassword, userRequestSchema, userUpdateSchema } from "@/schemas/user.schemas";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
-  const submitFunction = async (data: iLogin) => {
-    await api
-      .post<iLoginResponse>("/login", data)
-      .then((resp) => {
-        toast.success("login realizado");
-        setCookie(null, "ms.token", resp.data.token, {
-          maxAge: 60 * 30,
-          path: "/",
-        });
-        router.push("/profile");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
+  const { login } = useAuthContext();
 
   const {
     register,
@@ -70,7 +61,7 @@ const Login = () => {
       padding={"45px"}
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(login)}
     >
       <Heading fontSize={"24px"}>Login</Heading>
 
@@ -81,11 +72,11 @@ const Login = () => {
         name="email"
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         register={register("email")}
+        errors={errors.email?.message}
       />
 
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <InputGroup h={"100%"}>
-        <InputRightElement h={"100%"}>
+        <InputRightElement h={"48px"} top={"20px"}>
           <IconButton
             top="10px"
             right={"16px"}
@@ -113,13 +104,11 @@ const Login = () => {
           name="password"
           borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
           register={register("password")}
+          errors={errors.email?.message}
         />
       </InputGroup>
-      <Text color="feedback.alert1">{errors.password?.message}</Text>
       <Flex justifyContent={"flex-end"}>
-        <Text color={"grey2"} fontSize={"14px"}>
-          Esqueci minha senha
-        </Text>
+        <ModalContainer.ModalRecoverPassword />
       </Flex>
       <Button type="submit" variant={"brand1"}>
         Entrar
@@ -141,6 +130,7 @@ const Login = () => {
 const CreateProfile = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { createUser } = useUserContext();
 
   const {
     register,
@@ -166,16 +156,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
     }
   };
 
-  const submitFunction = async (data: iUserRequest) => {
-    await api
-      .post<iUser>("/users", data)
-      .then((resp) => {
-        onOpen();
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.data.message);
-      });
+  const onSubmit = async (data: iUserRequest) => {
+    await createUser(data, onOpen);
   };
 
   return (
@@ -192,7 +174,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
       padding="25px"
       marginTop={"90px"}
       marginBottom={"90px"}
-      onSubmit={handleSubmit(submitFunction)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Heading fontSize={"24px"}>Cadastro</Heading>
       <Text>Informações pessoais</Text>
@@ -203,8 +185,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         name="name"
         borderColor={errors.name ? "feedback.alert1" : "#E9ECEF"}
         register={register("name")}
+        errors={errors.name?.message}
       />
-      <Text color="feedback.alert1">{errors.name?.message}</Text>
       <Field.InputField
         label="Email"
         type="email"
@@ -212,8 +194,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("email")}
         borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe seu email"
+        errors={errors.email?.message}
       />
-      <Text color="feedback.alert1">{errors.email?.message}</Text>
       <Field.InputField
         label="CPF"
         type="text"
@@ -221,8 +203,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("cpf")}
         borderColor={errors.cpf ? "feedback.alert1" : "#E9ECEF"}
         placeholder="9000800900900"
+        errors={errors.cpf?.message}
       />
-      <Text color="feedback.alert1">{errors.cpf?.message}</Text>
       <Field.InputField
         label="Celular"
         type="tel"
@@ -230,8 +212,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("phone_number")}
         borderColor={errors.phone_number ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Informe o telefone com DDD"
+        errors={errors.phone_number?.message}
       />
-      <Text color="feedback.alert1">{errors.phone_number?.message}</Text>
       <Field.InputField
         label="Data de nascimento"
         type="date"
@@ -239,18 +221,20 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
         register={register("birthdate")}
         borderColor={errors.birthdate ? "feedback.alert1" : "#E9ECEF"}
         placeholder="mês/dia/ano"
+        errors={
+          errors.birthdate
+            ? "O campo data de nascimento é obrigatório"
+            : undefined
+        }
       />
-      {errors.birthdate ? (
-        <Text color="feedback.alert1">Birthdate is a required Field</Text>
-      ) : null}
       <Field.TextField
         label="Descrição"
         name="description"
         register={register("description")}
         borderColor={errors.description ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Insira a descrição do seu usuário"
+        errors={errors.description?.message}
       />
-      <Text color="feedback.alert1">{errors.description?.message}</Text>
       <Box
         maxWidth={"520px"}
         display={"flex"}
@@ -267,26 +251,35 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           register={register("address.cep", { onChange: requestCep })}
           borderColor={errors.address?.cep ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Informe seu Cep"
+          errors={errors.address?.cep?.message}
         />
-        <Text color="feedback.alert1">{errors.address?.cep?.message}</Text>
         <Flex>
-          <Field.InputField
-            label="Estado"
-            type="text"
-            name="state"
-            register={register("address.state")}
-            borderColor={errors.address?.state ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Estado"
-          />
-          <Field.InputField
-            label="Cidade"
-            type="text"
-            name="city"
-            register={register("address.city")}
-            borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Cidade"
-          />
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Estado"
+              type="text"
+              name="state"
+              register={register("address.state")}
+              borderColor={
+                errors.address?.state ? "feedback.alert1" : "#E9ECEF"
+              }
+              placeholder="Estado"
+              errors={errors.address?.state?.message}
+            />
+          </Flex>
+          <Flex flexDirection={"column"}>
+            <Field.InputField
+              label="Cidade"
+              type="text"
+              name="city"
+              register={register("address.city")}
+              borderColor={errors.address?.city ? "feedback.alert1" : "#E9ECEF"}
+              placeholder="Cidade"
+              errors={errors.address?.city?.message}
+            />
+          </Flex>
         </Flex>
+
         <Field.InputField
           label="Rua"
           type="text"
@@ -294,8 +287,8 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           register={register("address.street")}
           borderColor={errors.address?.street ? "feedback.alert1" : "#E9ECEF"}
           placeholder="Logradouro"
+          errors={errors.address?.street?.message}
         />
-        <Text color="feedback.alert1">{errors.address?.street?.message}</Text>
         <Flex>
           <Field.InputField
             label="Número"
@@ -304,6 +297,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
             register={register("address.number")}
             borderColor={errors.address?.number ? "feedback.alert1" : "#E9ECEF"}
             placeholder="Número"
+            errors={errors.address?.number?.message}
           />
           <Field.InputField
             label="Complemento"
@@ -314,6 +308,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
               errors.address?.complement ? "feedback.alert1" : "#E9ECEF"
             }
             placeholder="Complemento"
+            errors={errors.address?.complement?.message}
           />
         </Flex>
         <Flex alignContent={"center"} justifyContent={"center"} gap={"10px"}>
@@ -337,7 +332,16 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           </Button>
         </Flex>
         <InputGroup h={"100%"}>
-          <InputRightElement h={"100%"}>
+          <Field.InputField
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            register={register("password")}
+            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+            placeholder="Insira uma senha"
+            errors={errors.password?.message}
+          />
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -356,21 +360,23 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowPassword(!showPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Senha"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            register={register("password")}
-            borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
-            placeholder="Insira uma senha"
-          />
         </InputGroup>
-
-        <Text color="feedback.alert1">{errors.password?.message}</Text>
         <InputGroup>
-          <InputRightElement h={"100%"}>
+          <Field.InputField
+            label="Confirme a senha"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirm_password"
+            register={register("confirm_password")}
+            borderColor={
+              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
+            }
+            placeholder="Confirme sua senha"
+            errors={errors.confirm_password?.message}
+          />
+          <InputRightElement h={"48px"} top={"20px"}>
             <IconButton
               top="10px"
               right={"16px"}
@@ -389,20 +395,10 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
                 )
               }
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              tabIndex={-1}
             />
           </InputRightElement>
-          <Field.InputField
-            label="Confirme a senha"
-            type={showConfirmPassword ? "text" : "password"}
-            name="confirm_password"
-            register={register("confirm_password")}
-            borderColor={
-              errors.confirm_password ? "feedback.alert1" : "#E9ECEF"
-            }
-            placeholder="Confirme sua senha"
-          />
         </InputGroup>
-        <Text color="feedback.alert1">{errors.confirm_password?.message}</Text>
         <Flex
           alignContent={"center"}
           flexDirection="column"
@@ -412,9 +408,6 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
           <Button type="submit" width={"98%"} variant={"brand1"}>
             Finalizar cadastro
           </Button>
-          <Link href="/login" border={"none"} fontWeight={"400"}>
-            Iniciar sessão
-          </Link>
         </Flex>
       </Box>
     </Box>
@@ -422,9 +415,7 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
 };
 
 const EditProfile = () => {
-  const submitFunction = async () => {
-    
-  };
+  const submitFunction = async () => {};
 
   const {
     register,
@@ -782,6 +773,151 @@ const EditAd = () => {
   );
 };
 
+const RecoverySubmitEmail = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverEmail>({
+    resolver: yupResolver(userRecoverEmail),
+  });
+
+  const submitEmail = (data: tUserRecoverEmail) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      maxWidth={"520px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      onSubmit={handleSubmit(submitEmail)}
+    >
+      <Field.InputField
+        label="Email"
+        name="email"
+        placeholder="Informe seu email"
+        borderColor={errors.email ? "feedback.alert1" : "#E9ECEF"}
+        type="email"
+        errors={errors.email?.message}
+        register={register("email")}
+      />
+      <Button type="submit" variant={"brand1"} w="100%">
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
+const RecoveryPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<tUserRecoverPassword>({
+    resolver: yupResolver(userRecoverPassword),
+  });
+
+  const submitPassword = (data: tUserRecoverPassword) => {
+    console.log(data);
+  };
+
+  return (
+    <Box
+      as={"form"}
+      width={"512px"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      gap={"14px"}
+      borderRadius={"8px"}
+      backgroundColor={"grey.whiteFixed"}
+      padding={"45px"}
+      marginTop={"90px"}
+      marginBottom={"90px"}
+      onSubmit={handleSubmit(submitPassword)}
+    >
+      <Heading fontSize={"24px"}>Alteração de senha</Heading>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Nova senha"
+          type={showPassword ? "text" : "password"}
+          placeholder="Informe sua senha"
+          name="password"
+          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("password")}
+          errors={errors.password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            border="none"
+            aria-label="Search database"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Confirmar nova senha"
+          type={showConfirmPassword ? "text" : "password"}
+          placeholder="Confirme sua senha"
+          name="confirm_password"
+          borderColor={errors.confirm_password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("confirm_password")}
+          errors={errors.confirm_password?.message}
+        />
+        <InputRightElement h={"48px"} top={"20px"}>
+          <IconButton
+            tabIndex={-1}
+            top="10px"
+            right={"16px"}
+            h={"100%"}
+            bg="transparent"
+            size={"md"}
+            color={"black"}
+            aria-label="Search database"
+            border="none"
+            _hover={{ bg: "none", border: "none", color: "grey.2" }}
+            icon={
+              showConfirmPassword ? (
+                <ViewIcon w={6} h={6} />
+              ) : (
+                <ViewOffIcon w={6} h={6} />
+              )
+            }
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          />
+        </InputRightElement>
+      </InputGroup>
+      <Button type="submit" w={"100%"}>
+        Enviar
+      </Button>
+    </Box>
+  );
+};
+
 export const Form = {
   EditProfile,
   EditAddress,
@@ -789,4 +925,6 @@ export const Form = {
   EditAd,
   CreateProfile,
   Login,
+  RecoverySubmitEmail,
+  RecoveryPassword,
 };

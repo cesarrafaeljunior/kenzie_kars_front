@@ -45,3 +45,12 @@ export interface iLogin {
 export interface iLoginResponse {
   token: string;
 }
+
+export type tUserRecoverEmail = {
+  email: string;
+};
+
+export type tUserRecoverPassword = {
+  password: string;
+  confirm_password: string;
+};
