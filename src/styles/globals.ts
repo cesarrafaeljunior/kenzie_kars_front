@@ -1,11 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/Button";
 import { Link } from "./components/Link";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/lexend/700.css";
-import "@fontsource/lexend/600.css";
-import "@fontsource/lexend/500.css";
 
 const globalTheme = {
   colors: {
