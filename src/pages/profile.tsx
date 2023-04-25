@@ -10,6 +10,7 @@ import { useAdvertContext } from "@/contexts/advert.context";
 import { iProfileProps } from "@/interfaces/pages.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
+import { ModalContainer } from "@/components/Modal";
 
 export default ({ user }: iProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
@@ -76,7 +77,7 @@ export default ({ user }: iProfileProps) => {
           <Text color={"grey.2"} mb={"40px"}>
             {advertiseListByUser.description}
           </Text>
-          <Button variant={"outlineBrand"}>Criar anuncio</Button>
+          <ModalContainer.ModalCreateAd />
         </Box>
 
         <List
