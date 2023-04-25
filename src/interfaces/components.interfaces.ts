@@ -33,6 +33,7 @@ export interface iSelect {
 export interface iLinkProps extends LinkProps {
   href: string;
   children: ReactNode;
+  isMenuItem?: boolean;
 }
 
 export interface iModalProps {
