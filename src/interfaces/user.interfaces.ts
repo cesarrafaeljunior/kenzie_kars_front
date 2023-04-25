@@ -12,6 +12,16 @@ export interface iUserRequest {
   address: iAddressRequest;
   confirm_password: string;
 }
+export interface iUserUpdate {
+  name?: string;
+  email?: string;
+  cpf?: string;
+  phone_number?: string;
+  birthdate?: Date;
+  description?: string;
+  password?: string;
+
+}
 
 export interface iUser {
   id: string;

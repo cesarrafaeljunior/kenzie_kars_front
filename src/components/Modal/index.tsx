@@ -106,6 +106,24 @@ const ModalEditAddress = () => {
     </>
   );
 };
+const ModalEditProfile = ({ onClose, isOpen }: iModalProps) => {
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent fontFamily={"Inte, sans-serif"}>
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Editar Perfil
+          </ModalHeader>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalBody paddingBottom={"28px"}>
+            <Form.EditProfile />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const ModalCreateAd = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -768,4 +786,5 @@ export const ModalContainer = {
   ModalRemoveAdConfirmation,
   ModalMobileFilters,
   ModalRecoverPassword,
+  ModalEditProfile,
 };
