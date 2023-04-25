@@ -23,10 +23,11 @@ import {
   iLoginResponse,
   iUser,
   iUserRequest,
+  iUserUpdate,
 } from "@/interfaces/user.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { loginSchema } from "@/schemas/login.schemas";
-import { userRequestSchema } from "@/schemas/user.schemas";
+import { userRequestSchema, userUpdateSchema } from "@/schemas/user.schemas";
 import { Link } from "../Link";
 
 const Login = () => {
@@ -421,6 +422,18 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
 };
 
 const EditProfile = () => {
+  const submitFunction = async () => {
+    
+  };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iUserUpdate>({
+    resolver: yupResolver(userUpdateSchema),
+  });
   return (
     <Box
       as={"h2"}
@@ -432,41 +445,47 @@ const EditProfile = () => {
       borderRadius={"8px"}
     >
       <Text>Informações pessoais</Text>
-      {/* <Field.InputField
+      <Field.InputField
         label="Nome"
         type="text"
         name="text"
+        register={register("name")}
         placeholder="Samuel leão"
       />
       <Field.InputField
         label="Email"
         type="email"
         name="email"
+        register={register("email")}
         placeholder="samuelleao@gmail.com"
       />
       <Field.InputField
         label="CPF"
         type="text"
         name="text"
+        register={register("cpf")}
         placeholder="900.080.090-0"
       />
       <Field.InputField
         label="Celular"
         type="tel"
         name="tel"
+        register={register("phone_number")}
         placeholder="(084) 90909-9092"
       />
       <Field.InputField
         label="Data de nascimento"
         type="date"
         name="date"
+        register={register("birthdate")}
         placeholder=""
       />
       <Field.TextField
         label="Descrição"
         name="description"
+        register={register("description")}
         placeholder="Insira a descrição do usuário..."
-      /> */}
+      />
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar

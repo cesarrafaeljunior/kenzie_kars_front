@@ -106,6 +106,26 @@ const ModalEditAddress = () => {
     </>
   );
 };
+const ModalEditProfile = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button onClick={onOpen}>Editar Endereço</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent fontFamily={"Inte, sans-serif"}>
+          <ModalHeader as={"h2"} fontSize={"16px"}>
+            Editar endereço
+          </ModalHeader>
+          <ModalCloseButton border={"transparent"} outline={"none"} />
+          <ModalBody paddingBottom={"28px"}>
+            <Form.EditProfile />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const ModalCreateAd = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

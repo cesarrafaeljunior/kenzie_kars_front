@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { ObjectSchema } from "yup";
 
 // Precisa adicionar o relacionamento com o schema de address
-const ensureIfIsLegalAge = (birthdate: Date) => {
+const ensureIfIsLegalAge = (birthdate: Date | undefined) => {
   if (!birthdate) {
     return true;
   }
@@ -40,3 +40,18 @@ export const userRequestSchema: ObjectSchema<any> = yup.object().shape({
     complement: yup.string().required(),
   }),
 });
+
+export const userUpdateSchema: ObjectSchema<any> = yup.object().shape({
+  name: yup.string().max(100),
+  email: yup.string().email().max(100),
+  cpf: yup.string().max(11),
+  phone_number: yup.string().max(11),
+  birthdate: yup
+    .date()
+    
+    .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge),
+  description: yup.string(),
+  is_seller: yup.boolean(),
+  password: yup.string().required(),
+
+})
