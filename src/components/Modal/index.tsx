@@ -106,16 +106,14 @@ const ModalEditAddress = () => {
     </>
   );
 };
-const ModalEditProfile = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const ModalEditProfile = ({ onClose, isOpen }: iModalProps) => {
   return (
     <>
-      <Button onClick={onOpen}>Editar Endereço</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent fontFamily={"Inte, sans-serif"}>
           <ModalHeader as={"h2"} fontSize={"16px"}>
-            Editar endereço
+            Editar Perfil
           </ModalHeader>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalBody paddingBottom={"28px"}>
@@ -788,4 +786,5 @@ export const ModalContainer = {
   ModalRemoveAdConfirmation,
   ModalMobileFilters,
   ModalRecoverPassword,
+  ModalEditProfile,
 };

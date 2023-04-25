@@ -1,14 +1,16 @@
 import { iContextProps, iUserContext } from "@/interfaces/context.interfaces";
-import { iUser, iUserRequest } from "@/interfaces/user.interfaces";
+import { iUser, iUserRequest, iUserUpdate } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
 import { parseCookies } from "nookies";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useAuthContext } from "./auth.context";
 
 const UserContext = createContext<iUserContext>({} as iUserContext);
 
 export const UserProvider = ({ children }: iContextProps) => {
   const [user, setUser] = useState<iUser | null>(null);
+  const { logout } = useAuthContext();
 
   useEffect(() => {
     getUserProfile();
@@ -41,8 +43,44 @@ export const UserProvider = ({ children }: iContextProps) => {
       });
   };
 
+  const updateUser = async (data: iUserUpdate, userId: string) => {
+    await api
+      .patch<iUser>(`/users/${userId}`, data)
+      .then(({ data }) => {
+        setUser(data);
+        toast.success("Usuário atualizado com sucesso!");
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        toast.error(err.response.data.message[0]);
+      });
+  };
+
+  const softDeleteUser = async (userId: string) => {
+    await api
+      .delete(`/users/${userId}`)
+      .then(({ data }) => {
+        setUser(data);
+        toast.success("Conta deletada com sucesso!");
+        logout();
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        toast.error(err.response.data.message[0]);
+      });
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, getUserProfile, createUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        getUserProfile,
+        createUser,
+        updateUser,
+        softDeleteUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

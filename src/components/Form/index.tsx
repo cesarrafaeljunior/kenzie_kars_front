@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -34,7 +34,12 @@ import { useAuthContext } from "@/contexts/auth.context";
 import { useUserContext } from "@/contexts/user.context";
 import { loginSchema } from "@/schemas/login.schemas";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
-import { userRecoverEmail, userRecoverPassword, userRequestSchema, userUpdateSchema } from "@/schemas/user.schemas";
+import {
+  userRecoverEmail,
+  userRecoverPassword,
+  userRequestSchema,
+  userUpdateSchema,
+} from "@/schemas/user.schemas";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -415,25 +420,50 @@ const CreateProfile = ({ onOpen }: iOnOpenF) => {
 };
 
 const EditProfile = () => {
-  const submitFunction = async () => {};
+  const { updateUser, user, softDeleteUser } = useUserContext();
+
+  const onClickDeleteButton = async () => {
+    if (user) {
+      const { id } = user;
+      softDeleteUser(id);
+    }
+  };
+
+  const onSubmit = async (data: iUserUpdate) => {
+    if (user) {
+      const { id } = user;
+      console.log(id);
+      await updateUser(data, id);
+    }
+  };
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
+    setValue,
   } = useForm<iUserUpdate>({
     resolver: yupResolver(userUpdateSchema),
   });
+  useEffect(() => {
+    if (user) {
+      setValue("name", user.name);
+      setValue("email", user.email);
+      setValue("description", user.description);
+      setValue("phone_number", user.phone_number);
+      setValue("cpf", user.cpf);
+    }
+  }, []);
   return (
     <Box
-      as={"h2"}
+      as={"form"}
       maxWidth={"520px"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       gap={"14px"}
       borderRadius={"8px"}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Text>Informações pessoais</Text>
       <Field.InputField
@@ -477,11 +507,21 @@ const EditProfile = () => {
         register={register("description")}
         placeholder="Insira a descrição do usuário..."
       />
+      <Field.InputField
+        label="Senha"
+        type="password"
+        name="password"
+        register={register("password")}
+        placeholder="Insira a nova senha do usuário."
+      />
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar
         </Button>
-        <Button width={"193px"} variant={"brandDisable"}>
+        <Button width={"126px"} onClick={onClickDeleteButton} variant={"alert"}>
+          Excluir perfil
+        </Button>
+        <Button type="submit" width={"193px"} variant={"brand1"}>
           Salvar alterações
         </Button>
       </Flex>
@@ -501,7 +541,7 @@ const EditAddress = () => {
       borderRadius={"8px"}
     >
       <Text>Informações de endereço</Text>
-      {/* <Field.InputField
+      <Field.InputField
         label="Cep"
         type="text"
         name="text"
@@ -539,8 +579,8 @@ const EditAddress = () => {
           type="text"
           name="text"
           placeholder="Casa"
-        /> */}
-      {/* </Flex> */}
+        />
+      </Flex>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar

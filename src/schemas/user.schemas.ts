@@ -30,10 +30,9 @@ export const userUpdateSchema: ObjectSchema<any> = yup.object().shape({
     
     .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge),
   description: yup.string(),
-  is_seller: yup.boolean(),
-  password: yup.string().required(),
+  password: yup.string(),
 
-})
+}).partial()
 export const userRequestSchema: ObjectSchema<iUserRequest> = yup
   .object()
   .shape({
