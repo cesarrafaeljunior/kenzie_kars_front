@@ -23,7 +23,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   useEffect(() => {
     async function loadAdverts() {
       const { data } = await api.get("/advertised");
-      console.log(data);
       setAdvertsList(data);
     }
     loadAdverts();
