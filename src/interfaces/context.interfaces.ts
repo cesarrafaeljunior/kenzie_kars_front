@@ -9,9 +9,38 @@ export interface iContextProps {
 export interface iAdvertContext {
   modalVehicleImage: string;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
-  advertsList: iAdvert[]
+  advertsList: iAdvert[];
   getAdvertiseListByUserId: (userId: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
+  brandsList: string[];
+  brandSelect: string;
+  setBrandSelect: Dispatch<SetStateAction<string>>;
+  modelList: iAdvertObject[];
+  setModelList: Dispatch<SetStateAction<[]>>;
+}
+
+export interface iAdvertObject {
+  brand: string;
+  fuel: number;
+  id: string;
+  name: string;
+  value: number;
+  year: string;
+}
+
+export interface iAdvertisedRequest {
+  title: string;
+  brand: string;
+  model: string;
+  fuel: string;
+  color: string;
+  year: string;
+  mileage: number;
+  price: number;
+  description: string;
+  cover_image: string;
+  location: string;
+  is_avaliable: boolean;
 }
 
 export interface iUserContext {

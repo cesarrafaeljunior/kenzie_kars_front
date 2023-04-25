@@ -17,6 +17,8 @@ const InputField = ({
   register,
   borderColor,
   errors,
+  isReadOnly,
+  isDisable,
 }: iInput) => {
   return (
     <FormControl>

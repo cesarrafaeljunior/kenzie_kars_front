@@ -44,6 +44,9 @@ export default function Home() {
             A melhor plataforma de anúncios de carro do país
           </Text>
         </Center>
+
+        <ModalContainer.ModalCreateAd />
+
         <Image
           width={{ base: "700px", md: "1000px", lg: "1300px" }}
           height={"550px"}

@@ -8,9 +8,10 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Select,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -35,6 +36,9 @@ import {
 } from "@/schemas/user.schemas";
 import { Link } from "../Link";
 import { ModalContainer } from "../Modal";
+import { useAdvertContext } from "@/contexts/advert.context";
+import { advertisedRequestSchema } from "@/schemas/ad.schemas";
+import { iAdvertisedRequest } from "@/interfaces/context.interfaces";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -558,8 +562,65 @@ const EditAddress = () => {
     </Box>
   );
 };
-
+//////////////////////////////////////////////////////////////////
 const CreateAd = () => {
+  const { brandsList, setBrandSelect, modelList } = useAdvertContext();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iAdvertisedRequest>({
+    resolver: yupResolver(advertisedRequestSchema),
+  });
+
+  const brandSelectOptions = [];
+  for (let i = 0; i < brandsList.length; i++) {
+    brandSelectOptions.push(
+      <option key={brandsList[i]} value={brandsList[i]}>
+        {brandsList[i]}
+      </option>
+    );
+  }
+  const modelSelectOptions = [];
+  for (let i = 0; i < modelList.length; i++) {
+    modelSelectOptions.push(
+      <option key={modelList[i].id} value={modelList[i].id}>
+        {modelList[i].name}
+      </option>
+    );
+  }
+
+  const [modelSelect, setModelSelect] = useState();
+  const [fuel, setFuel] = useState<number>();
+  const [fuelDescription, setfuelDescription] = useState<string>("");
+  const [year, setYear] = useState<string>("");
+  const [fipe, setFipe] = useState<number>();
+
+  useEffect(() => {
+    const currentModel = modelList.find((model) => model.id === modelSelect);
+    const fuelType = (fuel: number) => {
+      if (fuel === 1) {
+        return "Flex";
+      } else if (fuel === 2) {
+        return "Híbrido";
+      } else if (fuel === 3) {
+        return "Elétrico";
+      }
+      return "";
+    };
+
+    if (currentModel) {
+      setYear(currentModel.year);
+      setFipe(currentModel.value);
+      setFuel(currentModel.fuel);
+      setfuelDescription(fuelType(currentModel.fuel));
+      setValue("year", currentModel.year);
+      setValue("price", currentModel.value);
+      setValue("fuel", fuelType(currentModel.fuel));
+    }
+  }, [modelSelect]);
+
   return (
     <Box
       as={"h2"}
@@ -571,48 +632,64 @@ const CreateAd = () => {
       borderRadius={"8px"}
     >
       <Text>Informações de veículo</Text>
-      {/* <Field.InputField
-        label="Marca"
-        type="text"
-        name="text"
-        placeholder="Mercedes Benz"
-      />
-      <Field.InputField
-        label="Modelo"
-        type="text"
-        name="text"
-        placeholder="A 200 CGI ADVANCE SEDAN"
-      />
+      <Text fontSize="sm" fontWeight={"semibold"}>
+        Marca
+      </Text>
+      <Select
+        placeholder="Select option"
+        onChange={(e: any) => {
+          setBrandSelect(e.target.value);
+        }}
+      >
+        {brandSelectOptions}
+      </Select>
+
+      <Text fontSize="sm" fontWeight={"semibold"}>
+        Modelo
+      </Text>
+      <Select
+        placeholder="Select model"
+        onChange={(e: any) => {
+          setModelSelect(e.target.value);
+        }}
+      >
+        {modelSelectOptions}
+      </Select>
+
       <Flex>
         <Field.InputField
+          isDisable
           label="Ano"
-          type="number"
-          name="number"
-          placeholder="2018"
+          type="text"
+          name="year"
+          register={register("year")}
+          placeholder={year}
         />
         <Field.InputField
+          isReadOnly={true}
           label="Combustível"
-          type="text"
-          name="text"
-          placeholder="Gasolina / Etanol"
+          type="number"
+          name="fuel"
+          placeholder={fuelDescription}
         />
       </Flex>
       <Flex>
         <Field.InputField
           label="Quilometragem"
           type="number"
-          name="number"
-          placeholder="2018"
+          name="milage"
+          placeholder="30000"
         />
         <Field.InputField
           label="Cor"
           type="text"
-          name="text"
+          name="color"
           placeholder="Branco"
         />
       </Flex>
       <Flex>
         <Field.InputField
+          isReadOnly={true}
           label="Preço tabela FIPE"
           type="number"
           name="number"
@@ -648,7 +725,7 @@ const CreateAd = () => {
         type="text"
         name="text"
         placeholder="https://image.com"
-      /> */}
+      />
       <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
         Adicionar campo para imagem da galeria
       </Button>

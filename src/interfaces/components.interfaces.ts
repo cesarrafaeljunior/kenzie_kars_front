@@ -15,6 +15,9 @@ export interface iInput {
   register?: UseFormRegisterReturn;
   borderColor?: string;
   errors?: string;
+  isReadOnly?: boolean;
+  isDisable?: boolean;
+  value?: string;
 }
 
 export interface iInputPassword extends iInput {
