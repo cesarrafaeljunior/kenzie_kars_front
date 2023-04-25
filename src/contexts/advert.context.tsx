@@ -1,9 +1,13 @@
-import { iAdvert, iAdvertListByUser } from "@/interfaces/advert.interfaces";
+import {
+  iAdvert,
+  iAdvertListByUser,
+  iAdvertisedRequest,
+} from "@/interfaces/advert.interfaces";
 import { iAdvertContext, iContextProps } from "@/interfaces/context.interfaces";
 import { api, apiKenzieKars } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { string } from "yup";
+import { parseCookies } from "nookies";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
@@ -66,16 +70,31 @@ export const AdvertProvider = ({ children }: iContextProps) => {
     setLoading(false);
   }, [brandSelect]);
 
+  const createAdv = async (data: iAdvertisedRequest) => {
+    const cookies = parseCookies();
+    const token = cookies["ms.token"];
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+    await api
+      .post<iAdvertisedRequest>("/advertised", data)
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.data.message);
+      });
+  };
+
   return (
     <AdvertContext.Provider
       value={{
+        createAdv,
         brandsList,
         brandSelect,
         setBrandSelect,
         modelList,
         setModelList,
         modalVehicleImage,
-        advertsList,
         setModalVehicleImage,
         getAdvertiseListByUserId,
         advertiseListByUser,

@@ -16,7 +16,6 @@ export interface iInput {
   borderColor?: string;
   errors?: string;
   isReadOnly?: boolean;
-  isDisable?: boolean;
   value?: string;
 }
 

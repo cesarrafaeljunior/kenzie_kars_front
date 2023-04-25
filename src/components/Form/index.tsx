@@ -38,9 +38,9 @@ import { Link } from "../Link";
 import { ModalContainer } from "../Modal";
 import { useAdvertContext } from "@/contexts/advert.context";
 import { advertisedRequestSchema } from "@/schemas/ad.schemas";
-import { iAdvertisedRequest } from "@/interfaces/context.interfaces";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useUserContext } from "@/contexts/user.context";
+import { iAdvertisedRequest } from "@/interfaces/advert.interfaces";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -544,15 +544,14 @@ const EditAddress = () => {
 };
 //////////////////////////////////////////////////////////////////
 const CreateAd = () => {
-  const { brandsList, setBrandSelect, modelList } = useAdvertContext();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<iAdvertisedRequest>({
-    resolver: yupResolver(advertisedRequestSchema),
-  });
+  const { brandsList, setBrandSelect, modelList, createAdv } =
+    useAdvertContext();
+  const { register, handleSubmit, setValue } = useForm<iAdvertisedRequest>();
+  const [modelSelect, setModelSelect] = useState();
+  const [fuel, setFuel] = useState<number>();
+  const [fuelDescription, setfuelDescription] = useState<string>("");
+  const [year, setYear] = useState<string>("");
+  const [fipe, setFipe] = useState<string>("");
 
   const brandSelectOptions = [];
   for (let i = 0; i < brandsList.length; i++) {
@@ -571,12 +570,6 @@ const CreateAd = () => {
     );
   }
 
-  const [modelSelect, setModelSelect] = useState();
-  const [fuel, setFuel] = useState<number>();
-  const [fuelDescription, setfuelDescription] = useState<string>("");
-  const [year, setYear] = useState<string>("");
-  const [fipe, setFipe] = useState<number>();
-
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
     const fuelType = (fuel: number) => {
@@ -592,26 +585,45 @@ const CreateAd = () => {
 
     if (currentModel) {
       setYear(currentModel.year);
-      setFipe(currentModel.value);
+      setFipe(
+        currentModel.value.toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        })
+      );
       setFuel(currentModel.fuel);
       setfuelDescription(fuelType(currentModel.fuel));
+      setValue("model", currentModel.name);
       setValue("year", currentModel.year);
-      setValue("price", currentModel.value);
+      setValue("fipe_price", currentModel.value);
       setValue("fuel", fuelType(currentModel.fuel));
     }
   }, [modelSelect]);
 
+  const submit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Box
-      as={"h2"}
+      as={"form"}
       maxWidth={"520px"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       gap={"14px"}
       borderRadius={"8px"}
+      onSubmit={handleSubmit(submit)}
     >
       <Text>Informações de veículo</Text>
+      <Field.InputField
+        label="Titulo do Anuncio"
+        type="text"
+        name="title"
+        register={register("title")}
+        placeholder="Digite um título"
+      />
+
       <Text fontSize="sm" fontWeight={"semibold"}>
         Marca
       </Text>
@@ -619,6 +631,7 @@ const CreateAd = () => {
         placeholder="Select option"
         onChange={(e: any) => {
           setBrandSelect(e.target.value);
+          setValue("brand", e.target.value);
         }}
       >
         {brandSelectOptions}
@@ -637,48 +650,48 @@ const CreateAd = () => {
       </Select>
 
       <Flex>
-        <Field.InputField
-          isDisable
+        <Field.InputReadyOnlyField
           label="Ano"
           type="text"
           name="year"
-          register={register("year")}
-          placeholder={year}
+          placeholder={year ? year : "2023"}
         />
-        <Field.InputField
-          isReadOnly={true}
+        <Field.InputReadyOnlyField
           label="Combustível"
-          type="number"
+          type="text"
           name="fuel"
-          placeholder={fuelDescription}
+          placeholder={fuelDescription ? fuelDescription : "Gasolina / Etanol"}
         />
       </Flex>
       <Flex>
         <Field.InputField
           label="Quilometragem"
           type="number"
-          name="milage"
+          name="mileage"
           placeholder="30000"
+          register={register("mileage")}
         />
         <Field.InputField
           label="Cor"
           type="text"
           name="color"
           placeholder="Branco"
+          register={register("color")}
         />
       </Flex>
       <Flex>
-        <Field.InputField
-          isReadOnly={true}
+        <Field.InputReadyOnlyField
+          isReadOnly
           label="Preço tabela FIPE"
-          type="number"
-          name="number"
-          placeholder="R$ 50.000,00"
+          type="string"
+          name="fipe"
+          placeholder={fipe ? `${fipe}` : "R$ 50.000,00"}
         />
         <Field.InputField
           label="Preço"
           type="number"
-          name="number"
+          name="price"
+          register={register("price")}
           placeholder="R$ 50.000,00"
         />
       </Flex>
@@ -686,12 +699,14 @@ const CreateAd = () => {
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do produto..."
+        register={register("description")}
       />
       <Field.InputField
         label="Imagem da capa"
         type="text"
-        name="text"
+        name="cover_image"
         placeholder="https://image.com"
+        register={register("cover_image")}
       />
 
       <Field.InputField
@@ -700,12 +715,7 @@ const CreateAd = () => {
         name="text"
         placeholder="https://image.com"
       />
-      <Field.InputField
-        label="2° Imagem da galeria"
-        type="text"
-        name="text"
-        placeholder="https://image.com"
-      />
+
       <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
         Adicionar campo para imagem da galeria
       </Button>
@@ -713,7 +723,7 @@ const CreateAd = () => {
         <Button width={"126px"} variant={"negative"}>
           Cancelar
         </Button>
-        <Button width={"193px"} variant={"brandDisable"}>
+        <Button type="submit" width={"193px"} variant={"brand1"}>
           Criar anúncio
         </Button>
       </Flex>

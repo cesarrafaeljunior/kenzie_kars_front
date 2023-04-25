@@ -28,3 +28,28 @@ export interface iSellerGalery {
   id: number;
   image: string;
 }
+
+export interface iAdvertObject {
+  brand: string;
+  fuel: number;
+  id: string;
+  name: string;
+  value: number;
+  year: string;
+}
+
+export interface iAdvertisedRequest {
+  title: string;
+  brand: string;
+  model: string;
+  fuel: string;
+  color: string;
+  year: string;
+  mileage: number;
+  fipe_price: number;
+  price: number;
+  description: string;
+  cover_image: string;
+  location: string;
+  is_avaliable: boolean;
+}
