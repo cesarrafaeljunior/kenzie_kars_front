@@ -93,8 +93,12 @@ export const Header = () => {
                 >
                   <MenuItem onClick={onOpenProfile}>Editar Perfil</MenuItem>
                   <MenuItem>Editar Endereço</MenuItem>
-                  {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
-                  <MenuItem onClick={() => logout()}>Sair</MenuItem>
+                  {user.is_seller && (
+                    <Link href={"/profile"} isMenuItem={true}>
+                      Meus Anúncios
+                    </Link>
+                  )}
+                  <MenuItem onClick={logout}>Sair</MenuItem>
                 </MenuList>
               </Menu>
             )}
@@ -143,8 +147,12 @@ export const Header = () => {
                     <>
                       <MenuItem onClick={onOpenProfile}>Editar Perfil</MenuItem>
                       <MenuItem>Editar Endereço</MenuItem>
-                      {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
-                      <MenuItem onClick={() => logout()}>Sair</MenuItem>
+                      {user.is_seller && (
+                        <Link href={"/profile"} isMenuItem={true}>
+                          Meus Anúncios
+                        </Link>
+                      )}
+                      <MenuItem onClick={logout}>Sair</MenuItem>
                     </>
                   )}
                 </MenuList>
