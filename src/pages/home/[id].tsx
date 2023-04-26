@@ -308,6 +308,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return { props: { advert: data } };
     })
     .catch(() => {
-      return { redirect: { destination: "/home", permanent: false } };
+      return { redirect: { destination: "/", permanent: false } };
     });
 };
