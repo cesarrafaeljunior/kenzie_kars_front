@@ -1,9 +1,12 @@
-import { iAddressRequest, iAddressUpdate } from "@/interfaces/address.interfaces";
+import {
+  iAddressRequest,
+  iAddressUpdate,
+} from "@/interfaces/address.interfaces";
 import {
   iUserRequest,
   iUserUpdate,
-  tUserRecoverEmail,
-  tUserRecoverPassword,
+  iUserRecoverEmail,
+  iUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
 import * as yup from "yup";
 import { ObjectSchema } from "yup";
@@ -21,35 +24,38 @@ const ensureIfIsLegalAge = (birthdate: Date | undefined) => {
   return date - birthdate > 18 ? true : false;
 };
 
+export const userUpdateSchema: ObjectSchema<iUserUpdate> = yup
+  .object()
+  .shape({
+    name: yup.string().max(100),
+    email: yup.string().email().max(100),
+    cpf: yup.string().max(11),
+    phone_number: yup.string().max(11),
+    birthdate: yup
+      .date()
 
-export const userUpdateSchema: ObjectSchema<iUserUpdate> = yup.object().shape({
-  name: yup.string().max(100),
-  email: yup.string().email().max(100),
-  cpf: yup.string().max(11),
-  phone_number: yup.string().max(11),
-  birthdate: yup
-    .date()
-    
-    .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge),
-  description: yup.string(),
-  password: yup.string(),
+      .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge),
+    description: yup.string(),
+    password: yup.string(),
+  })
+  .partial();
 
-}).partial()
-
-export const addressUpdateSchema: ObjectSchema<iAddressUpdate> = yup.object().shape({
-  cep: yup
-    .string()
-    .length(8, "O campo Cep, deve conter exatamete 8 caracteres"),
-  state: yup
-    .string()
-    .length(2, "O campo Estado, deve conter exatamete 2 caracteres"),
-  city: yup.string().max(50),
-  street: yup.string().max(80),
-  number: yup
-    .string()
-    .max(10, "O campo número deve conter no máximo 10 caracteres"),
-  complement: yup.string(),
-})
+export const addressUpdateSchema: ObjectSchema<iAddressUpdate> = yup
+  .object()
+  .shape({
+    cep: yup
+      .string()
+      .length(8, "O campo Cep, deve conter exatamete 8 caracteres"),
+    state: yup
+      .string()
+      .length(2, "O campo Estado, deve conter exatamete 2 caracteres"),
+    city: yup.string().max(50),
+    street: yup.string().max(80),
+    number: yup
+      .string()
+      .max(10, "O campo número deve conter no máximo 10 caracteres"),
+    complement: yup.string(),
+  });
 
 export const userRequestSchema: ObjectSchema<iUserRequest> = yup
   .object()
@@ -100,7 +106,7 @@ export const userRequestSchema: ObjectSchema<iUserRequest> = yup
     }),
   });
 
-export const userRecoverEmail: ObjectSchema<tUserRecoverEmail> = yup
+export const userRecoverEmail: ObjectSchema<iUserRecoverEmail> = yup
   .object()
   .shape({
     email: yup
@@ -109,7 +115,7 @@ export const userRecoverEmail: ObjectSchema<tUserRecoverEmail> = yup
       .required("É preciso enviar um email para recuperar a senha"),
   });
 
-export const userRecoverPassword: ObjectSchema<tUserRecoverPassword> = yup
+export const userRecoverPassword: ObjectSchema<iUserRecoverPassword> = yup
   .object()
   .shape({
     password: yup.string().required("O campo senha é obrigatório"),
