@@ -73,13 +73,13 @@ export const UserProvider = ({ children }: iContextProps) => {
 
   const updateUserAddress = async (data: iAddressUpdate) => {
     await api
-      .patch("/adress")
+      .patch("/address")
       .then(() => {
         toast.success("Endereço atualizado com sucesso!");
       })
       .catch((err) => {
         console.log(err.response.data.message);
-        toast.error(err.response.data.message[0]);
+        toast.error(err.response.data.message);
       });
   };
 

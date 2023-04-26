@@ -622,7 +622,7 @@ const EditAddress = () => {
         <Button width={"126px"} variant={"negative"}>
           Cancelar
         </Button>
-        <Button width={"193px"} variant={"brandDisable"}>
+        <Button type="submit" width={"193px"} variant={"brand1"}>
           Salvar alterações
         </Button>
       </Flex>
