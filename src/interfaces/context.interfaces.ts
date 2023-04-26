@@ -1,6 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { iLogin, iUser, iUserRequest, iUserUpdate } from "./user.interfaces";
 import { iAdvert, iAdvertListByUser } from "./advert.interfaces";
+import { iAddressUpdate } from "./address.interfaces";
 
 export interface iContextProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ export interface iUserContext {
   createUser: (data: iUserRequest, onOpen: () => void) => Promise<void>;
   updateUser: (data: iUserUpdate, userId: string) => Promise<void>
   softDeleteUser: (userId: string) => Promise<void>
+  updateUserAddress: (data: iAddressUpdate) => Promise<void>
 }
 
 export interface iAuthContext {

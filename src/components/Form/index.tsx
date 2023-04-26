@@ -35,11 +35,13 @@ import { useUserContext } from "@/contexts/user.context";
 import { loginSchema } from "@/schemas/login.schemas";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
 import {
+  addressUpdateSchema,
   userRecoverEmail,
   userRecoverPassword,
   userRequestSchema,
   userUpdateSchema,
 } from "@/schemas/user.schemas";
+import { iAddressUpdate } from "@/interfaces/address.interfaces";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -530,15 +532,44 @@ const EditProfile = () => {
 };
 
 const EditAddress = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<iAddressUpdate>({
+    resolver: yupResolver(addressUpdateSchema),
+  });
+  const { updateUserAddress } = useUserContext();
+  const submitFunction = (data: iAddressUpdate) => {
+    updateUserAddress(data);
+  };
+
+  const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length == 8) {
+      apiSearchCEP(e.target.value)
+        .then((resp) => {
+          setValue("city", resp.data.localidade);
+          setValue("state", resp.data.uf);
+          setValue("street", resp.data.logradouro);
+          setValue("complement", resp.data.complemento);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <Box
-      as={"h2"}
+      as={"form"}
       maxWidth={"520px"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       gap={"14px"}
       borderRadius={"8px"}
+      onSubmit={handleSubmit(submitFunction)}
     >
       <Text>Informações de endereço</Text>
       <Field.InputField
@@ -546,6 +577,7 @@ const EditAddress = () => {
         type="text"
         name="text"
         placeholder="37517000"
+        register={register("cep", { onChange: requestCep })}
       />
       <Flex>
         <Field.InputField
@@ -553,12 +585,14 @@ const EditAddress = () => {
           type="text"
           name="text"
           placeholder="MG"
+          register={register("state")}
         />
         <Field.InputField
           label="Cidade"
           type="text"
           name="text"
           placeholder="Formigas"
+          register={register("city")}
         />
       </Flex>
       <Field.InputField
@@ -566,6 +600,7 @@ const EditAddress = () => {
         type="text"
         name="text"
         placeholder="Rua das macieiras"
+        register={register("street")}
       />
       <Flex>
         <Field.InputField
@@ -573,12 +608,14 @@ const EditAddress = () => {
           type="number"
           name="number"
           placeholder="25"
+          register={register("number")}
         />
         <Field.InputField
           label="Complemento"
           type="text"
           name="text"
           placeholder="Casa"
+          register={register("complement")}
         />
       </Flex>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>

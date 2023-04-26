@@ -1,5 +1,7 @@
+import { iAddressRequest, iAddressUpdate } from "@/interfaces/address.interfaces";
 import {
   iUserRequest,
+  iUserUpdate,
   tUserRecoverEmail,
   tUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
@@ -20,7 +22,7 @@ const ensureIfIsLegalAge = (birthdate: Date | undefined) => {
 };
 
 
-export const userUpdateSchema: ObjectSchema<any> = yup.object().shape({
+export const userUpdateSchema: ObjectSchema<iUserUpdate> = yup.object().shape({
   name: yup.string().max(100),
   email: yup.string().email().max(100),
   cpf: yup.string().max(11),
@@ -33,6 +35,22 @@ export const userUpdateSchema: ObjectSchema<any> = yup.object().shape({
   password: yup.string(),
 
 }).partial()
+
+export const addressUpdateSchema: ObjectSchema<iAddressUpdate> = yup.object().shape({
+  cep: yup
+    .string()
+    .length(8, "O campo Cep, deve conter exatamete 8 caracteres"),
+  state: yup
+    .string()
+    .length(2, "O campo Estado, deve conter exatamete 2 caracteres"),
+  city: yup.string().max(50),
+  street: yup.string().max(80),
+  number: yup
+    .string()
+    .max(10, "O campo número deve conter no máximo 10 caracteres"),
+  complement: yup.string(),
+})
+
 export const userRequestSchema: ObjectSchema<iUserRequest> = yup
   .object()
   .shape({

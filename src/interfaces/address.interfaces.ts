@@ -6,6 +6,14 @@ export interface iAddressRequest {
   number?: string;
   complement?: string;
 }
+export interface iAddressUpdate {
+  cep?: string;
+  state?: string;
+  city?: string;
+  street?: string;
+  number?: string;
+  complement?: string;
+}
 
 export interface iAddressResponse {
   bairro: string;
