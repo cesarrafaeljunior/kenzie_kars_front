@@ -33,8 +33,8 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
     mileage: yup
       .number()
       .typeError("A quilometragem é obrigatoriamente um número")
-      .positive("A quilometragem não pode ser negativa")
-      .required("O campo Qqilometragem é obrigatório"),
+      .min(0, "A quilometragem não pode ser negativa")
+      .required("O campo Quilometragem é obrigatório"),
     fipe_price: yup
       .number()
       .positive("O preço FIPE não pode ser negativo")
