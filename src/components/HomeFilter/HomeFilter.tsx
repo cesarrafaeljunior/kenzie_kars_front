@@ -52,6 +52,7 @@ export const HomeFilter = () => {
     <>
       {Object.keys(filterObj).map((filterHeader) => (
         <Box
+          key={filterHeader}
           gap={"3px"}
           flexDirection={"column"}
           alignItems={"flex-start"}
