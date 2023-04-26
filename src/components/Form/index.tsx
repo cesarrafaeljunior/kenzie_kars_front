@@ -807,7 +807,7 @@ const CreateAd = ({ onOpen }: iOnOpenF) => {
         Adicionar campo para imagem da galeria
       </Button>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
-        <Button width={"126px"} variant={"negative"}>
+        <Button width={"126px"} variant={"negative"} onClick={onOpen}>
           Cancelar
         </Button>
         <Button type="submit" width={"193px"} variant={"brand1"}>

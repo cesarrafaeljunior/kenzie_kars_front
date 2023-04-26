@@ -73,9 +73,9 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const createAdv = async (data: iAdvertisedRequest, onOpen: () => void) => {
     api.defaults.headers.common.authorization = `Bearer ${token}`;
     await api
-      .post<iAdvertisedRequest>("/advertised", data)
-      .then((resp) => {
-        console.log(resp.status, resp.statusText);
+      .post<iAdvert>("/advertised", data)
+      .then(async (resp) => {
+        await getAdvertiseListByUserId(resp.data.user.id);
         onOpen();
       })
       .catch((err) => {
