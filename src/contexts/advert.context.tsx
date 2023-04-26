@@ -8,6 +8,7 @@ import { api, apiKenzieKars } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { parseCookies } from "nookies";
+import { iFilterParams } from "@/interfaces/components.interfaces";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
@@ -17,6 +18,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
   const [isLoading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] = useState<iFilterParams>({});
 
   const getAdvertiseListByUserId = async (userId: string) => {
     await api
@@ -27,13 +29,14 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    async function loadAdverts() {
-      const { data } = await api.get("/advertised");
-      setAdvertsList(data);
-    }
-    loadAdverts();
-  }, []);
+  const loadAdverts = async (filterParams?: iFilterParams) => {
+    await api
+      .get("/advertised", {
+        params: filterParams,
+      })
+      .then(({ data }) => setAdvertsList(data))
+      .catch((err) => console.log(err));
+  };
 
   const [brandsList, setBrandsList] = useState<Array<string>>([]);
   const [brandSelect, setBrandSelect] = useState<string>("");
@@ -98,6 +101,9 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         setModalVehicleImage,
         getAdvertiseListByUserId,
         advertiseListByUser,
+        loadAdverts,
+        filterParams,
+        setFilterParams,
       }}
     >
       {children}

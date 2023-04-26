@@ -46,3 +46,11 @@ export interface iModalProps {
 export interface iOnOpenF {
   onOpen: () => void;
 }
+
+export interface iFilterList {
+  [key: string]: { name: string; values: string[] };
+}
+
+export interface iFilterParams {
+  [key: string]: string;
+}

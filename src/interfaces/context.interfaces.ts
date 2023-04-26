@@ -7,6 +7,7 @@ import {
   iAdvertObject,
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
+import { iFilterParams } from "./components.interfaces";
 
 export interface iContextProps {
   children: ReactNode;
@@ -24,6 +25,9 @@ export interface iAdvertContext {
   setBrandSelect: Dispatch<SetStateAction<string>>;
   modelList: iAdvertObject[];
   setModelList: Dispatch<SetStateAction<[]>>;
+  loadAdverts: (filterParams?: iFilterParams) => Promise<void>;
+  filterParams: iFilterParams;
+  setFilterParams: Dispatch<SetStateAction<iFilterParams>>;
 }
 
 export interface iUserContext {

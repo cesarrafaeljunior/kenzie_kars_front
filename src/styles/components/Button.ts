@@ -5,12 +5,12 @@ export const ButtonStyle: ComponentStyleConfig = {
     fontWeight: "semibold",
     borderRadius: "4px",
     borderWidth: "2px",
+    borderColor: " transparent",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     fontFamily: "Inter, sans-serif",
-    
   },
   sizes: {
     sm: {

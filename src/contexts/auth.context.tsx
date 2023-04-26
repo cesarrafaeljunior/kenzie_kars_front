@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }: iContextProps) => {
         toast.success("login realizado");
 
         setCookie(null, "ms.token", resp.data.token, {
-          maxAge: 60 * 30,
+          maxAge: 60 * 60 * 7,
           path: "/",
         });
         await getUserProfile();
