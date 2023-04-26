@@ -1,11 +1,11 @@
 import { RecoveryPassword } from "./RecoveryPassword.form";
 import { RecoverySubmitEmail } from "./RecoverySubmitEmail.form";
-import { CreateAd } from "./createAd.form";
-import { CreateProfile } from "./createProfile.form";
-import { EditAd } from "./editAd.form";
-import { EditAddress } from "./editAddress.form";
-import { EditProfile } from "./editProfile.form";
-import { Login } from "./login.form";
+import { CreateAd } from "./CreateAd.form";
+import { CreateProfile } from "./CreateProfile.form";
+import { EditAd } from "./EditAd.form";
+import { EditAddress } from "./EditAddress.form";
+import { EditProfile } from "./EditProfile.form";
+import { Login } from "./Login.form";
 
 export const Form = {
   EditProfile,
