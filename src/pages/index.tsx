@@ -1,18 +1,28 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { HomeFilters } from "@/components/HomeFilter";
 import { ModalContainer } from "@/components/Modal";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
 import { useAdvertContext } from "@/contexts/advert.context";
-import { Box, Button, Center, Input } from "@chakra-ui/react";
+import { Box, Button, Center, useDisclosure } from "@chakra-ui/react";
 import { Image, Heading, Text, List } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { advertsList } = useAdvertContext();
+  const { advertsList, loadAdverts } = useAdvertContext();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  useEffect(() => {
+    loadAdverts();
+  }, []);
+
+  if (!advertsList) return null;
 
   return (
     <>
       <Header />
+      <ModalContainer.ModalMobileFilters isOpen={isOpen} onClose={onClose} />
       <Center>
         <Center
           bgGradient="linear(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%)"
@@ -49,7 +59,7 @@ export default function Home() {
           height={"550px"}
           src="home-page-car.png"
           objectFit={"cover"}
-        ></Image>
+        />
       </Center>
       <Box display={"flex"} gap={"15vw"} width={"100%"}>
         <Box
@@ -60,474 +70,7 @@ export default function Home() {
           display={{ base: "none", lg: "flex" }}
           as="aside"
         >
-          <Box
-            gap={"3px"}
-            flexDirection={"column"}
-            alignItems={"flex-start"}
-            display={"flex"}
-          >
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Marca
-            </Heading>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              General Motors
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Fiat
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Ford
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Honda
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Porshe
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Volswagen
-            </Button>
-          </Box>
-          <Box
-            gap={"3px"}
-            flexDirection={"column"}
-            alignItems={"flex-start"}
-            display={"flex"}
-          >
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Modelo
-            </Heading>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Civic
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Corolla
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Cruze
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Fit
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Gol
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Ka
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Onix
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Porshe 718
-            </Button>
-          </Box>
-          <Box
-            gap={"3px"}
-            flexDirection={"column"}
-            alignItems={"flex-start"}
-            display={"flex"}
-          >
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Cor
-            </Heading>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Azul
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Branco
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Cinza
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Prata
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Preto
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Verde
-            </Button>
-          </Box>
-          <Box
-            gap={"3px"}
-            flexDirection={"column"}
-            alignItems={"flex-start"}
-            display={"flex"}
-          >
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Ano
-            </Heading>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2022
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2021
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2018
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2015
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2013
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2012
-            </Button>
-            <Button
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              2010
-            </Button>
-          </Box>
-          <Box
-            gap={"3px"}
-            flexDirection={"column"}
-            alignItems={"flex-start"}
-            display={"flex"}
-          >
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Combustivel
-            </Heading>
-            <Button
-              fontSize={"20px"}
-              margin={"0"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Diesel
-            </Button>
-            <Button
-              fontSize={"20px"}
-              margin={"0"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Etanol
-            </Button>
-            <Button
-              fontSize={"20px"}
-              margin={"0"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Gasolina
-            </Button>
-            <Button
-              fontSize={"20px"}
-              margin={"0"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-            >
-              Flex
-            </Button>
-          </Box>
-          <Box>
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Km
-            </Heading>
-            <Box display={"flex"}>
-              <Input
-                borderRadius={"0px"}
-                width={"120px"}
-                marginRight={"25px"}
-                padding={"0"}
-                textAlign={"center"}
-                backgroundColor={"grey.5"}
-                type="text"
-                placeholder="Mínima"
-              />
-              <Input
-                borderRadius={"0px"}
-                width={"120px"}
-                marginRight={"25px"}
-                padding={"0"}
-                textAlign={"center"}
-                backgroundColor={"grey.5"}
-                type="text"
-                placeholder="Máxima"
-              />
-            </Box>
-          </Box>
-          <Box>
-            <Heading marginBottom={"10px"} fontSize={"28px"}>
-              Preço
-            </Heading>
-            <Box marginBottom={"80px"} display={"flex"}>
-              <Input
-                borderRadius={"0px"}
-                width={"120px"}
-                marginRight={"25px"}
-                padding={"0"}
-                textAlign={"center"}
-                backgroundColor={"grey.5"}
-                type="text"
-                placeholder="Mínimo"
-              />
-              <Input
-                borderRadius={"0px"}
-                width={"120px"}
-                marginRight={"25px"}
-                padding={"0"}
-                textAlign={"center"}
-                backgroundColor={"grey.5"}
-                type="text"
-                placeholder="Máximo"
-              />
-            </Box>
-          </Box>
+          <HomeFilters.HomeFilter />
         </Box>
         <Box>
           <List
@@ -546,7 +89,15 @@ export default function Home() {
             })}
           </List>
           <Center>
-            <ModalContainer.ModalMobileFilters />
+            <Button
+              marginTop={"100px"}
+              width={"200px"}
+              display={{ base: "initial", lg: "none" }}
+              variant={"brand1"}
+              onClick={onOpen}
+            >
+              Filtros
+            </Button>
           </Center>
           <PaginationNumbers />
         </Box>
