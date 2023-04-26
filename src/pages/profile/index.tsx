@@ -1,4 +1,13 @@
-import { Badge, Box, Button, Center, Flex, List, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  Center,
+  Flex,
+  List,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import nookies from "nookies";
@@ -10,14 +19,13 @@ import { useAdvertContext } from "@/contexts/advert.context";
 import { iProfileProps } from "@/interfaces/pages.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
-
+import { ModalContainer } from "@/components/Modal";
 export default ({ user }: iProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     getAdvertiseListByUserId(user.id);
   }, []);
-
   if (!advertiseListByUser) return null;
 
   return (
@@ -28,6 +36,7 @@ export default ({ user }: iProfileProps) => {
       minH={"100vh"}
     >
       <Header />
+      <ModalContainer.ModalCreateAd onClose={onClose} isOpen={isOpen} />
       <Box as={"main"} my={{ base: "65px", md: "75px" }}>
         <Box
           maxW={"1200px"}
@@ -76,9 +85,10 @@ export default ({ user }: iProfileProps) => {
           <Text color={"grey.2"} mb={"40px"}>
             {advertiseListByUser.description}
           </Text>
-          <Button variant={"outlineBrand"}>Criar anuncio</Button>
+          <Button variant={"outlineBrand"} onClick={onOpen}>
+            Criar anuncio
+          </Button>
         </Box>
-
         <List
           w={"90%"}
           display={"flex"}
@@ -101,15 +111,12 @@ export default ({ user }: iProfileProps) => {
     </Box>
   );
 };
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cookies = nookies.get(ctx);
   const token = cookies["ms.token"];
-
   if (!token) {
     return { redirect: { destination: "/login", permanent: false } };
   }
-
   api.defaults.headers.common.authorization = `Bearer ${token}`;
   return await api
     .get<iUser>("/users/profile")
