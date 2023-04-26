@@ -1,7 +1,12 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
-import { iLogin, iUser, iUserRequest, iUserUpdate } from "./user.interfaces";
-import { iAdvert, iAdvertListByUser } from "./advert.interfaces";
+import { ReactNode, Dispatch, SetStateAction } from "react";
 import { iAddressUpdate } from "./address.interfaces";
+import {
+  iAdvertisedRequest,
+  iAdvertListByUser,
+  iAdvert,
+  iAdvertObject,
+} from "./advert.interfaces";
+import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
 
 export interface iContextProps {
   children: ReactNode;
@@ -9,10 +14,16 @@ export interface iContextProps {
 
 export interface iAdvertContext {
   modalVehicleImage: string;
+  createAdv: (data: iAdvertisedRequest, onOpen: () => void) => Promise<void>;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
-  advertsList: iAdvert[]
   getAdvertiseListByUserId: (userId: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
+  advertsList: iAdvert[];
+  brandsList: string[];
+  brandSelect: string;
+  setBrandSelect: Dispatch<SetStateAction<string>>;
+  modelList: iAdvertObject[];
+  setModelList: Dispatch<SetStateAction<[]>>;
 }
 
 export interface iUserContext {
@@ -20,9 +31,9 @@ export interface iUserContext {
   setUser: Dispatch<SetStateAction<iUser | null>>;
   getUserProfile: () => Promise<void>;
   createUser: (data: iUserRequest, onOpen: () => void) => Promise<void>;
-  updateUser: (data: iUserUpdate, userId: string) => Promise<void>
-  softDeleteUser: (userId: string) => Promise<void>
-  updateUserAddress: (data: iAddressUpdate) => Promise<void>
+  softDeleteUser: (userId: string) => Promise<void>;
+  updateUserAddress: (data: iAddressUpdate) => Promise<void>;
+  updateUser: (data: iUserUpdate, userId: string) => Promise<void>;
 }
 
 export interface iAuthContext {

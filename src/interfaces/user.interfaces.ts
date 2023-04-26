@@ -1,4 +1,4 @@
-import { iAddressRequest } from "./address.interfaces";
+import { iAddress, iAddressRequest } from "./address.interfaces";
 
 export interface iUserRequest {
   name: string;
@@ -20,7 +20,6 @@ export interface iUserUpdate {
   birthdate?: Date;
   description?: string;
   password?: string;
-
 }
 
 export interface iUser {
@@ -34,6 +33,7 @@ export interface iUser {
   is_seller: boolean;
   created_at: string;
   updated_at: string;
+  address: iAddress;
 }
 
 export interface iLogin {

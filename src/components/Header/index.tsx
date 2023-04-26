@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Flex,
+  Spacer,
   Img,
   Menu,
   MenuButton,
@@ -48,9 +49,12 @@ export const Header = () => {
           borderColor={"grey.6"}
           bgColor={"grey.10"}
         >
-          <Box flex={"1 1 auto"}>
-            <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
+          <Box>
+            <Link href="/" h={"unset"} p={"0"} border={"none"} _hover={{}}>
+              <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
+            </Link>
           </Box>
+          <Spacer />
           <Flex
             pl={{ base: "14px", md: "28px", lg: "44px" }}
             gap={{ base: "14px", md: "26px", lg: "40px" }}
@@ -97,7 +101,12 @@ export const Header = () => {
                 >
                   <MenuItem onClick={onOpenProfile}>Editar Perfil</MenuItem>
                   <MenuItem onClick={onOpenAddress}>Editar Endereço</MenuItem>
-                  {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
+                  {user.is_seller && (
+                    <Link href={"/profile"} isMenuItem={true}>
+                      Meus Anúncios
+                    </Link>
+                  )}
+                  <MenuItem onClick={logout}>Sair</MenuItem>
                   <MenuItem onClick={() => logout()}>Sair</MenuItem>
                 </MenuList>
               </Menu>
@@ -149,8 +158,12 @@ export const Header = () => {
                       <MenuItem onClick={onOpenAddress}>
                         Editar Endereço
                       </MenuItem>
-                      {user.is_seller && <MenuItem>Meus Anúncios</MenuItem>}
-                      <MenuItem onClick={() => logout()}>Sair</MenuItem>
+                      {user.is_seller && (
+                        <Link href={"/profile"} isMenuItem={true}>
+                          Meus Anúncios
+                        </Link>
+                      )}
+                      <MenuItem onClick={logout}>Sair</MenuItem>
                     </>
                   )}
                 </MenuList>

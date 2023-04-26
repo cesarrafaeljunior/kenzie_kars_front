@@ -104,7 +104,7 @@ const ModalEditAddress = ({ onClose, isOpen }: iModalProps) => {
     </>
   );
 };
-const ModalEditProfile = ({ onClose, isOpen }: iModalProps) => {
+const ModalEditProfile = ({ isOpen, onClose }: iModalProps) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -123,24 +123,20 @@ const ModalEditProfile = ({ onClose, isOpen }: iModalProps) => {
   );
 };
 
-const ModalCreateAd = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const ModalCreateAd = ({ isOpen, onClose }: iModalProps) => {
   return (
-    <>
-      <Button onClick={onOpen}>Criar anúncio</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent fontFamily={"Inte, sans-serif"}>
-          <ModalCloseButton border={"transparent"} outline={"none"} />
-          <ModalHeader as={"h2"} fontSize={"16px"}>
-            Criar anúncio
-          </ModalHeader>
-          <ModalBody paddingBottom={"28px"}>
-            <Form.CreateAd />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent fontFamily={"Inte, sans-serif"}>
+        <ModalCloseButton border={"transparent"} outline={"none"} />
+        <ModalHeader as={"h2"} fontSize={"16px"}>
+          Criar anúncio
+        </ModalHeader>
+        <ModalBody paddingBottom={"28px"}>
+          <Form.CreateAd onOpen={onClose} />
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 

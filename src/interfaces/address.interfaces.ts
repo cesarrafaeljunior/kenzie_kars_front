@@ -15,6 +15,10 @@ export interface iAddressUpdate {
   complement?: string;
 }
 
+export interface iAddress extends iAddressRequest {
+  id: string;
+}
+
 export interface iAddressResponse {
   bairro: string;
   cep: string;

@@ -8,40 +8,40 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Select,
+  Link,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useEffect, useState } from "react";
-import { setCookie } from "nookies";
+
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { api, apiSearchCEP } from "@/services/api";
+import { apiSearchCEP } from "@/services/api";
 import { Field } from "../Field";
 import {
   iLogin,
-  iLoginResponse,
-  iUser,
   iUserRequest,
   iUserUpdate,
   tUserRecoverEmail,
   tUserRecoverPassword,
 } from "@/interfaces/user.interfaces";
-
-import { Link } from "../Link";
-import { ModalContainer } from "../Modal";
+import { useAdvertContext } from "@/contexts/advert.context";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useUserContext } from "@/contexts/user.context";
-import { loginSchema } from "@/schemas/login.schemas";
+import { iAdvertisedRequest } from "@/interfaces/advert.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
+import { advertisedRequestSchema } from "@/schemas/ad.schemas";
+import { loginSchema } from "@/schemas/login.schemas";
 import {
   addressUpdateSchema,
-  userRecoverEmail,
-  userRecoverPassword,
   userRequestSchema,
   userUpdateSchema,
+  userRecoverEmail,
+  userRecoverPassword,
 } from "@/schemas/user.schemas";
 import { iAddressUpdate } from "@/interfaces/address.interfaces";
+import { ModalContainer } from "../Modal";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -630,82 +630,205 @@ const EditAddress = () => {
   );
 };
 
-const CreateAd = () => {
+const CreateAd = ({ onOpen }: iOnOpenF) => {
+  const { brandsList, setBrandSelect, modelList, createAdv } =
+    useAdvertContext();
+  const { user } = useUserContext();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iAdvertisedRequest>({
+    resolver: yupResolver(advertisedRequestSchema),
+  });
+
+  const [modelSelect, setModelSelect] = useState();
+  const [fuel, setFuel] = useState<number>();
+  const [fuelDescription, setfuelDescription] = useState<string>("");
+  const [year, setYear] = useState<string>("");
+  const [fipe, setFipe] = useState<string>("");
+  const brandSelectOptions = [];
+  const modelSelectOptions = [];
+
+  for (let i = 0; i < brandsList.length; i++) {
+    brandSelectOptions.push(
+      <option key={brandsList[i]} value={brandsList[i]}>
+        {brandsList[i]}
+      </option>
+    );
+  }
+  for (let i = 0; i < modelList.length; i++) {
+    modelSelectOptions.push(
+      <option key={modelList[i].id} value={modelList[i].id}>
+        {modelList[i].name}
+      </option>
+    );
+  }
+
+  useEffect(() => {
+    const currentModel = modelList.find((model) => model.id === modelSelect);
+    const fuelType = (fuel: number) => {
+      if (fuel === 1) {
+        return "Flex";
+      } else if (fuel === 2) {
+        return "Híbrido";
+      } else if (fuel === 3) {
+        return "Elétrico";
+      }
+      return "";
+    };
+
+    if (currentModel) {
+      setYear(currentModel.year);
+      setFipe(
+        currentModel.value.toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        })
+      );
+      setFuel(currentModel.fuel);
+      setfuelDescription(fuelType(currentModel.fuel));
+      setValue("model", currentModel.name);
+      setValue("year", currentModel.year);
+      setValue("fipe_price", currentModel.value);
+      setValue("fuel", fuelType(currentModel.fuel));
+      setValue("location", user!.address.cep);
+    }
+  }, [modelSelect, user]);
+
+  const submit = async (data: iAdvertisedRequest) => {
+    await createAdv(data, onOpen);
+    console.log(data);
+  };
+
   return (
     <Box
-      as={"h2"}
+      as={"form"}
       maxWidth={"520px"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       gap={"14px"}
       borderRadius={"8px"}
+      onSubmit={handleSubmit(submit)}
     >
       <Text>Informações de veículo</Text>
-      {/* <Field.InputField
-        label="Marca"
-        type="text"
-        name="text"
-        placeholder="Mercedes Benz"
-      />
       <Field.InputField
-        label="Modelo"
+        label="Titulo do Anuncio"
         type="text"
-        name="text"
-        placeholder="A 200 CGI ADVANCE SEDAN"
+        name="title"
+        placeholder="Digite um título"
+        borderColor={errors.title ? "feedback.alert1" : "#E9ECEF"}
+        errors={errors.title?.message}
+        register={register("title")}
       />
+
+      <Text fontSize="sm" fontWeight={"semibold"}>
+        Marca
+      </Text>
+      <Select
+        isRequired
+        name="brand"
+        borderColor={errors.brand ? "feedback.alert1" : "#E9ECEF"}
+        placeholder="Escolha uma marca"
+        onChange={(e: any) => {
+          setBrandSelect(e.target.value);
+          setValue("brand", e.target.value);
+        }}
+      >
+        {brandSelectOptions}
+      </Select>
+
+      <Text fontSize="sm" fontWeight={"semibold"}>
+        Modelo
+      </Text>
+      <Select
+        isRequired
+        name="model"
+        placeholder="Escolha um modelo"
+        onChange={(e: any) => {
+          setModelSelect(e.target.value);
+        }}
+        borderColor={errors.model ? "feedback.alert1" : "#E9ECEF"}
+      >
+        {modelSelectOptions}
+      </Select>
+
       <Flex>
-        <Field.InputField
+        <Field.InputReadyOnlyField
           label="Ano"
-          type="number"
-          name="number"
-          placeholder="2018"
+          type="text"
+          name="year"
+          placeholder={year ? year : "2023"}
+          errors={errors.year?.message}
+          borderColor={errors.year ? "feedback.alert1" : "#E9ECEF"}
         />
-        <Field.InputField
+        <Field.InputReadyOnlyField
           label="Combustível"
           type="text"
-          name="text"
-          placeholder="Gasolina / Etanol"
+          name="fuel"
+          placeholder={fuelDescription ? fuelDescription : "Gasolina / Etanol"}
+          errors={errors.fuel?.message}
+          borderColor={errors.fuel ? "feedback.alert1" : "#E9ECEF"}
         />
       </Flex>
       <Flex>
         <Field.InputField
           label="Quilometragem"
           type="number"
-          name="number"
-          placeholder="2018"
+          name="mileage"
+          placeholder="30000"
+          errors={errors.mileage?.message}
+          borderColor={errors.mileage ? "feedback.alert1" : "#E9ECEF"}
+          register={register("mileage")}
         />
         <Field.InputField
           label="Cor"
           type="text"
-          name="text"
+          name="color"
           placeholder="Branco"
+          errors={errors.color?.message}
+          borderColor={errors.color ? "feedback.alert1" : "#E9ECEF"}
+          register={register("color")}
         />
       </Flex>
       <Flex>
-        <Field.InputField
+        <Field.InputReadyOnlyField
+          isReadOnly
           label="Preço tabela FIPE"
-          type="number"
-          name="number"
-          placeholder="R$ 50.000,00"
+          type="string"
+          name="fipe_price"
+          placeholder={fipe ? `${fipe}` : "R$ 50.000,00"}
+          errors={errors.fipe_price?.message}
+          borderColor={errors.fipe_price ? "feedback.alert1" : "#E9ECEF"}
         />
         <Field.InputField
           label="Preço"
           type="number"
-          name="number"
+          name="price"
           placeholder="R$ 50.000,00"
+          errors={errors.price?.message}
+          borderColor={errors.price ? "feedback.alert1" : "#E9ECEF"}
+          register={register("price")}
         />
       </Flex>
       <Field.TextField
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do produto..."
+        errors={errors.description?.message}
+        borderColor={errors.description ? "feedback.alert1" : "#E9ECEF"}
+        register={register("description")}
       />
       <Field.InputField
         label="Imagem da capa"
         type="text"
-        name="text"
+        name="cover_image"
         placeholder="https://image.com"
+        errors={errors.cover_image?.message}
+        borderColor={errors.cover_image ? "feedback.alert1" : "#E9ECEF"}
+        register={register("cover_image")}
       />
 
       <Field.InputField
@@ -714,20 +837,15 @@ const CreateAd = () => {
         name="text"
         placeholder="https://image.com"
       />
-      <Field.InputField
-        label="2° Imagem da galeria"
-        type="text"
-        name="text"
-        placeholder="https://image.com"
-      /> */}
+
       <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
         Adicionar campo para imagem da galeria
       </Button>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
-        <Button width={"126px"} variant={"negative"}>
+        <Button width={"126px"} variant={"negative"} onClick={onOpen}>
           Cancelar
         </Button>
-        <Button width={"193px"} variant={"brandDisable"}>
+        <Button type="submit" width={"193px"} variant={"brand1"}>
           Criar anúncio
         </Button>
       </Flex>

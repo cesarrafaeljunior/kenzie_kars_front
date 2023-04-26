@@ -4,7 +4,6 @@ import { ModalContainer } from "@/components/Modal";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
 import { useAdvertContext } from "@/contexts/advert.context";
-import { iAdvert } from "@/interfaces/advert.interfaces";
 import { Box, Button, Center, Input } from "@chakra-ui/react";
 import { Image, Heading, Text, List } from "@chakra-ui/react";
 
@@ -44,6 +43,7 @@ export default function Home() {
             A melhor plataforma de anúncios de carro do país
           </Text>
         </Center>
+
         <Image
           width={{ base: "700px", md: "1000px", lg: "1300px" }}
           height={"550px"}
