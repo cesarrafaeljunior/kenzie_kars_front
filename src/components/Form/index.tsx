@@ -10,8 +10,6 @@ import {
   IconButton,
   Select,
   Link,
-  useDisclosure,
-  NumberInput,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -36,11 +34,13 @@ import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { advertisedRequestSchema } from "@/schemas/ad.schemas";
 import { loginSchema } from "@/schemas/login.schemas";
 import {
+  addressUpdateSchema,
   userRequestSchema,
   userUpdateSchema,
   userRecoverEmail,
   userRecoverPassword,
 } from "@/schemas/user.schemas";
+import { iAddressUpdate } from "@/interfaces/address.interfaces";
 import { ModalContainer } from "../Modal";
 
 const Login = () => {
@@ -532,15 +532,44 @@ const EditProfile = () => {
 };
 
 const EditAddress = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<iAddressUpdate>({
+    resolver: yupResolver(addressUpdateSchema),
+  });
+  const { updateUserAddress } = useUserContext();
+  const submitFunction = (data: iAddressUpdate) => {
+    updateUserAddress(data);
+  };
+
+  const requestCep = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length == 8) {
+      apiSearchCEP(e.target.value)
+        .then((resp) => {
+          setValue("city", resp.data.localidade);
+          setValue("state", resp.data.uf);
+          setValue("street", resp.data.logradouro);
+          setValue("complement", resp.data.complemento);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <Box
-      as={"h2"}
+      as={"form"}
       maxWidth={"520px"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       gap={"14px"}
       borderRadius={"8px"}
+      onSubmit={handleSubmit(submitFunction)}
     >
       <Text>Informações de endereço</Text>
       <Field.InputField
@@ -548,6 +577,7 @@ const EditAddress = () => {
         type="text"
         name="text"
         placeholder="37517000"
+        register={register("cep", { onChange: requestCep })}
       />
       <Flex>
         <Field.InputField
@@ -555,12 +585,14 @@ const EditAddress = () => {
           type="text"
           name="text"
           placeholder="MG"
+          register={register("state")}
         />
         <Field.InputField
           label="Cidade"
           type="text"
           name="text"
           placeholder="Formigas"
+          register={register("city")}
         />
       </Flex>
       <Field.InputField
@@ -568,6 +600,7 @@ const EditAddress = () => {
         type="text"
         name="text"
         placeholder="Rua das macieiras"
+        register={register("street")}
       />
       <Flex>
         <Field.InputField
@@ -575,19 +608,21 @@ const EditAddress = () => {
           type="number"
           name="number"
           placeholder="25"
+          register={register("number")}
         />
         <Field.InputField
           label="Complemento"
           type="text"
           name="text"
           placeholder="Casa"
+          register={register("complement")}
         />
       </Flex>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
         <Button width={"126px"} variant={"negative"}>
           Cancelar
         </Button>
-        <Button width={"193px"} variant={"brandDisable"}>
+        <Button type="submit" width={"193px"} variant={"brand1"}>
           Salvar alterações
         </Button>
       </Flex>

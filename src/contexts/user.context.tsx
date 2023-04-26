@@ -5,6 +5,7 @@ import { parseCookies } from "nookies";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAuthContext } from "./auth.context";
+import { iAddressUpdate } from "@/interfaces/address.interfaces";
 
 const UserContext = createContext<iUserContext>({} as iUserContext);
 
@@ -70,6 +71,18 @@ export const UserProvider = ({ children }: iContextProps) => {
       });
   };
 
+  const updateUserAddress = async (data: iAddressUpdate) => {
+    await api
+      .patch("/address")
+      .then(() => {
+        toast.success("Endereço atualizado com sucesso!");
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        toast.error(err.response.data.message);
+      });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -79,6 +92,7 @@ export const UserProvider = ({ children }: iContextProps) => {
         createUser,
         updateUser,
         softDeleteUser,
+        updateUserAddress,
       }}
     >
       {children}

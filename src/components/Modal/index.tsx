@@ -86,11 +86,9 @@ const ModalSuccessAccount = ({ isOpen, onClose }: iModalProps) => {
   );
 };
 
-const ModalEditAddress = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const ModalEditAddress = ({ onClose, isOpen }: iModalProps) => {
   return (
     <>
-      <Button onClick={onOpen}>Editar Endereço</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent fontFamily={"Inte, sans-serif"}>

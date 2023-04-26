@@ -25,12 +25,20 @@ export const Header = () => {
     onOpen: onOpenProfile,
     onClose: onCloseProfile,
   } = useDisclosure();
-
+  const {
+    isOpen: isOpenAddress,
+    onOpen: onOpenAddress,
+    onClose: onCloseAddress,
+  } = useDisclosure();
   return (
     <>
       <ModalContainer.ModalEditProfile
         onClose={onCloseProfile}
         isOpen={isOpenProfile}
+      />
+      <ModalContainer.ModalEditAddress
+        onClose={onCloseAddress}
+        isOpen={isOpenAddress}
       />
       <header>
         <Center
@@ -92,7 +100,7 @@ export const Header = () => {
                   borderRadius={"4px"}
                 >
                   <MenuItem onClick={onOpenProfile}>Editar Perfil</MenuItem>
-                  <MenuItem>Editar Endereço</MenuItem>
+                  <MenuItem onClick={onOpenAddress}>Editar Endereço</MenuItem>
                   {user.is_seller && (
                     <Link href={"/profile"} isMenuItem={true}>
                       Meus Anúncios
@@ -146,7 +154,9 @@ export const Header = () => {
                   ) : (
                     <>
                       <MenuItem onClick={onOpenProfile}>Editar Perfil</MenuItem>
-                      <MenuItem>Editar Endereço</MenuItem>
+                      <MenuItem onClick={onOpenAddress}>
+                        Editar Endereço
+                      </MenuItem>
                       {user.is_seller && (
                         <Link href={"/profile"} isMenuItem={true}>
                           Meus Anúncios
