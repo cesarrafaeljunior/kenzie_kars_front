@@ -1,5 +1,6 @@
 import { ReactNode, Dispatch, SetStateAction } from "react";
 import {
+  iAdvert,
   iAdvertisedRequest,
   iAdvertListByUser,
   iAdvertObject,
@@ -12,10 +13,11 @@ export interface iContextProps {
 
 export interface iAdvertContext {
   modalVehicleImage: string;
-  createAdv: (data: iAdvertisedRequest) => Promise<void>;
+  createAdv: (data: iAdvertisedRequest, onOpen: () => void) => Promise<void>;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
   getAdvertiseListByUserId: (userId: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
+  advertsList: iAdvert[];
   brandsList: string[];
   brandSelect: string;
   setBrandSelect: Dispatch<SetStateAction<string>>;

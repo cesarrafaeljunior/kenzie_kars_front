@@ -9,22 +9,20 @@ import {
   InputRightElement,
   IconButton,
   Select,
-  useDisclosure,
   Link,
+  useDisclosure,
+  NumberInput,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useEffect, useState } from "react";
-import { setCookie } from "nookies";
+
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { api, apiSearchCEP } from "@/services/api";
+import { apiSearchCEP } from "@/services/api";
 import { Field } from "../Field";
 import {
   iLogin,
-  iLoginResponse,
-  iUser,
   iUserRequest,
   iUserUpdate,
   tUserRecoverEmail,
@@ -597,7 +595,7 @@ const EditAddress = () => {
   );
 };
 
-const CreateAd = () => {
+const CreateAd = ({ onOpen }: iOnOpenF) => {
   const { brandsList, setBrandSelect, modelList, createAdv } =
     useAdvertContext();
   const { user } = useUserContext();
@@ -609,14 +607,15 @@ const CreateAd = () => {
   } = useForm<iAdvertisedRequest>({
     resolver: yupResolver(advertisedRequestSchema),
   });
+
   const [modelSelect, setModelSelect] = useState();
   const [fuel, setFuel] = useState<number>();
   const [fuelDescription, setfuelDescription] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [fipe, setFipe] = useState<string>("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const brandSelectOptions = [];
+  const modelSelectOptions = [];
+
   for (let i = 0; i < brandsList.length; i++) {
     brandSelectOptions.push(
       <option key={brandsList[i]} value={brandsList[i]}>
@@ -624,7 +623,6 @@ const CreateAd = () => {
       </option>
     );
   }
-  const modelSelectOptions = [];
   for (let i = 0; i < modelList.length; i++) {
     modelSelectOptions.push(
       <option key={modelList[i].id} value={modelList[i].id}>
@@ -665,9 +663,8 @@ const CreateAd = () => {
   }, [modelSelect, user]);
 
   const submit = async (data: iAdvertisedRequest) => {
-    await createAdv(data);
+    await createAdv(data, onOpen);
     console.log(data);
-    console.log;
   };
 
   return (
@@ -686,9 +683,10 @@ const CreateAd = () => {
         label="Titulo do Anuncio"
         type="text"
         name="title"
-        register={register("title")}
         placeholder="Digite um título"
+        borderColor={errors.title ? "feedback.alert1" : "#E9ECEF"}
         errors={errors.title?.message}
+        register={register("title")}
       />
 
       <Text fontSize="sm" fontWeight={"semibold"}>
@@ -696,6 +694,8 @@ const CreateAd = () => {
       </Text>
       <Select
         isRequired
+        name="brand"
+        borderColor={errors.brand ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Escolha uma marca"
         onChange={(e: any) => {
           setBrandSelect(e.target.value);
@@ -710,10 +710,12 @@ const CreateAd = () => {
       </Text>
       <Select
         isRequired
+        name="model"
         placeholder="Escolha um modelo"
         onChange={(e: any) => {
           setModelSelect(e.target.value);
         }}
+        borderColor={errors.model ? "feedback.alert1" : "#E9ECEF"}
       >
         {modelSelectOptions}
       </Select>
@@ -725,13 +727,15 @@ const CreateAd = () => {
           name="year"
           placeholder={year ? year : "2023"}
           errors={errors.year?.message}
+          borderColor={errors.year ? "feedback.alert1" : "#E9ECEF"}
         />
         <Field.InputReadyOnlyField
           label="Combustível"
           type="text"
           name="fuel"
-          errors={errors.fuel?.message}
           placeholder={fuelDescription ? fuelDescription : "Gasolina / Etanol"}
+          errors={errors.fuel?.message}
+          borderColor={errors.fuel ? "feedback.alert1" : "#E9ECEF"}
         />
       </Flex>
       <Flex>
@@ -741,6 +745,7 @@ const CreateAd = () => {
           name="mileage"
           placeholder="30000"
           errors={errors.mileage?.message}
+          borderColor={errors.mileage ? "feedback.alert1" : "#E9ECEF"}
           register={register("mileage")}
         />
         <Field.InputField
@@ -749,6 +754,7 @@ const CreateAd = () => {
           name="color"
           placeholder="Branco"
           errors={errors.color?.message}
+          borderColor={errors.color ? "feedback.alert1" : "#E9ECEF"}
           register={register("color")}
         />
       </Flex>
@@ -757,17 +763,19 @@ const CreateAd = () => {
           isReadOnly
           label="Preço tabela FIPE"
           type="string"
-          name="fipe"
-          errors={errors.fipe_price?.message}
+          name="fipe_price"
           placeholder={fipe ? `${fipe}` : "R$ 50.000,00"}
+          errors={errors.fipe_price?.message}
+          borderColor={errors.fipe_price ? "feedback.alert1" : "#E9ECEF"}
         />
         <Field.InputField
           label="Preço"
           type="number"
           name="price"
-          errors={errors.price?.message}
-          register={register("price")}
           placeholder="R$ 50.000,00"
+          errors={errors.price?.message}
+          borderColor={errors.price ? "feedback.alert1" : "#E9ECEF"}
+          register={register("price")}
         />
       </Flex>
       <Field.TextField
@@ -775,6 +783,7 @@ const CreateAd = () => {
         name="description"
         placeholder="Insira a descrição do produto..."
         errors={errors.description?.message}
+        borderColor={errors.description ? "feedback.alert1" : "#E9ECEF"}
         register={register("description")}
       />
       <Field.InputField
@@ -782,8 +791,9 @@ const CreateAd = () => {
         type="text"
         name="cover_image"
         placeholder="https://image.com"
-        register={register("cover_image")}
         errors={errors.cover_image?.message}
+        borderColor={errors.cover_image ? "feedback.alert1" : "#E9ECEF"}
+        register={register("cover_image")}
       />
 
       <Field.InputField
