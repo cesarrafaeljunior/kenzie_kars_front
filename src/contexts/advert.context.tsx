@@ -17,7 +17,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const [advertsList, setAdvertsList] = useState<iAdvert[]>([]);
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
-  const [isLoading, setLoading] = useState(false);
+
   const [filterParams, setFilterParams] = useState<iFilterParams>({});
 
   const getAdvertiseListByUserId = async (userId: string) => {
@@ -45,7 +45,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const token = cookies["ms.token"];
 
   useEffect(() => {
-    setLoading(true);
     apiKenzieKars
       .get("/cars")
       .then((response) => {
@@ -55,11 +54,9 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       .catch((err) => {
         console.log(`userEffects error ${err}`);
       });
-    setLoading(false);
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     if (brandSelect) {
       apiKenzieKars
         .get(`/cars?brand=${brandSelect}`)
@@ -70,7 +67,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
           console.log(`userEffects error ${err}`);
         });
     }
-    setLoading(false);
   }, [brandSelect]);
 
   const createAdv = async (data: iAdvertisedRequest, onOpen: () => void) => {
