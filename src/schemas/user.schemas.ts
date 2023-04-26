@@ -11,7 +11,6 @@ import {
 import * as yup from "yup";
 import { ObjectSchema } from "yup";
 
-// Precisa adicionar o relacionamento com o schema de address
 const ensureIfIsLegalAge = (birthdate: Date | undefined) => {
   if (!birthdate) {
     return true;
