@@ -66,7 +66,7 @@ export const EditAd = () => {
           placeholder="R$ 50.000,00"
         />
       </Flex>
-      <Field.TextField
+      <Field.TextAreaField
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do produto..."

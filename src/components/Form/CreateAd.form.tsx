@@ -192,7 +192,7 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
           register={register("price")}
         />
       </Flex>
-      <Field.TextField
+      <Field.TextAreaField
         label="Descrição"
         name="description"
         placeholder="Insira a descrição do produto..."

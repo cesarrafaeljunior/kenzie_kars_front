@@ -91,7 +91,7 @@ export const EditProfile = () => {
         register={register("birthdate")}
         placeholder=""
       />
-      <Field.TextField
+      <Field.TextAreaField
         label="Descrição"
         name="description"
         register={register("description")}

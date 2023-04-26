@@ -119,7 +119,7 @@ export const CreateProfile = ({ onOpen }: iOnOpenF) => {
             : undefined
         }
       />
-      <Field.TextField
+      <Field.TextAreaField
         label="Descrição"
         name="description"
         register={register("description")}
