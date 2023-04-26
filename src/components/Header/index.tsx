@@ -107,7 +107,6 @@ export const Header = () => {
                     </Link>
                   )}
                   <MenuItem onClick={logout}>Sair</MenuItem>
-                  <MenuItem onClick={() => logout()}>Sair</MenuItem>
                 </MenuList>
               </Menu>
             )}
