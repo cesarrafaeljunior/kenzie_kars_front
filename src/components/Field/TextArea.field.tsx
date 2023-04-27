@@ -1,5 +1,14 @@
 import { iTextArea } from "@/interfaces/components.interfaces";
-import { FormControl, FormLabel, Flex, Textarea, Text } from "@chakra-ui/react";
+import { WarningIcon } from "@chakra-ui/icons";
+import {
+  FormControl,
+  FormLabel,
+  Flex,
+  Textarea,
+  Text,
+  Box,
+  Tooltip,
+} from "@chakra-ui/react";
 
 export const TextAreaField = ({
   label,
@@ -16,14 +25,44 @@ export const TextAreaField = ({
         justifyContent={"center"}
         gap={"8px"}
       >
-        <Text
-          fontFamily="Inter, sans-serif"
-          fontSize="14px"
-          fontWeight="600"
-          color="#212529"
-        >
-          {label}
-        </Text>
+        <Flex>
+          <Box>
+            <Text
+              fontFamily="Inter, sans-serif"
+              fontSize="14px"
+              fontWeight="600"
+              color="#212529"
+            >
+              {label}
+            </Text>
+          </Box>
+          <Box>
+            <>
+              {errors ? (
+                <Tooltip
+                  label={errors}
+                  hasArrow
+                  shouldWrapChildren
+                  placement="right"
+                  color="grey.whiteFixed"
+                  bgColor="feedback.alert1"
+                  border="1px solid"
+                  borderRadius={"md"}
+                  fontSize={"14px"}
+                  p={2}
+                >
+                  <WarningIcon
+                    boxSize={"1rem"}
+                    color={"feedback.alert1"}
+                    m={1}
+                  />
+                </Tooltip>
+              ) : (
+                <></>
+              )}
+            </>
+          </Box>
+        </Flex>
         <Flex flexDirection={"column"}>
           <Textarea
             placeholder={placeholder}
@@ -39,9 +78,6 @@ export const TextAreaField = ({
             fontFamily="Inter, sans-serif"
             resize="none"
           />
-          <Text color="feedback.alert1" fontSize={"14px"}>
-            {errors}
-          </Text>
         </Flex>
       </FormLabel>
     </FormControl>
