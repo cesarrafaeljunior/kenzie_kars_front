@@ -17,10 +17,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
-import { ModalContainer } from "../Modal";
 import { Link } from "../Link";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
 
-export const Login = () => {
+export const Login = ({ onOpen }: iOnOpenF) => {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuthContext();
 
@@ -91,7 +91,21 @@ export const Login = () => {
         </InputRightElement>
       </InputGroup>
       <Flex justifyContent={"flex-end"}>
-        <ModalContainer.ModalRecoverPassword />
+        <Button
+          color={"grey2"}
+          fontSize={"14px"}
+          border="none"
+          bg="none"
+          onClick={onOpen}
+          _hover={{ bg: "none", border: "none", textDecoration: "underline" }}
+          fontWeight={"400"}
+          w={"max-content"}
+          h={"max-content"}
+          p={0}
+        >
+          {" "}
+          Esqueci minha senha{" "}
+        </Button>
       </Flex>
       <Button type="submit" variant={"brand1"}>
         Entrar
