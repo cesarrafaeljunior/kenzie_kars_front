@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }: iContextProps) => {
     setUser(null);
     router.push("/login");
   };
+
   return (
     <AuthContext.Provider value={{ login, logout }}>
       {children}
