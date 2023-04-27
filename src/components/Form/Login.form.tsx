@@ -59,6 +59,15 @@ export const Login = () => {
       />
 
       <InputGroup h={"100%"}>
+        <Field.InputField
+          label="Senha"
+          type={showPassword ? "text" : "password"}
+          placeholder="Digite sua senha"
+          name="password"
+          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
+          register={register("password")}
+          errors={errors.password?.message}
+        />
         <InputRightElement h={"48px"} top={"20px"}>
           <IconButton
             top="10px"
@@ -80,15 +89,6 @@ export const Login = () => {
             onClick={() => setShowPassword(!showPassword)}
           />
         </InputRightElement>
-        <Field.InputField
-          label="Senha"
-          type={showPassword ? "text" : "password"}
-          placeholder="Digite sua senha"
-          name="password"
-          borderColor={errors.password ? "feedback.alert1" : "#E9ECEF"}
-          register={register("password")}
-          errors={errors.email?.message}
-        />
       </InputGroup>
       <Flex justifyContent={"flex-end"}>
         <ModalContainer.ModalRecoverPassword />

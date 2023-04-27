@@ -1,23 +1,29 @@
-import { iContextProps, iAuthContext } from "@/interfaces/context.interfaces";
-import { useRouter } from "next/router";
-import { destroyCookie, setCookie } from "nookies";
-import { createContext, useContext } from "react";
-import { useUserContext } from "./user.context";
+import { iAuthContext, iContextProps } from "@/interfaces/context.interfaces";
 import { iLogin, iLoginResponse } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
-import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { setCookie, destroyCookie } from "nookies";
+import { createContext, useContext } from "react";
+import { useUserContext } from "./user.context";
+import { useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext<iAuthContext>({} as iAuthContext);
 
 export const AuthProvider = ({ children }: iContextProps) => {
   const router = useRouter();
   const { setUser, getUserProfile } = useUserContext();
-
+  const toast = useToast();
   const login = async (data: iLogin) => {
     await api
       .post<iLoginResponse>("/login", data)
       .then(async (resp) => {
-        toast.success("login realizado");
+        toast({
+          position: "top",
+          title: "Login realizado",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
 
         setCookie(null, "ms.token", resp.data.token, {
           maxAge: 60 * 60 * 7,
@@ -27,7 +33,14 @@ export const AuthProvider = ({ children }: iContextProps) => {
         router.push("/profile");
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast({
+          position: "top",
+          title: "Erro ao fazer login",
+          description: err.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       });
   };
 
@@ -36,6 +49,7 @@ export const AuthProvider = ({ children }: iContextProps) => {
     setUser(null);
     router.push("/login");
   };
+
   return (
     <AuthContext.Provider value={{ login, logout }}>
       {children}

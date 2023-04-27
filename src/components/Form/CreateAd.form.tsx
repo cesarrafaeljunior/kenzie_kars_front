@@ -33,7 +33,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       {brand}
     </option>
   ));
-
   const modelSelectOptions = modelList.map((model) => (
     <option key={model.id} value={model.id}>
       {model.name}
@@ -41,20 +40,19 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
   ));
 
   const fuelType = (fuel: number) => {
-    switch (fuel) {
-      case 1:
-        return "Flex";
-      case 2:
-        return "Híbrido";
-      case 3:
-        return "Elétrico";
-      default:
-        return "Flex";
+    if (fuel === 1) {
+      return "Flex";
+    } else if (fuel === 2) {
+      return "Híbrido";
+    } else if (fuel === 3) {
+      return "Elétrico";
     }
+    return "";
   };
 
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
+
     if (currentModel) {
       setYear(currentModel.year);
       setFipe(
@@ -65,6 +63,10 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       );
       setFuel(currentModel.fuel);
       setfuelDescription(fuelType(currentModel.fuel));
+      setValue("model", currentModel.name);
+      setValue("year", currentModel.year);
+      setValue("fipe_price", currentModel.value);
+      setValue("fuel", fuelType(currentModel.fuel));
       setValue("location", user!.address.cep);
     }
   }, [modelSelect, user]);

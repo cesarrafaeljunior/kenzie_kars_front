@@ -1,5 +1,14 @@
 import { iInput } from "@/interfaces/components.interfaces";
-import { FormControl, FormLabel, Flex, Input, Text } from "@chakra-ui/react";
+import { WarningIcon } from "@chakra-ui/icons";
+import {
+  FormControl,
+  FormLabel,
+  Flex,
+  Input,
+  Text,
+  Box,
+  Tooltip,
+} from "@chakra-ui/react";
 
 export const InputReadyOnlyField = ({
   label,
@@ -17,14 +26,44 @@ export const InputReadyOnlyField = ({
         justifyContent={"center"}
         gap={"8px"}
       >
-        <Text
-          fontFamily="Inter, sans-serif"
-          fontSize="14px"
-          fontWeight="600"
-          color="#212529"
-        >
-          {label}
-        </Text>
+        <Flex>
+          <Box>
+            <Text
+              fontFamily="Inter, sans-serif"
+              fontSize="14px"
+              fontWeight="600"
+              color="#212529"
+            >
+              {label}
+            </Text>
+          </Box>
+          <Box>
+            <>
+              {errors ? (
+                <Tooltip
+                  label={errors}
+                  hasArrow
+                  shouldWrapChildren
+                  placement="right"
+                  color="grey.whiteFixed"
+                  bgColor="feedback.alert1"
+                  border="1px solid"
+                  borderRadius={"md"}
+                  fontSize={"14px"}
+                  p={2}
+                >
+                  <WarningIcon
+                    boxSize={"1rem"}
+                    color={"feedback.alert1"}
+                    m={1}
+                  />
+                </Tooltip>
+              ) : (
+                <></>
+              )}
+            </>
+          </Box>
+        </Flex>
         <Flex flexDirection={"column"}>
           <Input
             type={type}
@@ -42,9 +81,6 @@ export const InputReadyOnlyField = ({
             fontFamily="Inter, sans-serif"
             {...register}
           />
-          <Text color="feedback.alert1" fontSize={"14px"}>
-            {errors}
-          </Text>
         </Flex>
       </FormLabel>
     </FormControl>
