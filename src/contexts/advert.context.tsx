@@ -15,6 +15,11 @@ const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 export const AdvertProvider = ({ children }: iContextProps) => {
   const [modalVehicleImage, setModalVehicleImage] = useState<string>("");
   const [advertsList, setAdvertsList] = useState<iAdvert[]>([]);
+  const [brandsList, setBrandsList] = useState<Array<string>>([]);
+  const [brandSelect, setBrandSelect] = useState<string>("");
+  const [modelList, setModelList] = useState<[]>([]);
+  const cookies = parseCookies();
+  const token = cookies["ms.token"];
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
 
@@ -37,12 +42,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       .then(({ data }) => setAdvertsList(data))
       .catch((err) => console.log(err));
   };
-
-  const [brandsList, setBrandsList] = useState<Array<string>>([]);
-  const [brandSelect, setBrandSelect] = useState<string>("");
-  const [modelList, setModelList] = useState<[]>([]);
-  const cookies = parseCookies();
-  const token = cookies["ms.token"];
 
   useEffect(() => {
     apiKenzieKars

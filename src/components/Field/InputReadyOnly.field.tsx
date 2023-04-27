@@ -67,11 +67,11 @@ export const InputReadyOnlyField = ({
         <Flex flexDirection={"column"}>
           <Input
             type={type}
+            isDisabled={true}
             placeholder={placeholder}
-            isReadOnly={true}
-            value={placeholder}
             w="100%"
             height="48px"
+            color={"grey.0"}
             _placeholder={{ color: "#868E96" }}
             border="solid 1px transparent"
             borderColor={borderColor}

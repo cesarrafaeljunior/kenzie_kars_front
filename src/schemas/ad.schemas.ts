@@ -56,4 +56,11 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
       .required("O campo imagem é obrigatório"),
     location: yup.string().length(8).required("O campo location é obrigatório"),
     is_avaliable: yup.boolean().required().default(true),
+    galery: yup
+      .array(
+        yup.object({
+          image: yup.string().required(),
+        })
+      )
+      .default([]),
   });

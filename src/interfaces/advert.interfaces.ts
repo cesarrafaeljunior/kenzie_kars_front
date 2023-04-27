@@ -52,4 +52,9 @@ export interface iAdvertisedRequest {
   cover_image: string;
   location: string;
   is_avaliable: boolean;
+  galery: { image: string }[];
+}
+
+export interface iAdvertGallery {
+  image: string;
 }

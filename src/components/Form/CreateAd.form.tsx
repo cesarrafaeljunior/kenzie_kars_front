@@ -1,13 +1,29 @@
 import { useAdvertContext } from "@/contexts/advert.context";
 import { useUserContext } from "@/contexts/user.context";
-import { iAdvertisedRequest } from "@/interfaces/advert.interfaces";
+import {
+  iAdvertGallery,
+  iAdvertisedRequest,
+} from "@/interfaces/advert.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { advertisedRequestSchema } from "@/schemas/ad.schemas";
-import { Box, Button, Flex, Select, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Select,
+  Text,
+  IconButton,
+} from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export const CreateAd = ({ onOpen }: iOnOpenF) => {
   const { brandsList, setBrandSelect, modelList, createAdv } =
@@ -21,12 +37,25 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
   } = useForm<iAdvertisedRequest>({
     resolver: yupResolver(advertisedRequestSchema),
   });
-
-  const [modelSelect, setModelSelect] = useState();
-  const [fuel, setFuel] = useState<number>();
-  const [fuelDescription, setfuelDescription] = useState<string>("");
-  const [year, setYear] = useState<string>("");
+  const [modelSelect, setModelSelect] = useState("");
   const [fipe, setFipe] = useState<string>("");
+  const [gallery, setGallery] = useState<iAdvertGallery[]>([{ image: "" }]);
+
+  const handleAddImage = () => {
+    setGallery([...gallery, { image: "" }]);
+  };
+
+  const handleImageChange = (index: number, value: string) => {
+    const newGallery = [...gallery];
+    newGallery[index].image = value;
+    setGallery(newGallery);
+  };
+
+  const handleRemoveImage = (index: number) => {
+    const newGallery = [...gallery];
+    newGallery.splice(index, 1);
+    setGallery(newGallery);
+  };
 
   const brandSelectOptions = brandsList.map((brand) => (
     <option key={brand} value={brand}>
@@ -54,22 +83,13 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
 
     if (currentModel) {
-      setYear(currentModel.year);
-      setFipe(
-        currentModel.value.toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        })
-      );
-      setFuel(currentModel.fuel);
-      setfuelDescription(fuelType(currentModel.fuel));
       setValue("model", currentModel.name);
       setValue("year", currentModel.year);
       setValue("fipe_price", currentModel.value);
       setValue("fuel", fuelType(currentModel.fuel));
       setValue("location", user!.address.cep);
     }
-  }, [modelSelect, user]);
+  }, [modelSelect, setValue]);
 
   const submit = async (data: iAdvertisedRequest) => {
     await createAdv(data, onOpen);
@@ -103,7 +123,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       <Select
         isRequired
         name="brand"
-        borderColor={errors.brand ? "feedback.alert1" : "#E9ECEF"}
         placeholder="Escolha uma marca"
         onChange={(e: any) => {
           setBrandSelect(e.target.value);
@@ -123,7 +142,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         onChange={(e: any) => {
           setModelSelect(e.target.value);
         }}
-        borderColor={errors.model ? "feedback.alert1" : "#E9ECEF"}
       >
         {modelSelectOptions}
       </Select>
@@ -133,17 +151,15 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
           label="Ano"
           type="text"
           name="year"
-          placeholder={year ? year : "2023"}
-          errors={errors.year?.message}
-          borderColor={errors.year ? "feedback.alert1" : "#E9ECEF"}
+          placeholder={"2023"}
+          register={register("year")}
         />
         <Field.InputReadyOnlyField
           label="Combustível"
           type="text"
           name="fuel"
-          placeholder={fuelDescription ? fuelDescription : "Gasolina / Etanol"}
-          errors={errors.fuel?.message}
-          borderColor={errors.fuel ? "feedback.alert1" : "#E9ECEF"}
+          placeholder={"Gasolina / Etanol"}
+          register={register("fuel")}
         />
       </Flex>
       <Flex>
@@ -168,14 +184,14 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       </Flex>
       <Flex>
         <Field.InputReadyOnlyField
-          isReadOnly
           label="Preço tabela FIPE"
           type="string"
           name="fipe_price"
-          placeholder={fipe ? `${fipe}` : "R$ 50.000,00"}
-          errors={errors.fipe_price?.message}
-          borderColor={errors.fipe_price ? "feedback.alert1" : "#E9ECEF"}
+          placeholder="R$ 51.000,00"
+          value={fipe}
+          register={register("fipe_price")}
         />
+
         <Field.InputField
           label="Preço"
           type="number"
@@ -204,14 +220,42 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         register={register("cover_image")}
       />
 
-      <Field.InputField
-        label="1° Imagem da galeria"
-        type="text"
-        name="text"
-        placeholder="https://image.com"
-      />
+      {gallery.map((image, index) => (
+        <FormControl key={index}>
+          <FormLabel
+            htmlFor={`imagem${index}`}
+            fontFamily={"body"}
+            fontWeight={"bold"}
+            fontSize={"14px"}
+          >
+            {index + 1}ª imagem da galeria
+          </FormLabel>
+          <InputGroup>
+            <Input
+              id={`imagem${index}`}
+              value={image.image}
+              onChange={(e) => handleImageChange(index, e.target.value)}
+            />
+            <InputRightElement>
+              <IconButton
+                color="grey.3"
+                variant="outline"
+                size="sm"
+                aria-label="delete"
+                icon={<DeleteIcon />}
+                onClick={() => handleRemoveImage(index)}
+              />
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+      ))}
 
-      <Button variant={"brandOpacity"} size={"sm"} maxWidth={"320px"}>
+      <Button
+        onClick={handleAddImage}
+        variant={"brandOpacity"}
+        size={"sm"}
+        maxWidth={"320px"}
+      >
         Adicionar campo para imagem da galeria
       </Button>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
