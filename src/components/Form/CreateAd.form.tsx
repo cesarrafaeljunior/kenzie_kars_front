@@ -27,36 +27,31 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
   const [fuelDescription, setfuelDescription] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [fipe, setFipe] = useState<string>("");
-  const brandSelectOptions = [];
-  const modelSelectOptions = [];
 
-  for (let i = 0; i < brandsList.length; i++) {
-    brandSelectOptions.push(
-      <option key={brandsList[i]} value={brandsList[i]}>
-        {brandsList[i]}
-      </option>
-    );
-  }
-  for (let i = 0; i < modelList.length; i++) {
-    modelSelectOptions.push(
-      <option key={modelList[i].id} value={modelList[i].id}>
-        {modelList[i].name}
-      </option>
-    );
-  }
+  const brandSelectOptions = brandsList.map((brand) => (
+    <option key={brand} value={brand}>
+      {brand}
+    </option>
+  ));
+  const modelSelectOptions = modelList.map((model) => (
+    <option key={model.id} value={model.id}>
+      {model.name}
+    </option>
+  ));
+
+  const fuelType = (fuel: number) => {
+    if (fuel === 1) {
+      return "Flex";
+    } else if (fuel === 2) {
+      return "Híbrido";
+    } else if (fuel === 3) {
+      return "Elétrico";
+    }
+    return "";
+  };
 
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
-    const fuelType = (fuel: number) => {
-      if (fuel === 1) {
-        return "Flex";
-      } else if (fuel === 2) {
-        return "Híbrido";
-      } else if (fuel === 3) {
-        return "Elétrico";
-      }
-      return "";
-    };
 
     if (currentModel) {
       setYear(currentModel.year);
@@ -78,7 +73,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
 
   const submit = async (data: iAdvertisedRequest) => {
     await createAdv(data, onOpen);
-    console.log(data);
   };
 
   return (
