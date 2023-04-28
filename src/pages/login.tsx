@@ -3,8 +3,19 @@ import { Form } from "@/components/Form";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ModalContainer } from "@/components/Modal";
+import { parseCookies } from "nookies";
+import { useRouter } from "next/router";
 
 const loginPage = () => {
+  const cookies = parseCookies();
+  const token = cookies["ms.token"];
+
+  const router = useRouter();
+
+  if (token) {
+    router.push("/profile");
+  }
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
