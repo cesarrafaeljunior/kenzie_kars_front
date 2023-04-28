@@ -103,8 +103,7 @@ export const Login = ({ onOpen }: iOnOpenF) => {
           h={"max-content"}
           p={0}
         >
-          {" "}
-          Esqueci minha senha{" "}
+          Esqueci minha senha
         </Button>
       </Flex>
       <Button type="submit" variant={"brand1"}>
