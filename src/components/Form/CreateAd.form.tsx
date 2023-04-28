@@ -280,25 +280,27 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
             fontSize={"14px"}
           >
             {index + 1}ª imagem da galeria
-          </FormLabel>
-          <InputGroup>
-            <Input
-              id={`imagem${index}`}
-              placeholder="http://site.com/imagem.jpg"
-              value={image.image}
-              onChange={(e) => handleImageChange(index, e.target.value)}
-            />
-            <InputRightElement>
-              <IconButton
-                color="grey.3"
-                variant="outline"
-                size="sm"
-                aria-label="delete"
-                icon={<DeleteIcon />}
-                onClick={() => handleRemoveImage(index)}
+            <InputGroup>
+              <Input
+                borderColor={errors.galery ? "feedback.alert1" : "#E9ECEF"}
+                id={`imagem${index}`}
+                placeholder="http://site.com/imagem.jpg"
+                value={image.image}
+                onChange={(e) => handleImageChange(index, e.target.value)}
               />
-            </InputRightElement>
-          </InputGroup>
+
+              <InputRightElement>
+                <IconButton
+                  color="grey.3"
+                  variant="outline"
+                  size="sm"
+                  aria-label="delete"
+                  icon={<DeleteIcon />}
+                  onClick={() => handleRemoveImage(index)}
+                />
+              </InputRightElement>
+            </InputGroup>
+          </FormLabel>
         </FormControl>
       ))}
 

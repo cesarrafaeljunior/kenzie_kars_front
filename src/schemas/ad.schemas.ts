@@ -55,7 +55,7 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
     galery: yup
       .array(
         yup.object({
-          image: yup.string().required(),
+          image: yup.string().url().required(),
         })
       )
       .default([]),
