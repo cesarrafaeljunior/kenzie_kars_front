@@ -8,13 +8,18 @@ import {
   IconButton,
   Button,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
+import { api } from "@/services/api";
+import { iTokenProps } from "@/pages/recoverPassword/[token]";
+import { destroyCookie } from "nookies";
+import { useRouter } from "next/router";
 
-export const RecoveryPassword = () => {
+export const RecoveryPassword = ({ token }: iTokenProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,8 +31,24 @@ export const RecoveryPassword = () => {
     resolver: yupResolver(userRecoverPassword),
   });
 
+  const toast = useToast();
+  const router = useRouter();
+
   const submitPassword = (data: iUserRecoverPassword) => {
-    console.log(data);
+    api
+      .patch(`/users/resetPassword/${token}`, data)
+      .then((res) => {
+        toast({
+          position: "top",
+          title: res.data.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        destroyCookie(null, "ms.resetToken");
+        router.push("/login");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
