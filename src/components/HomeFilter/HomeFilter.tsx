@@ -1,9 +1,10 @@
 import { useAdvertContext } from "@/contexts/advert.context";
 import { iFilterList } from "@/interfaces/components.interfaces";
 import { Box, Button, Heading } from "@chakra-ui/react";
+import { BetweenFilter } from "./BetweenFilter";
 
-export const HomeFilter = () => {
-  const { advertsList, loadAdverts, filterParams, setFilterParams } =
+export const HomeFilters = () => {
+  const { advertsList, loadAdverts, setFilterParams, submitAdvertFilter } =
     useAdvertContext();
 
   const filterObj: iFilterList = {
@@ -35,14 +36,6 @@ export const HomeFilter = () => {
       ))
   );
 
-  const submitFilter = (target: HTMLButtonElement, filter: string) => {
-    setFilterParams((oldFilterParams) => {
-      oldFilterParams[filter] = target.innerText;
-      loadAdverts(oldFilterParams);
-      return oldFilterParams;
-    });
-  };
-
   const resetFilter = () => {
     setFilterParams({});
     loadAdverts();
@@ -50,40 +43,45 @@ export const HomeFilter = () => {
 
   return (
     <>
-      {Object.keys(filterObj).map((filterHeader) => (
-        <Box
-          key={filterHeader}
-          gap={"3px"}
-          flexDirection={"column"}
-          alignItems={"flex-start"}
-          display={"flex"}
-        >
-          <Heading marginBottom={"10px"} fontSize={"28px"}>
-            {filterHeader}
-          </Heading>
-          {filterObj[filterHeader].values.map((item) => (
-            <Button
-              key={item}
-              fontSize={"20px"}
-              display={"box"}
-              textAlign={"left"}
-              width={"min-content"}
-              padding={"0"}
-              height={"min-content"}
-              color={"grey.3"}
-              variant={""}
-              onClick={(e) =>
-                submitFilter(
-                  e.target as HTMLButtonElement,
-                  filterObj[filterHeader].name
-                )
-              }
-            >
-              {item}
-            </Button>
-          ))}
-        </Box>
-      ))}
+      {Object.keys(filterObj).map((filterHeader) =>
+        filterObj[filterHeader].values.length == 0 ? null : (
+          <Box
+            key={filterHeader}
+            gap={"3px"}
+            flexDirection={"column"}
+            alignItems={"flex-start"}
+            display={"flex"}
+          >
+            <Heading marginBottom={"10px"} fontSize={"28px"}>
+              {filterHeader}
+            </Heading>
+            {filterObj[filterHeader].values.map((item) => (
+              <Button
+                key={item}
+                fontSize={"20px"}
+                display={"box"}
+                textAlign={"left"}
+                width={"min-content"}
+                padding={"0"}
+                height={"min-content"}
+                color={"grey.3"}
+                variant={""}
+                onClick={(e) => {
+                  const target = e.target as HTMLButtonElement;
+                  submitAdvertFilter(
+                    filterObj[filterHeader].name,
+                    target.innerText
+                  );
+                }}
+              >
+                {item}
+              </Button>
+            ))}
+          </Box>
+        )
+      )}
+      <BetweenFilter headingName={"KM"} requestName={"mileage"} />
+      <BetweenFilter headingName={"Preço"} requestName={"price"} />
       <Button marginBottom={"20px"} variant={"brand1"} onClick={resetFilter}>
         Limpar filtros
       </Button>

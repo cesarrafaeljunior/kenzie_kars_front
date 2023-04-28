@@ -29,6 +29,13 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       .catch((err) => console.log(err));
   };
 
+  const submitAdvertFilter = (key: string, value: string) => {
+    const filterObj = filterParams;
+    filterObj[key] = value;
+    setFilterParams(filterObj);
+    loadAdverts(filterObj);
+  };
+
   const loadAdverts = async (filterParams?: iFilterParams) => {
     await api
       .get("/advertised", {
@@ -100,6 +107,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         loadAdverts,
         filterParams,
         setFilterParams,
+        submitAdvertFilter,
       }}
     >
       {children}
