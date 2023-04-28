@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: iContextProps) => {
   };
 
   const logout = () => {
-    destroyCookie(null, "ms.token");
+    destroyCookie(null, "ms.token", { path: "/" });
     setUser(null);
     router.push("/login");
   };
