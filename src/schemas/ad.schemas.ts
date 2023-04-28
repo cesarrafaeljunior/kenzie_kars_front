@@ -5,10 +5,6 @@ import { ObjectSchema } from "yup";
 export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
   .object()
   .shape({
-    title: yup
-      .string()
-      .max(100, "O campo título deve conter menos de 100 caracteres")
-      .required("O campo título é obrigatório"),
     brand: yup
       .string()
       .max(50, "O campo marca deve conter menos de 50 caracteres")

@@ -133,15 +133,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       onSubmit={handleSubmit(submit)}
     >
       <Text>Informações de veículo</Text>
-      <Field.InputField
-        label="Titulo do Anuncio"
-        type="text"
-        name="title"
-        placeholder="Digite um título"
-        borderColor={errors.title ? "feedback.alert1" : "#E9ECEF"}
-        errors={errors.title?.message}
-        register={register("title")}
-      />
 
       <Text fontSize="sm" fontWeight={"semibold"}>
         Marca
