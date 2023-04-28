@@ -5,13 +5,14 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useRouter } from "next/router";
 import * as yup from "yup";
+import { parseCookies } from "nookies";
+import { api } from "@/services/api";
 
-const RecoverPage = ({ token }: any) => {
-  const router = useRouter();
+export interface iTokenProps {
+  token: string;
+}
 
-  if (!token) {
-    router.push("/");
-  }
+const RecoverPage = ({ token }: iTokenProps) => {
   return (
     <>
       <Header />
@@ -20,32 +21,37 @@ const RecoverPage = ({ token }: any) => {
         backgroundColor={"grey.8"}
         flexDirection={"column"}
       >
-        <Form.RecoveryPassword />
+        <Form.RecoveryPassword token={token} />
       </Center>
       <Footer />
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { token } = query;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { token } = ctx.query;
 
-  const schema = yup.object().shape({
-    token: yup.string().uuid().required(),
-  });
+  const schemaToken = yup.string().uuid().required();
 
-  return schema
-    .validate({ token })
-    .then(() => {
-      return {
-        props: {
-          token,
-        },
-      };
-    })
-    .catch(() => {
+  try {
+    schemaToken.validateSync(token);
+
+    const cookies = parseCookies(ctx);
+
+    const resetToken = cookies["ms.resetToken"];
+
+    if (token !== resetToken) {
       return { redirect: { destination: "/", permanent: false } };
-    });
+    }
+
+    return {
+      props: {
+        token,
+      },
+    };
+  } catch (error) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
 };
 
 export default RecoverPage;
