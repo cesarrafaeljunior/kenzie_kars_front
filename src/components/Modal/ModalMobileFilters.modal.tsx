@@ -7,11 +7,9 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Heading,
-  Input,
   Box,
 } from "@chakra-ui/react";
-import { HomeFilters } from "../HomeFilter";
+import { HomeFilters } from "../HomeFilter/HomeFilter";
 
 export const ModalMobileFilters = ({ isOpen, onClose }: iModalProps) => {
   return (
@@ -22,7 +20,7 @@ export const ModalMobileFilters = ({ isOpen, onClose }: iModalProps) => {
         <ModalCloseButton color={"grey.4"} />
         <ModalBody>
           <Box flexDirection={"column"} gap={"35px"} display={"flex"}>
-            <HomeFilters.HomeFilter />
+            <HomeFilters />
             <Button marginBottom={"20px"} variant={"brand1"}>
               Ver anúncios
             </Button>
