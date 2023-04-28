@@ -4,8 +4,7 @@ import { Box, Heading, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export const BetweenFilter = ({ headingName, requestName }: iBetweenFilter) => {
-  const { filterParams, setFilterParams, submitAdvertFilter } =
-    useAdvertContext();
+  const { filterParams, submitAdvertFilter } = useAdvertContext();
   const [minValue, setMinValue] = useState("");
   const [maxValue, setMaxValue] = useState("");
 
