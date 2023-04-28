@@ -20,7 +20,7 @@ export const ModalEditProfile = ({ isOpen, onClose }: iModalProps) => {
           </ModalHeader>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalBody paddingBottom={"28px"}>
-            <Form.EditProfile />
+            <Form.EditProfile onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -7,8 +7,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
+import { iCloseF } from "@/interfaces/components.interfaces";
 
-export const EditAddress = () => {
+export const EditAddress = ({ onClose }: iCloseF) => {
   const {
     register,
     handleSubmit,
@@ -96,7 +97,12 @@ export const EditAddress = () => {
         />
       </Flex>
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
-        <Button width={"126px"} variant={"negative"}>
+        <Button
+          type="button"
+          onClick={onClose}
+          width={"126px"}
+          variant={"negative"}
+        >
           Cancelar
         </Button>
         <Button type="submit" width={"193px"} variant={"brand1"}>
