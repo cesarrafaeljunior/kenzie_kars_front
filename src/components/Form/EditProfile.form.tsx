@@ -6,8 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
+import { iCloseF } from "@/interfaces/components.interfaces";
 
-export const EditProfile = () => {
+export const EditProfile = ({ onClose }: iCloseF) => {
   const { updateUser, user, softDeleteUser } = useUserContext();
 
   const onClickDeleteButton = async () => {
@@ -105,7 +106,12 @@ export const EditProfile = () => {
         placeholder="Insira a nova senha do usuário."
       />
       <Flex alignContent={"center"} justifyContent={"flex-end"} gap={"10px"}>
-        <Button width={"126px"} variant={"negative"}>
+        <Button
+          type="button"
+          onClick={onClose}
+          width={"126px"}
+          variant={"negative"}
+        >
           Cancelar
         </Button>
         <Button width={"126px"} onClick={onClickDeleteButton} variant={"alert"}>

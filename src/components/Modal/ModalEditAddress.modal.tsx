@@ -20,7 +20,7 @@ export const ModalEditAddress = ({ onClose, isOpen }: iModalProps) => {
           </ModalHeader>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalBody paddingBottom={"28px"}>
-            <Form.EditAddress />
+            <Form.EditAddress onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
