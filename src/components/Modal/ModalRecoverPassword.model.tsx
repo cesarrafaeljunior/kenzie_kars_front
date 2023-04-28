@@ -24,7 +24,7 @@ export const ModalRecoverPassword = ({ isOpen, onClose }: iModalProps) => {
             Para recuperar sua senha, informe seu endereço de email que nós
             enviaremos um link para a alteração da senha
           </Text>
-          <Form.RecoverySubmitEmail />
+          <Form.RecoverySubmitEmail onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>

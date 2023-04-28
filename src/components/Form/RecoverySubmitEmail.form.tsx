@@ -1,11 +1,14 @@
 import { iUserRecoverEmail } from "@/interfaces/user.interfaces";
 import { userRecoverEmail } from "@/schemas/user.schemas";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
+import { api } from "@/services/api";
+import { iCloseF } from "@/interfaces/components.interfaces";
+import { setCookie } from "nookies";
 
-export const RecoverySubmitEmail = () => {
+export const RecoverySubmitEmail = ({ onClose }: iCloseF) => {
   const {
     register,
     handleSubmit,
@@ -14,8 +17,26 @@ export const RecoverySubmitEmail = () => {
     resolver: yupResolver(userRecoverEmail),
   });
 
-  const submitEmail = (data: iUserRecoverEmail) => {
-    console.log(data);
+  const toast = useToast();
+
+  const submitEmail = async (data: iUserRecoverEmail) => {
+    api
+      .post("/users/resetPassword", data)
+      .then((res) => {
+        toast({
+          position: "top",
+          title: res.data.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        onClose();
+        setCookie(null, "ms.resetToken", res.data.resetToken, {
+          maxAge: 60 * 60 * 7,
+          path: "/recoverPassword",
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
