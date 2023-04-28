@@ -1,18 +1,18 @@
-import { Box, Button, Center, useDisclosure } from "@chakra-ui/react";
+import { Center, useDisclosure } from "@chakra-ui/react";
 import { Form } from "@/components/Form";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ModalContainer } from "@/components/Modal";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { useUserContext } from "@/contexts/user.context";
 
 const loginPage = () => {
-  const cookies = parseCookies();
-  const token = cookies["ms.token"];
-
   const router = useRouter();
+  const { user } = useUserContext();
 
-  if (token) {
+  if (user) {
     router.push("/profile");
   }
 
