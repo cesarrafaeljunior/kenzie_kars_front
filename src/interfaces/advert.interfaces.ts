@@ -6,7 +6,6 @@ export interface iAdvertListByUser extends iUser {
 
 export interface iAdvert {
   id: string;
-  title: string;
   brand: string;
   fuel: string;
   color: string;
@@ -39,7 +38,6 @@ export interface iAdvertObject {
 }
 
 export interface iAdvertisedRequest {
-  title: string;
   brand: string;
   model: string;
   fuel: string;
@@ -52,4 +50,9 @@ export interface iAdvertisedRequest {
   cover_image: string;
   location: string;
   is_avaliable: boolean;
+  galery: { image: string }[];
+}
+
+export interface iAdvertGalery {
+  image: string;
 }

@@ -78,7 +78,7 @@ export default ({ advert }: iDetailHomeProps) => {
               fontSize={"20px"}
               color={"grey.1"}
             >
-              {advert.title}
+              {advert.model}
             </Heading>
             <Flex gap={"12px"} mb={"24px"}>
               <Text

@@ -12,6 +12,7 @@ export interface iInput {
   type: HTMLInputTypeAttribute;
   name: string;
   placeholder: string;
+  placeholderTextColor?: string;
   register?: UseFormRegisterReturn;
   borderColor?: string;
   errors?: string;
