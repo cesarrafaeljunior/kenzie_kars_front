@@ -5,10 +5,6 @@ import { ObjectSchema } from "yup";
 export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
   .object()
   .shape({
-    title: yup
-      .string()
-      .max(100, "O campo título deve conter menos de 100 caracteres")
-      .required("O campo título é obrigatório"),
     brand: yup
       .string()
       .max(50, "O campo marca deve conter menos de 50 caracteres")
@@ -56,4 +52,18 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
       .required("O campo imagem é obrigatório"),
     location: yup.string().length(8).required("O campo location é obrigatório"),
     is_avaliable: yup.boolean().required().default(true),
+    galery: yup
+      .array(
+        yup.object({
+          image: yup
+            .string()
+            .url()
+            .matches(
+              /\.(jpeg|jpg|gif|png)$/i,
+              "a URl da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
+            )
+            .required(),
+        })
+      )
+      .default([]),
   });
