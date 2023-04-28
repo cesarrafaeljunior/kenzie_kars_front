@@ -1,7 +1,7 @@
 import { useAdvertContext } from "@/contexts/advert.context";
 import { useUserContext } from "@/contexts/user.context";
 import {
-  iAdvertGallery,
+  iAdvertGalery,
   iAdvertisedRequest,
 } from "@/interfaces/advert.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
@@ -38,23 +38,40 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     resolver: yupResolver(advertisedRequestSchema),
   });
   const [modelSelect, setModelSelect] = useState("");
-  const [fipe, setFipe] = useState<string>("");
-  const [gallery, setGallery] = useState<iAdvertGallery[]>([{ image: "" }]);
-
+  const [fipeValue, setFipeValue] = useState("");
+  const [priceValue, setPriceValue] = useState(0);
+  const [galery, setGalery] = useState<iAdvertGalery[]>([{ image: "" }]);
+  const carColors = [
+    "preto",
+    "branco",
+    "cinza",
+    "prata",
+    "vermelho",
+    "azul",
+    "verde",
+    "amarelo",
+    "laranja",
+    "marrom",
+    "bege",
+    "roxo",
+    "outros",
+  ];
   const handleAddImage = () => {
-    setGallery([...gallery, { image: "" }]);
+    setGalery([...galery, { image: "" }]);
   };
 
   const handleImageChange = (index: number, value: string) => {
-    const newGallery = [...gallery];
-    newGallery[index].image = value;
-    setGallery(newGallery);
+    const updatedGalery = [...galery];
+    updatedGalery[index].image = value;
+    setGalery(updatedGalery);
+
+    setValue("galery", updatedGalery);
   };
 
   const handleRemoveImage = (index: number) => {
-    const newGallery = [...gallery];
-    newGallery.splice(index, 1);
-    setGallery(newGallery);
+    const newGalery = [...galery];
+    newGalery.splice(index, 1);
+    setGalery(newGalery);
   };
 
   const brandSelectOptions = brandsList.map((brand) => (
@@ -79,10 +96,19 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     return "";
   };
 
+  function formatCurrency(value: number) {
+    const formatter = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formatter.format(value);
+  }
+
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
 
     if (currentModel) {
+      setFipeValue(formatCurrency(currentModel.value));
       setValue("model", currentModel.name);
       setValue("year", currentModel.year);
       setValue("fipe_price", currentModel.value);
@@ -122,6 +148,8 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       </Text>
       <Select
         isRequired
+        fontSize={"md"}
+        size="lg"
         name="brand"
         placeholder="Escolha uma marca"
         onChange={(e: any) => {
@@ -136,6 +164,8 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         Modelo
       </Text>
       <Select
+        fontSize={"md"}
+        size="lg"
         isRequired
         name="model"
         placeholder="Escolha um modelo"
@@ -172,26 +202,56 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
           borderColor={errors.mileage ? "feedback.alert1" : "#E9ECEF"}
           register={register("mileage")}
         />
-        <Field.InputField
-          label="Cor"
-          type="text"
-          name="color"
-          placeholder="Branco"
-          errors={errors.color?.message}
-          borderColor={errors.color ? "feedback.alert1" : "#E9ECEF"}
-          register={register("color")}
-        />
+
+        <FormControl>
+          <FormLabel
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            gap={"8px"}
+          >
+            <Flex>
+              <Box>
+                <Text
+                  fontFamily="Inter, sans-serif"
+                  fontSize="14px"
+                  fontWeight="600"
+                  color="#212529"
+                >
+                  Cores
+                </Text>
+              </Box>
+            </Flex>
+            <Flex flexDirection={"column"}>
+              <Select
+                name={"color"}
+                isRequired
+                placeholder="Selecione uma opção"
+                fontFamily="Inter, sans-serif"
+                fontSize={"md"}
+                size="lg"
+                onChange={(e: any) => {
+                  setValue("color", e.target.value);
+                }}
+              >
+                {carColors.map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </Select>
+            </Flex>
+          </FormLabel>
+        </FormControl>
       </Flex>
       <Flex>
         <Field.InputReadyOnlyField
+          isReadOnly
           label="Preço tabela FIPE"
           type="string"
           name="fipe_price"
-          placeholder="R$ 51.000,00"
-          value={fipe}
-          register={register("fipe_price")}
+          placeholder={fipeValue ? `${fipeValue}` : "R$ 50.000,00"}
         />
-
         <Field.InputField
           label="Preço"
           type="number"
@@ -214,13 +274,13 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         label="Imagem da capa"
         type="text"
         name="cover_image"
-        placeholder="https://image.com"
+        placeholder="http://site.com/imagem.jpg"
         errors={errors.cover_image?.message}
         borderColor={errors.cover_image ? "feedback.alert1" : "#E9ECEF"}
         register={register("cover_image")}
       />
 
-      {gallery.map((image, index) => (
+      {galery.map((image, index) => (
         <FormControl key={index}>
           <FormLabel
             htmlFor={`imagem${index}`}
@@ -233,6 +293,7 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
           <InputGroup>
             <Input
               id={`imagem${index}`}
+              placeholder="http://site.com/imagem.jpg"
               value={image.image}
               onChange={(e) => handleImageChange(index, e.target.value)}
             />

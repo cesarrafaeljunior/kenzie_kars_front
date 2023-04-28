@@ -55,6 +55,6 @@ export interface iAdvertisedRequest {
   galery: { image: string }[];
 }
 
-export interface iAdvertGallery {
+export interface iAdvertGalery {
   image: string;
 }
