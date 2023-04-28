@@ -47,6 +47,10 @@ export interface iOnOpenF {
   onOpen: () => void;
 }
 
+export interface iCloseF {
+  onClose: () => void;
+}
+
 export interface iFilterList {
   [key: string]: { name: string; values: string[] };
 }
