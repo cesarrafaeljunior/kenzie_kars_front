@@ -28,6 +28,7 @@ export interface iAdvertContext {
   loadAdverts: (filterParams?: iFilterParams) => Promise<void>;
   filterParams: iFilterParams;
   setFilterParams: Dispatch<SetStateAction<iFilterParams>>;
+  submitAdvertFilter: (key: string, value: string) => void;
 }
 
 export interface iUserContext {

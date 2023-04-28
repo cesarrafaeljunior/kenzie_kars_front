@@ -55,3 +55,8 @@ export interface iFilterList {
 export interface iFilterParams {
   [key: string]: string;
 }
+
+export interface iBetweenFilter {
+  headingName: string;
+  requestName: string;
+}
