@@ -19,7 +19,8 @@ export const AuthProvider = ({ children }: iContextProps) => {
       .then(async (resp) => {
         toast({
           position: "top",
-          title: "Login realizado",
+          title: "Login realizado.",
+          description: "Logo você será redirecionado para o site.",
           status: "success",
           duration: 3000,
           isClosable: true,
