@@ -55,7 +55,14 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
     galery: yup
       .array(
         yup.object({
-          image: yup.string().url().required(),
+          image: yup
+            .string()
+            .url()
+            .matches(
+              /\.(jpeg|jpg|gif|png)$/i,
+              "a URl da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
+            )
+            .required(),
         })
       )
       .default([]),

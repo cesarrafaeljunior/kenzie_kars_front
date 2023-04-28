@@ -282,6 +282,7 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
             {index + 1}ª imagem da galeria
             <InputGroup>
               <Input
+                isRequired
                 borderColor={errors.galery ? "feedback.alert1" : "#E9ECEF"}
                 id={`imagem${index}`}
                 placeholder="http://site.com/imagem.jpg"
