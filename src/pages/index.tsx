@@ -1,6 +1,6 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { HomeFilters } from "@/components/HomeFilter";
+import { HomeFilters } from "@/components/HomeFilter/HomeFilter";
 import { ModalContainer } from "@/components/Modal";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
@@ -70,7 +70,7 @@ export default function Home() {
           display={{ base: "none", lg: "flex" }}
           as="aside"
         >
-          <HomeFilters.HomeFilter />
+          <HomeFilters />
         </Box>
         <Box>
           <List
