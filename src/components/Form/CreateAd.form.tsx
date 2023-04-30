@@ -20,10 +20,11 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect, ChangeEvent, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { formatValues } from "@/utils/valuesFormat.util";
 
 export const CreateAd = ({ onOpen }: iOnOpenF) => {
   const { brandsList, setBrandSelect, modelList, createAdv } =
@@ -39,7 +40,6 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
   });
   const [modelSelect, setModelSelect] = useState("");
   const [fipeValue, setFipeValue] = useState("");
-  const [priceValue, setPriceValue] = useState(0);
   const [galery, setGalery] = useState<iAdvertGalery[]>([{ image: "" }]);
   const carColors = [
     "preto",
@@ -96,19 +96,11 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     return "";
   };
 
-  function formatCurrency(value: number) {
-    const formatter = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-    return formatter.format(value);
-  }
-
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
 
     if (currentModel) {
-      setFipeValue(formatCurrency(currentModel.value));
+      setFipeValue(formatValues(currentModel.value, "BRL"));
       setValue("model", currentModel.name);
       setValue("year", currentModel.year);
       setValue("fipe_price", currentModel.value);
@@ -186,12 +178,16 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       <Flex>
         <Field.InputField
           label="Quilometragem"
-          type="number"
+          type="string"
           name="mileage"
           placeholder="30000"
           errors={errors.mileage?.message}
           borderColor={errors.mileage ? "feedback.alert1" : "#E9ECEF"}
-          register={register("mileage")}
+          register={register("mileage", {
+            onBlur(e) {
+              e.target.value = formatValues(e.target.value, "KM");
+            },
+          })}
         />
 
         <FormControl>
@@ -245,12 +241,16 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         />
         <Field.InputField
           label="Preço"
-          type="number"
+          type="string"
           name="price"
           placeholder="R$ 50.000,00"
           errors={errors.price?.message}
           borderColor={errors.price ? "feedback.alert1" : "#E9ECEF"}
-          register={register("price")}
+          register={register("price", {
+            onBlur(e) {
+              e.target.value = formatValues(e.target.value, "BRL");
+            },
+          })}
         />
       </Flex>
       <Field.TextAreaField

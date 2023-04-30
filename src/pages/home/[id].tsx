@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { api } from "@/services/api";
 import { iAdvert } from "@/interfaces/advert.interfaces";
+import { formatValues } from "@/utils/valuesFormat.util";
 
 interface iDetailHomeProps {
   advert: iAdvert;
@@ -101,11 +102,11 @@ export default ({ advert }: iDetailHomeProps) => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                {advert.mileage} KM
+                {`${formatValues(advert.mileage, "KM")} KM`}
               </Text>
               <Spacer />
               <Text fontWeight={"medium"} fontSize={"16px"} color={"grey.1"}>
-                {`R$ ${advert.price}`}
+                {formatValues(advert.price, "BRL")}
               </Text>
             </Flex>
             <Button size={"sm"}>Comprar</Button>

@@ -1,5 +1,6 @@
 import { iAdvert } from "@/interfaces/advert.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
+import { formatValues } from "@/utils/valuesFormat.util";
 import {
   ListItem,
   Box,
@@ -89,7 +90,7 @@ export const ProductCard = ({
             padding={"4px"}
             borderRadius={"4px"}
           >
-            {`${advertData.mileage} KM`}
+            {`${formatValues(advertData.mileage, "KM")} KM`}
           </Text>
           <Text
             fontWeight={"medium"}
@@ -108,7 +109,7 @@ export const ProductCard = ({
           color={"grey.1"}
           textDecoration={""}
         >
-          {`R$ ${advertData.price}`}
+          {formatValues(advertData.price, "BRL")}
         </Text>
         {router.pathname == "/profile" && isSeller ? (
           <Flex gap={"16px"} m="16px 0 0 0">

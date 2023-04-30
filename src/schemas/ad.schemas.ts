@@ -1,4 +1,5 @@
 import { iAdvertisedRequest } from "@/interfaces/advert.interfaces";
+import { formatToNumber } from "@/utils/valuesFormat.util";
 import * as yup from "yup";
 import { ObjectSchema } from "yup";
 
@@ -39,7 +40,8 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
       .number()
       .typeError("o preço é obrigatoriamente um número")
       .positive("O preço não pode ser negativo")
-      .required("O campo preço é obrigatório"),
+      .required("O campo preço é obrigatório")
+      .transform((value, originalValue) => formatToNumber(originalValue)),
     description: yup.string().required("O campo descrição é obrigatório"),
     cover_image: yup
       .string()
