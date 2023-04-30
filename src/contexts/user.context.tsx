@@ -12,7 +12,11 @@ const UserContext = createContext<iUserContext>({} as iUserContext);
 export const UserProvider = ({ children }: iContextProps) => {
   const [user, setUser] = useState<iUser | null>(null);
   const { logout } = useAuthContext();
-  const toast = useToast();
+  const toast = useToast({
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
 
   useEffect(() => {
     getUserProfile();
@@ -44,13 +48,7 @@ export const UserProvider = ({ children }: iContextProps) => {
       })
       .catch((err) => {
         console.log(err);
-        toast({
-          position: "top",
-          description: err.response.data.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast({ status: "error", description: err.response.data.message });
       });
   };
 
@@ -59,23 +57,11 @@ export const UserProvider = ({ children }: iContextProps) => {
       .patch<iUser>(`/users/${userId}`, data)
       .then(({ data }) => {
         setUser(data);
-        toast({
-          position: "top",
-          title: "Usuário atualizado com sucesso!",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast({ status: "success", title: "Usuário atualizado com sucesso!" });
       })
       .catch((err) => {
-        console.log(err.response.data.message);
-        toast({
-          position: "top",
-          description: err.response.data.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        console.log(err);
+        toast({ status: "error", description: err.response.data.message });
       });
   };
 
@@ -84,24 +70,12 @@ export const UserProvider = ({ children }: iContextProps) => {
       .delete(`/users/${userId}`)
       .then(({ data }) => {
         setUser(data);
-        toast({
-          position: "top",
-          title: "Conta deletada com sucesso!",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast({ status: "success", title: "Conta deletada com sucesso!" });
         logout();
       })
       .catch((err) => {
         console.log(err);
-        toast({
-          position: "top",
-          description: err.response.data.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast({ status: "error", description: err.response.data.message });
       });
   };
 
@@ -109,23 +83,11 @@ export const UserProvider = ({ children }: iContextProps) => {
     await api
       .patch("/address")
       .then(() => {
-        toast({
-          position: "top",
-          title: "Endereço atualizado com sucesso!",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast({ status: "success", title: "Endereço atualizado com sucesso!" });
       })
       .catch((err) => {
-        console.log(err.response.data.message);
-        toast({
-          position: "top",
-          description: err.response.data.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        console.log(err);
+        toast({ status: "error", description: err.response.data.message });
       });
   };
 
