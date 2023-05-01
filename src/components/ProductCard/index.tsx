@@ -1,5 +1,4 @@
-import { iAdvert } from "@/interfaces/advert.interfaces";
-import { iUser } from "@/interfaces/user.interfaces";
+import { iProductCard } from "@/interfaces/components.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
 import {
   ListItem,
@@ -15,12 +14,6 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-interface iProductCard {
-  advertData: Omit<iAdvert, "user"> | iAdvert;
-  seller?: iUser | null;
-  isSeller?: boolean;
-}
 
 export const ProductCard = ({
   advertData,

@@ -14,21 +14,16 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { ModalContainer } from "../../components/Modal";
 import { useAdvertContext } from "@/contexts/advert.context";
 import { Textarea } from "@/components/Textarea";
 import { useUserContext } from "@/contexts/user.context";
-import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { api } from "@/services/api";
 import { iAdvert } from "@/interfaces/advert.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
 import { Link } from "@/components/Link";
-
-interface iDetailHomeProps {
-  advert: iAdvert;
-}
+import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
 
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
