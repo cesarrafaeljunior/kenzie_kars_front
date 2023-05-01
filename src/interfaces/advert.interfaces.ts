@@ -11,6 +11,7 @@ export interface iAdvert {
   color: string;
   mileage: number;
   price: number;
+  fipe_price: number;
   year: number;
   model: string;
   description: string;
