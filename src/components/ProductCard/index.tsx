@@ -42,6 +42,18 @@ export const ProductCard = ({
               {advertData.is_avaliable ? "Ativo" : "Inativo"}
             </Badge>
           ) : null}
+          {router.pathname == "/" &&
+          advertData.fipe_price * 0.95 > advertData.price ? (
+            <Badge
+              position={"absolute"}
+              top={"0"}
+              right={"0"}
+              variant={"goodBargain"}
+              title={"Preço 5% ou mais, abaixo da fipe"}
+            >
+              {"$"}
+            </Badge>
+          ) : null}
           <Image
             src={advertData.cover_image}
             width={{ base: "300px" }}

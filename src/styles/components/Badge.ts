@@ -9,7 +9,6 @@ export const BadgeStyle: ComponentStyleConfig = {
     borderRadius: "0",
     textTransform: "unset",
     fontFamily: "Inter, sans-serif",
-    cursor: "default",
   },
   variants: {
     disabled: {
@@ -19,6 +18,12 @@ export const BadgeStyle: ComponentStyleConfig = {
     brand1: {
       bg: "#4529E6",
       color: "#FFFFFF",
+    },
+    goodBargain: {
+      bg: "#349974",
+      color: "#FFFFFF",
+      borderRadius: "2px",
+      padding: "4px",
     },
   },
 };
