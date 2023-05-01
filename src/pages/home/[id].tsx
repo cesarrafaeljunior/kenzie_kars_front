@@ -24,19 +24,16 @@ import { GetServerSideProps } from "next";
 import { api } from "@/services/api";
 import { iAdvert } from "@/interfaces/advert.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
+import { Link } from "@/components/Link";
 
 interface iDetailHomeProps {
   advert: iAdvert;
 }
 
 export default ({ advert }: iDetailHomeProps) => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
   const { user } = useUserContext();
-  // console.log(router.query.id);
-
-  useEffect(() => {}, []);
 
   if (!advert) return null;
 
@@ -293,7 +290,13 @@ export default ({ advert }: iDetailHomeProps) => {
               {advert.user.name}
             </Text>
             <Text color={"grey.2"}>{advert.user.description}</Text>
-            <Button variant={"grey1"}>Ver todos anuncios</Button>
+            <Link
+              href={`/profile/${advert.user.id}`}
+              variant={"grey1"}
+              whiteSpace={"nowrap"}
+            >
+              Ver todos anuncios
+            </Link>
           </Center>
         </Box>
       </SimpleGrid>
