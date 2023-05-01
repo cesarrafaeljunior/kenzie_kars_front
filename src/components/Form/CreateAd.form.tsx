@@ -178,7 +178,7 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
       <Flex>
         <Field.InputField
           label="Quilometragem"
-          type="string"
+          type="text"
           name="mileage"
           placeholder="30000"
           errors={errors.mileage?.message}
@@ -235,13 +235,13 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         <Field.InputReadyOnlyField
           isReadOnly
           label="Preço tabela FIPE"
-          type="string"
+          type="text"
           name="fipe_price"
           placeholder={fipeValue ? `${fipeValue}` : "R$ 50.000,00"}
         />
         <Field.InputField
           label="Preço"
-          type="string"
+          type="text"
           name="price"
           placeholder="R$ 50.000,00"
           errors={errors.price?.message}
