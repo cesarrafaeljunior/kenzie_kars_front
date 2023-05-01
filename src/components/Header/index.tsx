@@ -14,8 +14,9 @@ import {
 import { ModalContainer } from "../Modal";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useUserContext } from "@/contexts/user.context";
-import { Link } from "../Link";
 import { useAuthContext } from "@/contexts/auth.context";
+import NextLink from "next/link";
+import { Link } from "../Link";
 
 export const Header = () => {
   const { user } = useUserContext();
@@ -49,11 +50,10 @@ export const Header = () => {
           borderColor={"grey.6"}
           bgColor={"grey.10"}
         >
-          <Box>
-            <Link href="/" h={"unset"} p={"0"} border={"none"} _hover={{}}>
-              <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
-            </Link>
-          </Box>
+          <NextLink href="/">
+            <Img src={"/imgs/motors_shop_colored.png"} alt="Logo" />
+          </NextLink>
+
           <Spacer />
           <Flex
             pl={{ base: "14px", md: "28px", lg: "44px" }}
