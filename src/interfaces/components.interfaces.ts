@@ -72,3 +72,11 @@ export interface iProductCard {
   seller?: iUser | null;
   isSeller?: boolean;
 }
+
+export interface iUrlImageField {
+  label: string;
+  index: number;
+  register: UseFormRegisterReturn;
+  errors: string | undefined;
+  handleRemoveImage: (index: number) => void;
+}

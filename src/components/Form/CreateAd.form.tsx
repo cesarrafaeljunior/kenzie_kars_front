@@ -1,9 +1,6 @@
 import { useAdvertContext } from "@/contexts/advert.context";
 import { useUserContext } from "@/contexts/user.context";
-import {
-  iAdvertGalery,
-  iAdvertisedRequest,
-} from "@/interfaces/advert.interfaces";
+import { iAdvertisedRequest } from "@/interfaces/advert.interfaces";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
 import { advertisedRequestSchema } from "@/schemas/ad.schemas";
 import {
@@ -12,18 +9,13 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
   Select,
   Text,
-  IconButton,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { formatValues } from "@/utils/valuesFormat.util";
 
 export const CreateAd = ({ onOpen }: iOnOpenF) => {
@@ -34,13 +26,14 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<iAdvertisedRequest>({
     resolver: yupResolver(advertisedRequestSchema),
   });
   const [modelSelect, setModelSelect] = useState("");
   const [fipeValue, setFipeValue] = useState("");
-  const [galery, setGalery] = useState<iAdvertGalery[]>([{ image: "" }]);
+  const [refreshGalery, setRefreshGalery] = useState(0);
   const carColors = [
     "preto",
     "branco",
@@ -56,22 +49,21 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     "roxo",
     "outros",
   ];
+
   const handleAddImage = () => {
-    setGalery([...galery, { image: "" }]);
-  };
+    const galery = getValues("galery");
 
-  const handleImageChange = (index: number, value: string) => {
-    const updatedGalery = [...galery];
-    updatedGalery[index].image = value;
-    setGalery(updatedGalery);
-
-    setValue("galery", updatedGalery);
+    galery
+      ? setValue("galery", [...galery, { image: "" }])
+      : setValue("galery", [{ image: "" }]);
+    setRefreshGalery(refreshGalery + 1);
   };
 
   const handleRemoveImage = (index: number) => {
-    const newGalery = [...galery];
-    newGalery.splice(index, 1);
-    setGalery(newGalery);
+    const galery = getValues("galery");
+    galery.splice(index, 1);
+    setValue("galery", galery);
+    setRefreshGalery(refreshGalery - 1);
   };
 
   const brandSelectOptions = brandsList.map((brand) => (
@@ -95,6 +87,10 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
     }
     return "";
   };
+
+  useEffect(() => {
+    handleAddImage();
+  }, []);
 
   useEffect(() => {
     const currentModel = modelList.find((model) => model.id === modelSelect);
@@ -271,39 +267,17 @@ export const CreateAd = ({ onOpen }: iOnOpenF) => {
         register={register("cover_image")}
       />
 
-      {galery.map((image, index) => (
-        <FormControl key={index}>
-          <FormLabel
-            htmlFor={`imagem${index}`}
-            fontFamily={"body"}
-            fontWeight={"bold"}
-            fontSize={"14px"}
-          >
-            {index + 1}ª imagem da galeria
-            <InputGroup>
-              <Input
-                isRequired
-                borderColor={errors.galery ? "feedback.alert1" : "#E9ECEF"}
-                id={`imagem${index}`}
-                placeholder="http://site.com/imagem.jpg"
-                value={image.image}
-                onChange={(e) => handleImageChange(index, e.target.value)}
-              />
-
-              <InputRightElement>
-                <IconButton
-                  color="grey.3"
-                  variant="outline"
-                  size="sm"
-                  aria-label="delete"
-                  icon={<DeleteIcon />}
-                  onClick={() => handleRemoveImage(index)}
-                />
-              </InputRightElement>
-            </InputGroup>
-          </FormLabel>
-        </FormControl>
-      ))}
+      {getValues("galery") &&
+        getValues("galery").map((image, index) => (
+          <Field.UrlImageField
+            key={index}
+            index={index}
+            handleRemoveImage={handleRemoveImage}
+            label={`${index + 1}ª imagem da galeria`}
+            register={register(`galery.${index}.image`)}
+            errors={errors.galery && errors.galery[index]?.image?.message}
+          />
+        ))}
 
       <Button
         onClick={handleAddImage}
