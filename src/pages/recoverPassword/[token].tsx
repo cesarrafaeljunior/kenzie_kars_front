@@ -3,9 +3,7 @@ import { Center, Heading } from "@chakra-ui/react";
 import { Form } from "@/components/Form";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { useRouter } from "next/router";
 import * as yup from "yup";
-import { parseCookies } from "nookies";
 import { api } from "@/services/api";
 
 export interface iTokenProps {
