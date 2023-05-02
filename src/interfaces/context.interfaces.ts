@@ -7,7 +7,7 @@ import {
   iAdvertObject,
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
-import { iFilterParams } from "./components.interfaces";
+import { iFilterParams, onOpen } from "./components.interfaces";
 
 export interface iContextProps {
   children: ReactNode;
@@ -44,4 +44,8 @@ export interface iUserContext {
 export interface iAuthContext {
   login: (data: iLogin) => Promise<void>;
   logout: () => void;
+}
+
+export interface iCommentContext {
+  checkUserIsLogged: (data: onOpen) => void;
 }
