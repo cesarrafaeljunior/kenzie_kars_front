@@ -89,7 +89,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       })
       .catch((err) => {
         console.log(err);
-        toast({ status: "error", description: err.request.data.message });
+        toast({ status: "error", description: err.data.message });
       });
   };
 
