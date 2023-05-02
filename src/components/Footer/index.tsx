@@ -28,6 +28,8 @@ export const Footer = () => {
         @2022 - Todos os direitos reservados
       </Text>
       <IconButton
+        as={"a"}
+        href="#"
         bg="grey.1"
         borderColor={"transparent"}
         aria-label="Footer"
