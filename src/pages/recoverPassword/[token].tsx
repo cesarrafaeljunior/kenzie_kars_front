@@ -35,21 +35,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   try {
     schemaToken.validateSync(token);
-
-    const cookies = parseCookies(ctx);
-
-    const resetToken = cookies["ms.resetToken"];
-
-    if (token !== resetToken) {
-      return { redirect: { destination: "/", permanent: false } };
-    }
+    await api.get(`/users/resetPassword/${token}`);
 
     return {
       props: {
         token,
       },
     };
-  } catch (error) {
+  } catch {
     return { redirect: { destination: "/", permanent: false } };
   }
 };

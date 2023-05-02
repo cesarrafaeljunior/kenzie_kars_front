@@ -31,10 +31,6 @@ export const RecoverySubmitEmail = ({ onClose }: iCloseF) => {
           isClosable: true,
         });
         onClose();
-        setCookie(null, "ms.resetToken", res.data.resetToken, {
-          maxAge: 60 * 60 * 7,
-          path: "/recoverPassword",
-        });
       })
       .catch((err) => console.log(err));
   };
