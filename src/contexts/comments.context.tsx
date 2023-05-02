@@ -4,11 +4,13 @@ import {
   iContextProps,
 } from "@/interfaces/context.interfaces";
 import { parseCookies } from "nookies";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const CommentContext = createContext<iCommentContext>({} as iCommentContext);
 
 export const CommentProvider = ({ children }: iContextProps) => {
+  const [textAreaField, setTextAreaField] = useState("");
+
   const checkUserIsLogged = (onOpen: onOpen) => {
     const cookies = parseCookies();
     const token = cookies["ms.token"];
@@ -19,7 +21,9 @@ export const CommentProvider = ({ children }: iContextProps) => {
   };
 
   return (
-    <CommentContext.Provider value={{ checkUserIsLogged }}>
+    <CommentContext.Provider
+      value={{ checkUserIsLogged, textAreaField, setTextAreaField }}
+    >
       {children}
     </CommentContext.Provider>
   );
