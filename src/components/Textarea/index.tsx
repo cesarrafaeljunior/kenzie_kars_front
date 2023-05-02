@@ -7,10 +7,11 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
+import { CommentSuggestions } from "../Comment";
 
 export const Textarea = ({ onOpen }: iOnOpenF) => {
-  const [textareaField, setTextareaField] = useState("");
-  const { checkUserIsLogged } = useCommentContext();
+  const { textAreaField, setTextAreaField, checkUserIsLogged } =
+    useCommentContext();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -26,8 +27,8 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
         position={"relative"}
       >
         <ChakraTextarea
-          onChange={(e) => setTextareaField(e.target.value)}
-          value={textareaField}
+          onChange={(e) => setTextAreaField(e.target.value)}
+          value={textAreaField}
           placeholder={
             "Carro muito confortável, foi uma ótima experiência de compra..."
           }
@@ -37,8 +38,8 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
           pb={{ base: "8px", md: "50px" }}
         />
         <Button
-          type={textareaField.trim() ? "submit" : "button"}
-          variant={textareaField.trim() ? "brand1" : "disabled"}
+          type={textAreaField.trim() ? "submit" : "button"}
+          variant={textAreaField.trim() ? "brand1" : "disabled"}
           size={"sm"}
           mt={{ base: "24px", md: "unset" }}
           position={{ base: "unset", md: "absolute" }}
@@ -50,58 +51,10 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
         </Button>
       </Box>
       <Flex alignItems={"center"} gap={"8px"} flexWrap={"wrap"}>
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Gostei muito!
-        </Button>
-
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Incrível
-        </Button>
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Recomendarei para meus amigos!
-        </Button>
+        <CommentSuggestions text={"Gostei muito"} />
+        <CommentSuggestions text={"Carro muito confortável!"} />
+        <CommentSuggestions text={"ótimo e simpático vendedor!"} />
+        <CommentSuggestions text={"Carro muito lindo e conservado!"} />
       </Flex>
     </>
   );
