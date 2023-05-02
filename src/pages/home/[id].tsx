@@ -24,7 +24,7 @@ import { iAdvert } from "@/interfaces/advert.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
 import { Link } from "@/components/Link";
 import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
-import { Comments } from "@/components/Comments";
+import { Comments } from "@/components/Comment";
 
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
