@@ -45,10 +45,10 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
     description: yup.string().required("O campo descrição é obrigatório"),
     cover_image: yup
       .string()
-      .url()
+      .url("URL inválida")
       .matches(
         /\.(jpeg|jpg|gif|png)$/i,
-        "a URl da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
+        "a URL da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
       )
       .max(300, "O campo imagem deve conter menos de 300")
       .required("O campo imagem é obrigatório"),
@@ -59,10 +59,10 @@ export const advertisedRequestSchema: ObjectSchema<iAdvertisedRequest> = yup
         yup.object({
           image: yup
             .string()
-            .url()
+            .url("URL inválida.")
             .matches(
               /\.(jpeg|jpg|gif|png)$/i,
-              "a URl da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
+              "a URL da imagem é obrigatoria e deve terminar em jpeg, jpg, gif ou png"
             )
             .required(),
         })
