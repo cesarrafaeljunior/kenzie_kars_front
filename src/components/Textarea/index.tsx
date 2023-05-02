@@ -1,3 +1,5 @@
+import { useCommentContext } from "@/contexts/comments.context";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
 import {
   Box,
   Button,
@@ -6,12 +8,13 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 
-export const Textarea = () => {
+export const Textarea = ({ onOpen }: iOnOpenF) => {
   const [textareaField, setTextareaField] = useState("");
+  const { checkUserIsLogged } = useCommentContext();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    console.log(textareaField.trim());
+    checkUserIsLogged(onOpen);
   };
 
   return (
@@ -41,6 +44,7 @@ export const Textarea = () => {
           position={{ base: "unset", md: "absolute" }}
           right={"11px"}
           bottom={"13px"}
+          zIndex={1000}
         >
           Comentar
         </Button>
