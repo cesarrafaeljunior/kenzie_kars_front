@@ -8,6 +8,7 @@ import { ModalRemoveAdConfirmation } from "./ModalRemoveAdConfirmation.modal";
 import { ModalSuccessAccount } from "./ModalSuccessAccount.modal";
 import { ModalSuccessAd } from "./ModalSuccessAd.modal";
 import { ModalVehicleImage } from "./ModalVehicleImage.modal";
+import { ModalCheckLogin } from "./ModalCheckLogin.modal";
 
 export const ModalContainer = {
   ModalVehicleImage,
@@ -20,4 +21,5 @@ export const ModalContainer = {
   ModalMobileFilters,
   ModalRecoverPassword,
   ModalEditProfile,
+  ModalCheckLogin,
 };
