@@ -6,9 +6,9 @@ import {
 import { iAdvertContext, iContextProps } from "@/interfaces/context.interfaces";
 import { api, apiKenzieKars } from "@/services/api";
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { parseCookies } from "nookies";
 import { iFilterParams } from "@/interfaces/components.interfaces";
+import { useToast } from "@chakra-ui/react";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
@@ -22,8 +22,12 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const token = cookies["ms.token"];
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
-
   const [filterParams, setFilterParams] = useState<iFilterParams>({});
+  const toast = useToast({
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
 
   const getAdvertiseListByUserId = async (userId: string) => {
     await api
@@ -85,7 +89,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.data.message);
+        toast({ status: "error", description: err.request.data.message });
       });
   };
 

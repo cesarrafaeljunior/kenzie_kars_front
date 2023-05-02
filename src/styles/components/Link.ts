@@ -32,6 +32,12 @@ export const LinkStyle: ComponentStyleConfig = {
       color: "#0B0D0D",
       _hover: { bg: "#F1F3F5", borderColor: "#F1F3F5", textDecoration: "none" },
     },
+    grey1: {
+      borderColor: "#0B0D0D",
+      bg: "#0B0D0D",
+      color: "#ffffff",
+      _hover: { bg: "#212529", borderColor: "#212529" },
+    },
     outline2: {
       borderColor: "#ADB5BD",
       bg: "#FDFDFD",

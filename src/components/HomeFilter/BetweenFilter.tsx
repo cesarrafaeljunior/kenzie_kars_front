@@ -1,5 +1,6 @@
 import { useAdvertContext } from "@/contexts/advert.context";
 import { iBetweenFilter } from "@/interfaces/components.interfaces";
+import { formatToNumber, formatValues } from "@/utils/valuesFormat.util";
 import { Box, Heading, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -30,12 +31,16 @@ export const BetweenFilter = ({ headingName, requestName }: iBetweenFilter) => {
           padding={"0"}
           textAlign={"center"}
           backgroundColor={"grey.5"}
-          type="number"
+          type="text"
           placeholder="Mínimo"
+          maxLength={13}
           value={minValue}
           onChange={(e) => {
-            setMinValue(e.target.value);
-            submitAdvertFilter(minValueName, e.target.value);
+            setMinValue(e.target.value && formatValues(e.target.value, "KM"));
+            submitAdvertFilter(
+              minValueName,
+              e.target.value && formatToNumber(e.target.value).toString()
+            );
           }}
         />
         <Input
@@ -44,12 +49,16 @@ export const BetweenFilter = ({ headingName, requestName }: iBetweenFilter) => {
           padding={"0"}
           textAlign={"center"}
           backgroundColor={"grey.5"}
-          type="number"
+          type="text"
           placeholder="Máximo"
+          maxLength={13}
           value={maxValue}
           onChange={(e) => {
-            setMaxValue(e.target.value);
-            submitAdvertFilter(maxValueName, e.target.value);
+            setMaxValue(e.target.value && formatValues(e.target.value, "KM"));
+            submitAdvertFilter(
+              maxValueName,
+              e.target.value && formatToNumber(e.target.value).toString()
+            );
           }}
         />
       </Box>

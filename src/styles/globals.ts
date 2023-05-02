@@ -1,6 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/Button";
 import { Link } from "./components/Link";
+import { Badge } from "./components/Badge";
 
 const globalTheme = {
   colors: {
@@ -69,6 +70,7 @@ const globalTheme = {
   components: {
     Button,
     Link,
+    Badge,
   },
 };
 

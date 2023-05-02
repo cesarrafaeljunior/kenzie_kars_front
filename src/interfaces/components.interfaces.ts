@@ -6,6 +6,8 @@ import {
   SetStateAction,
 } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { iAdvert } from "./advert.interfaces";
+import { iUser } from "./user.interfaces";
 
 export interface iInput {
   label: string;
@@ -63,4 +65,18 @@ export interface iFilterParams {
 export interface iBetweenFilter {
   headingName: string;
   requestName: string;
+}
+
+export interface iProductCard {
+  advertData: Omit<iAdvert, "user"> | iAdvert;
+  seller?: iUser | null;
+  isSeller?: boolean;
+}
+
+export interface iUrlImageField {
+  label: string;
+  index: number;
+  register: UseFormRegisterReturn;
+  errors: string | undefined;
+  handleRemoveImage: (index: number) => void;
 }

@@ -12,17 +12,20 @@ const AuthContext = createContext<iAuthContext>({} as iAuthContext);
 export const AuthProvider = ({ children }: iContextProps) => {
   const router = useRouter();
   const { setUser, getUserProfile } = useUserContext();
-  const toast = useToast();
+  const toast = useToast({
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
+
   const login = async (data: iLogin) => {
     await api
       .post<iLoginResponse>("/login", data)
       .then(async (resp) => {
         toast({
-          position: "top",
-          title: "Login realizado",
+          title: "Login realizado.",
           status: "success",
-          duration: 3000,
-          isClosable: true,
+          description: "Logo você será redirecionado para o site.",
         });
 
         setCookie(null, "ms.token", resp.data.token, {
@@ -34,12 +37,9 @@ export const AuthProvider = ({ children }: iContextProps) => {
       })
       .catch((err) => {
         toast({
-          position: "top",
           title: "Erro ao fazer login",
-          description: err.message,
           status: "error",
-          duration: 3000,
-          isClosable: true,
+          description: err.message,
         });
       });
   };

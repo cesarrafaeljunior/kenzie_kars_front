@@ -14,28 +14,21 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { ModalContainer } from "../../components/Modal";
 import { useAdvertContext } from "@/contexts/advert.context";
 import { Textarea } from "@/components/Textarea";
 import { useUserContext } from "@/contexts/user.context";
-import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { api } from "@/services/api";
 import { iAdvert } from "@/interfaces/advert.interfaces";
-
-interface iDetailHomeProps {
-  advert: iAdvert;
-}
+import { formatValues } from "@/utils/valuesFormat.util";
+import { Link } from "@/components/Link";
+import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
 
 export default ({ advert }: iDetailHomeProps) => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
   const { user } = useUserContext();
-  // console.log(router.query.id);
-
-  useEffect(() => {}, []);
 
   if (!advert) return null;
 
@@ -101,11 +94,11 @@ export default ({ advert }: iDetailHomeProps) => {
                 py={"4px"}
                 borderRadius={"4px"}
               >
-                {advert.mileage} KM
+                {`${formatValues(advert.mileage, "KM")} KM`}
               </Text>
               <Spacer />
               <Text fontWeight={"medium"} fontSize={"16px"} color={"grey.1"}>
-                {`R$ ${advert.price}`}
+                {formatValues(advert.price, "BRL")}
               </Text>
             </Flex>
             <Button size={"sm"}>Comprar</Button>
@@ -292,7 +285,13 @@ export default ({ advert }: iDetailHomeProps) => {
               {advert.user.name}
             </Text>
             <Text color={"grey.2"}>{advert.user.description}</Text>
-            <Button variant={"grey1"}>Ver todos anuncios</Button>
+            <Link
+              href={`/profile/${advert.user.id}`}
+              variant={"grey1"}
+              whiteSpace={"nowrap"}
+            >
+              Ver todos anuncios
+            </Link>
           </Center>
         </Box>
       </SimpleGrid>
