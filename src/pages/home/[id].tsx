@@ -29,7 +29,6 @@ import { Comments } from "@/components/Comment";
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
-  const { user } = useUserContext();
 
   if (!advert) return null;
 
