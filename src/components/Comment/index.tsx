@@ -1,6 +1,7 @@
 import { useUserContext } from "@/contexts/user.context";
 import {
   Box,
+  Button,
   Center,
   Flex,
   Img,
@@ -11,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { Textarea } from "../Textarea";
 import { ModalContainer } from "../Modal";
+import { useState } from "react";
+import { useCommentContext } from "@/contexts/comments.context";
 
 export const Comments = () => {
   const { user } = useUserContext();
@@ -94,5 +97,29 @@ export const Comments = () => {
         <Textarea onOpen={onOpen} />
       </Box>
     </Box>
+  );
+};
+
+export const CommentSuggestions = ({ text }: any) => {
+  const { setTextAreaField } = useCommentContext();
+
+  return (
+    <Button
+      onClick={(e) => {
+        const target = e.target as HTMLButtonElement;
+        setTextAreaField(target.innerText);
+      }}
+      h={"unset"}
+      variant={"unstyled"}
+      fontWeight={"medium"}
+      lineHeight={"24px"}
+      fontSize={"12px"}
+      color={"grey.3"}
+      bgColor={"grey.7"}
+      px={"12px"}
+      borderRadius={"24px"}
+    >
+      {text}
+    </Button>
   );
 };
