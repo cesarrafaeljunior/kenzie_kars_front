@@ -24,6 +24,7 @@ import { iAdvert } from "@/interfaces/advert.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
 import { Link } from "@/components/Link";
 import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
+import { Comments } from "@/components/Comments";
 
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -121,87 +122,7 @@ export default ({ advert }: iDetailHomeProps) => {
             <Text color={"grey.2"}>{advert.description}</Text>
           </Box>
         </Box>
-        <Box as={"section"}>
-          <Box
-            bgColor={"grey.10"}
-            borderRadius={"4px"}
-            px={"44px"}
-            py={"36px"}
-            mb={"32px"}
-          >
-            <Text
-              mb={"32px"}
-              fontWeight={"semibold"}
-              fontSize={"20px"}
-              color={"grey.1"}
-            >
-              Comentários
-            </Text>
-            <List display={"flex"} flexDirection={"column"} gap={"44px"}>
-              {[1, 2, 3, 4].map((number) => (
-                <ListItem key={number}>
-                  <Flex alignItems={"center"} gap={"8px"} mb={"12px"}>
-                    <Center
-                      as={"p"}
-                      bg={"brand.2"}
-                      minW={"32px"}
-                      boxSize={"32px"}
-                      borderRadius={"50%"}
-                      fontWeight={"medium"}
-                      color={"white"}
-                    >
-                      JL
-                    </Center>
-                    <Text
-                      fontWeight={"medium"}
-                      fontSize={"14px"}
-                      color={"grey.1"}
-                    >
-                      Júlia Lima
-                    </Text>
-                    <Img src={"/imgs/ellipse.png"}></Img>
-                    <Text fontSize={"12px"} color={"grey.3"}>
-                      há 3 dias
-                    </Text>
-                  </Flex>
-                  <Text fontSize={"14px"} color={"grey.2"}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.
-                  </Text>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-          <Box bgColor={"grey.10"} borderRadius={"4px"} px={"44px"} py={"36px"}>
-            <Flex alignItems={"center"} gap={"8px"} mb={"15px"}>
-              <Center
-                as={"p"}
-                bg={"brand.2"}
-                minW={"32px"}
-                boxSize={"32px"}
-                borderRadius={"50%"}
-                fontWeight={"medium"}
-                color={"white"}
-              >
-                {user?.name
-                  ? `${user.name[0]}${
-                      user.name.split(" ").length > 1
-                        ? user.name.split(" ", 2)[1][0]
-                        : ""
-                    }`
-                  : "U"}
-              </Center>
-              <Text fontWeight={"medium"} fontSize={"14px"} color={"grey.1"}>
-                {user?.name || "Usuário"}
-              </Text>
-            </Flex>
-            <Textarea />
-          </Box>
-        </Box>
-
+        <Comments />
         <Box
           as={"aside"}
           gridRow={{ base: "2", md: "1" }}
