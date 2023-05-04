@@ -7,13 +7,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { CommentSuggestions } from "../Comment";
-import { iComment, iCommentRequest } from "@/interfaces/comment.interface";
+import { iCommentRequest } from "@/interfaces/comment.interface";
+import { FormEvent } from "react";
 
 export const Textarea = ({ onOpen }: iOnOpenF) => {
   const { textAreaField, setTextAreaField, checkUserIsLogged, createComment } =
     useCommentContext();
 
-  const handleSubmit = (e: Event) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const description: iCommentRequest = {
@@ -27,7 +28,7 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
   return (
     <>
       <Box
-        onSubmit={(e: any) => handleSubmit(e)}
+        onSubmit={handleSubmit}
         as={"form"}
         mb={{ base: "24px", md: "15px" }}
         position={"relative"}
