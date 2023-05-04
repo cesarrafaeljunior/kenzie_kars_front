@@ -1,3 +1,4 @@
+import { useAdvertContext } from "@/contexts/advert.context";
 import { iProductCard } from "@/interfaces/components.interfaces";
 import { formatValues } from "@/utils/valuesFormat.util";
 import {
@@ -19,8 +20,11 @@ export const ProductCard = ({
   advertData,
   seller = null,
   isSeller,
+  onOpen,
 }: iProductCard) => {
   const router = useRouter();
+
+  const { setAdvertPatchDeleteId } = useAdvertContext();
 
   return (
     <ListItem maxWidth={"312px"} minWidth={"312px"}>
@@ -141,7 +145,16 @@ export const ProductCard = ({
       </Link>
       {router.pathname == "/profile" && isSeller ? (
         <Flex gap={"16px"} m="16px 0 0 0">
-          <Button h="38px" variant={"outline"}>
+          <Button
+            onClick={() => {
+              if (onOpen) {
+                onOpen();
+                setAdvertPatchDeleteId(advertData.id);
+              }
+            }}
+            h="38px"
+            variant={"outline"}
+          >
             Editar
           </Button>
           <Button h="38px" variant={"outline"}>

@@ -19,7 +19,7 @@ export const ModalEditAd = ({ isOpen, onClose }: iModalProps) => {
           Editar anúncio
         </ModalHeader>
         <ModalBody paddingBottom={"28px"}>
-          <Form.EditAd />
+          <Form.EditAd onOpen={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>

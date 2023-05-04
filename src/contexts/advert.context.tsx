@@ -2,6 +2,7 @@ import {
   iAdvert,
   iAdvertListByUser,
   iAdvertisedRequest,
+  iAdvertisedUpdate,
 } from "@/interfaces/advert.interfaces";
 import { iAdvertContext, iContextProps } from "@/interfaces/context.interfaces";
 import { api, apiKenzieKars } from "@/services/api";
@@ -23,6 +24,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const [advertiseListByUser, setAdvertiseListByUser] =
     useState<iAdvertListByUser | null>(null);
   const [filterParams, setFilterParams] = useState<iFilterParams>({});
+  const [advertPatchDeleteId, setAdvertPatchDeleteId] = useState<string>("");
   const toast = useToast({
     position: "top",
     duration: 3000,
@@ -93,6 +95,44 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       });
   };
 
+  const updateAdv = async (
+    data: iAdvertisedUpdate,
+    onOpen: () => void,
+    advertId: string
+  ) => {
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+    await api
+      .patch<iAdvert>(`/advertised/${advertId}`, data)
+      .then(async (resp) => {
+        await getAdvertiseListByUserId(resp.data.user.id);
+        toast({ status: "success", title: "Anúncio atualizado com sucesso!" });
+        onOpen();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
+      });
+  };
+
+  const deleteAdv = async (
+    advertId: string,
+    onOpen: () => void,
+    userId: string
+  ) => {
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+    await api
+      .delete(`/advertised/${advertId}`)
+      .then(async ({ data }) => {
+        await getAdvertiseListByUserId(userId);
+        onOpen();
+        toast({ status: "success", title: "Anúncio deletado com sucesso!" });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
+      });
+  };
+
   return (
     <AdvertContext.Provider
       value={{
@@ -111,6 +151,10 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         filterParams,
         setFilterParams,
         submitAdvertFilter,
+        updateAdv,
+        deleteAdv,
+        advertPatchDeleteId,
+        setAdvertPatchDeleteId,
       }}
     >
       {children}

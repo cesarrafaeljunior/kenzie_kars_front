@@ -71,6 +71,7 @@ export interface iProductCard {
   advertData: Omit<iAdvert, "user"> | iAdvert;
   seller?: iUser | null;
   isSeller?: boolean;
+  onOpen?: () => void;
 }
 
 export interface iUrlImageField {

@@ -5,6 +5,7 @@ import {
   iAdvertListByUser,
   iAdvert,
   iAdvertObject,
+  iAdvertisedUpdate,
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
 import { iFilterParams } from "./components.interfaces";
@@ -29,6 +30,18 @@ export interface iAdvertContext {
   filterParams: iFilterParams;
   setFilterParams: Dispatch<SetStateAction<iFilterParams>>;
   submitAdvertFilter: (key: string, value: string) => void;
+  updateAdv: (
+    data: iAdvertisedUpdate,
+    onOpen: () => void,
+    advertId: string
+  ) => Promise<void>;
+  deleteAdv: (
+    advertId: string,
+    onOpen: () => void,
+    userId: string
+  ) => Promise<void>;
+  setAdvertPatchDeleteId: Dispatch<SetStateAction<string>>;
+  advertPatchDeleteId: string;
 }
 
 export interface iUserContext {

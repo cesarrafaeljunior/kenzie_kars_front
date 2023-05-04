@@ -22,7 +22,16 @@ import { api } from "@/services/api";
 import { ModalContainer } from "@/components/Modal";
 export default ({ user }: iProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCreate,
+    onOpen: onOpenCreate,
+    onClose: onCloseCreate,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenUpdate,
+    onOpen: onOpenUpdate,
+    onClose: onCloseUpdate,
+  } = useDisclosure();
   useEffect(() => {
     getAdvertiseListByUserId(user.id);
   }, []);
@@ -36,7 +45,14 @@ export default ({ user }: iProfileProps) => {
       minH={"100vh"}
     >
       <Header />
-      <ModalContainer.ModalCreateAd onClose={onClose} isOpen={isOpen} />
+      <ModalContainer.ModalCreateAd
+        onClose={onCloseCreate}
+        isOpen={isOpenCreate}
+      />
+      <ModalContainer.ModalEditAd
+        onClose={onCloseUpdate}
+        isOpen={isOpenUpdate}
+      />
       <Box as={"main"} my={{ base: "65px", md: "75px" }}>
         <Box
           maxW={"1200px"}
@@ -85,7 +101,7 @@ export default ({ user }: iProfileProps) => {
           <Text color={"grey.2"} mb={"40px"}>
             {advertiseListByUser.description}
           </Text>
-          <Button variant={"outlineBrand"} onClick={onOpen}>
+          <Button variant={"outlineBrand"} onClick={onOpenCreate}>
             Criar anuncio
           </Button>
         </Box>
@@ -102,6 +118,7 @@ export default ({ user }: iProfileProps) => {
               key={index}
               advertData={advert}
               isSeller={advertiseListByUser.is_seller}
+              onOpen={onOpenUpdate}
             />
           ))}
         </List>
