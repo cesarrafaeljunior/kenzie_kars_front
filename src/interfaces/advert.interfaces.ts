@@ -54,6 +54,21 @@ export interface iAdvertisedRequest {
   galery: { image: string }[];
 }
 
+export interface iAdvertisedUpdate {
+  brand?: string;
+  model?: string;
+  fuel?: string;
+  color?: string;
+  year?: string;
+  mileage?: number;
+  fipe_price?: number;
+  price?: number;
+  description?: string;
+  cover_image?: string;
+  location?: string;
+  is_avaliable?: boolean;
+  galery: { image: string }[];
+}
 export interface iAdvertGalery {
   image: string;
 }
