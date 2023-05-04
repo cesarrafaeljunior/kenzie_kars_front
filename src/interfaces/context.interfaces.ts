@@ -62,9 +62,9 @@ export interface iAuthContext {
 
 export interface iCommentContext {
   textAreaField: string;
-  setTextAreaField: Dispatch<string>;
+  setTextAreaField: Dispatch<SetStateAction<string>>;
   checkUserIsLogged: (data: onOpen) => void;
   createComment: (data: iCommentRequest) => void;
   currentComments: iComment[];
-  setCurrentComments: Dispatch<iComment[]>;
+  setCurrentComments: Dispatch<SetStateAction<iComment[]>>;
 }

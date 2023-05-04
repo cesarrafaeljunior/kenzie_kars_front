@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { Textarea } from "../Textarea";
 import { ModalContainer } from "../Modal";
-import { iComment } from "@/interfaces/comment.interface";
 import { useCommentContext } from "@/contexts/comments.context";
+import { iCommentSuggestions } from "@/interfaces/comment.interface";
 import moment from "moment";
 import "moment/locale/pt-br";
 
@@ -42,7 +42,7 @@ export const Comments = () => {
           Comentários
         </Text>
         <List display={"flex"} flexDirection={"column"} gap={"44px"}>
-          {currentComments.map((comment: iComment) => (
+          {currentComments.map((comment) => (
             <ListItem key={comment.id}>
               <Flex alignItems={"center"} gap={"8px"} mb={"12px"}>
                 <Center
@@ -63,7 +63,7 @@ export const Comments = () => {
                 <Text fontWeight={"medium"} fontSize={"14px"} color={"grey.1"}>
                   {comment.user.name}
                 </Text>
-                <Img src={"/imgs/ellipse.png"}></Img>
+                <Img src={"/imgs/ellipse.png"} />
                 <Text fontSize={"12px"} color={"grey.3"}>
                   {moment().diff(comment.created_at, "hours") < 24
                     ? moment(comment.created_at).startOf("minutes").fromNow()
@@ -106,10 +106,13 @@ export const Comments = () => {
   );
 };
 
-export const CommentSuggestions = ({ texts, setTextAreaField }: any) => {
+export const CommentSuggestions = ({
+  texts,
+  setTextAreaField,
+}: iCommentSuggestions) => {
   return (
     <Flex gap={"10px"} flexWrap={"wrap"}>
-      {texts.map((text: string) => {
+      {texts.map((text) => {
         return (
           <Button
             key={text}
