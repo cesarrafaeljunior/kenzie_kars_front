@@ -6,29 +6,35 @@ import {
   Textarea as ChakraTextarea,
   Flex,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
 import { CommentSuggestions } from "../Comment";
+import { iComment, iCommentRequest } from "@/interfaces/comment.interface";
 
 export const Textarea = ({ onOpen }: iOnOpenF) => {
-  const { textAreaField, setTextAreaField, checkUserIsLogged } =
+  const { textAreaField, setTextAreaField, checkUserIsLogged, createComment } =
     useCommentContext();
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (e: Event) => {
+    e.preventDefault();
+
+    const description: iCommentRequest = {
+      description: textAreaField,
+    };
+
     checkUserIsLogged(onOpen);
+    createComment(description);
   };
 
   return (
     <>
       <Box
-        onSubmit={handleSubmit}
+        onSubmit={(e: any) => handleSubmit(e)}
         as={"form"}
         mb={{ base: "24px", md: "15px" }}
         position={"relative"}
       >
         <ChakraTextarea
-          onChange={(e) => setTextAreaField(e.target.value)}
           value={textAreaField}
+          onChange={(e) => setTextAreaField(e.target.value)}
           placeholder={
             "Carro muito confortável, foi uma ótima experiência de compra..."
           }
@@ -38,8 +44,8 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
           pb={{ base: "8px", md: "50px" }}
         />
         <Button
-          type={textAreaField.trim() ? "submit" : "button"}
-          variant={textAreaField.trim() ? "brand1" : "disabled"}
+          type={textAreaField ? "submit" : "button"}
+          variant={textAreaField ? "brand1" : "disabled"}
           size={"sm"}
           mt={{ base: "24px", md: "unset" }}
           position={{ base: "unset", md: "absolute" }}
@@ -51,10 +57,15 @@ export const Textarea = ({ onOpen }: iOnOpenF) => {
         </Button>
       </Box>
       <Flex alignItems={"center"} gap={"8px"} flexWrap={"wrap"}>
-        <CommentSuggestions text={"Gostei muito"} />
-        <CommentSuggestions text={"Carro muito confortável!"} />
-        <CommentSuggestions text={"ótimo e simpático vendedor!"} />
-        <CommentSuggestions text={"Carro muito lindo e conservado!"} />
+        <CommentSuggestions
+          setTextAreaField={setTextAreaField}
+          texts={[
+            "Gostei muito",
+            "Carro muito confortável!",
+            "ótimo e simpático vendedor!",
+            "Carro muito lindo e conservado!",
+          ]}
+        />
       </Flex>
     </>
   );

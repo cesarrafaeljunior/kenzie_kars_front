@@ -9,6 +9,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import { iFilterParams } from "@/interfaces/components.interfaces";
 import { useToast } from "@chakra-ui/react";
+import { iComment } from "@/interfaces/comment.interface";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 

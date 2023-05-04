@@ -25,12 +25,19 @@ import { formatValues } from "@/utils/valuesFormat.util";
 import { Link } from "@/components/Link";
 import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
 import { Comments } from "@/components/Comment";
+import { useCommentContext } from "@/contexts/comments.context";
+import { useEffect } from "react";
 
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setModalVehicleImage } = useAdvertContext();
+  const { setCurrentComments } = useCommentContext();
 
   if (!advert) return null;
+
+  useEffect(() => {
+    setCurrentComments(advert.comments);
+  }, []);
 
   return (
     <Box

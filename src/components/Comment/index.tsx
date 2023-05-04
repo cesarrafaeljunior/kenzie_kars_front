@@ -12,11 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { Textarea } from "../Textarea";
 import { ModalContainer } from "../Modal";
-import { useState } from "react";
+import { iComment } from "@/interfaces/comment.interface";
 import { useCommentContext } from "@/contexts/comments.context";
 
 export const Comments = () => {
   const { user } = useUserContext();
+  const { currentComments } = useCommentContext();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -39,8 +40,8 @@ export const Comments = () => {
           Comentários
         </Text>
         <List display={"flex"} flexDirection={"column"} gap={"44px"}>
-          {[1, 2, 3, 4].map((number) => (
-            <ListItem key={number}>
+          {currentComments.map((comment: iComment) => (
+            <ListItem key={comment.id}>
               <Flex alignItems={"center"} gap={"8px"} mb={"12px"}>
                 <Center
                   as={"p"}
@@ -51,10 +52,14 @@ export const Comments = () => {
                   fontWeight={"medium"}
                   color={"white"}
                 >
-                  JL
+                  {`${comment.user.name[0]}${
+                    comment.user.name.split(" ").length > 1
+                      ? comment.user.name.split(" ", 2)[1][0]
+                      : ""
+                  }`}
                 </Center>
                 <Text fontWeight={"medium"} fontSize={"14px"} color={"grey.1"}>
-                  Júlia Lima
+                  {comment.user.name}
                 </Text>
                 <Img src={"/imgs/ellipse.png"}></Img>
                 <Text fontSize={"12px"} color={"grey.3"}>
@@ -62,10 +67,7 @@ export const Comments = () => {
                 </Text>
               </Flex>
               <Text fontSize={"14px"} color={"grey.2"}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
+                {comment.description}
               </Text>
             </ListItem>
           ))}
@@ -100,26 +102,28 @@ export const Comments = () => {
   );
 };
 
-export const CommentSuggestions = ({ text }: any) => {
-  const { setTextAreaField } = useCommentContext();
-
+export const CommentSuggestions = ({ texts, setTextAreaField }: any) => {
   return (
-    <Button
-      onClick={(e) => {
-        const target = e.target as HTMLButtonElement;
-        setTextAreaField(target.innerText);
-      }}
-      h={"unset"}
-      variant={"unstyled"}
-      fontWeight={"medium"}
-      lineHeight={"24px"}
-      fontSize={"12px"}
-      color={"grey.3"}
-      bgColor={"grey.7"}
-      px={"12px"}
-      borderRadius={"24px"}
-    >
-      {text}
-    </Button>
+    <Flex gap={"10px"} flexWrap={"wrap"}>
+      {texts.map((text: string) => {
+        return (
+          <Button
+            key={text}
+            h={"unset"}
+            variant={"unstyled"}
+            fontWeight={"medium"}
+            lineHeight={"24px"}
+            fontSize={"12px"}
+            color={"grey.3"}
+            bgColor={"grey.7"}
+            px={"12px"}
+            borderRadius={"24px"}
+            onClick={() => setTextAreaField(text)}
+          >
+            {text}
+          </Button>
+        );
+      })}
+    </Flex>
   );
 };
