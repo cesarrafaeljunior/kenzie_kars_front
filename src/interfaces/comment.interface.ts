@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { iUser } from "./user.interfaces";
 
 export interface iCommentRequest {
@@ -13,6 +14,6 @@ export interface iComment {
 }
 
 export interface iCommentSuggestions {
-  text: string;
-  setValue: () => void;
+  texts: string[];
+  setTextAreaField: Dispatch<SetStateAction<string>>;
 }
