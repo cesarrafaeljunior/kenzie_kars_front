@@ -14,6 +14,8 @@ import { Textarea } from "../Textarea";
 import { ModalContainer } from "../Modal";
 import { iComment } from "@/interfaces/comment.interface";
 import { useCommentContext } from "@/contexts/comments.context";
+import moment from "moment";
+import "moment/locale/pt-br";
 
 export const Comments = () => {
   const { user } = useUserContext();
@@ -63,7 +65,9 @@ export const Comments = () => {
                 </Text>
                 <Img src={"/imgs/ellipse.png"}></Img>
                 <Text fontSize={"12px"} color={"grey.3"}>
-                  há 3 dias
+                  {moment().diff(comment.created_at, "hours") < 24
+                    ? moment(comment.created_at).startOf("minutes").fromNow()
+                    : moment(comment.created_at).startOf("days").fromNow()}
                 </Text>
               </Flex>
               <Text fontSize={"14px"} color={"grey.2"}>

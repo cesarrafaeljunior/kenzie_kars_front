@@ -5,6 +5,8 @@ export interface iCommentRequest {
 }
 
 export interface iComment {
+  created_at: Date;
+  updated_at: Date;
   id: string;
   description: string;
   user: Omit<iUser, "address">;
