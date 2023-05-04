@@ -10,6 +10,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import { iFilterParams } from "@/interfaces/components.interfaces";
 import { useToast } from "@chakra-ui/react";
+import { iComment } from "@/interfaces/comment.interface";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
@@ -91,7 +92,7 @@ export const AdvertProvider = ({ children }: iContextProps) => {
       })
       .catch((err) => {
         console.log(err);
-        toast({ status: "error", description: err.request.data.message });
+        toast({ status: "error", description: err.data.message });
       });
   };
 

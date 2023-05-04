@@ -9,17 +9,20 @@ import "@fontsource/inter/500.css";
 import "@fontsource/lexend/700.css";
 import "@fontsource/lexend/600.css";
 import "@fontsource/lexend/500.css";
+import { CommentProvider } from "@/contexts/comments.context";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <UserProvider>
-        <AuthProvider>
-          <AdvertProvider>
-            <Component {...pageProps} />
-          </AdvertProvider>
-        </AuthProvider>
-      </UserProvider>
+      <CommentProvider>
+        <UserProvider>
+          <AuthProvider>
+            <AdvertProvider>
+              <Component {...pageProps} />
+            </AdvertProvider>
+          </AuthProvider>
+        </UserProvider>
+      </CommentProvider>
     </ChakraProvider>
   );
 }

@@ -50,6 +50,8 @@ export interface iOnOpenF {
   onOpen: () => void;
 }
 
+export type onOpen = () => void;
+
 export interface iCloseF {
   onClose: () => void;
 }

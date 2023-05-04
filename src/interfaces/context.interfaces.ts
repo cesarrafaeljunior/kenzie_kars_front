@@ -8,7 +8,8 @@ import {
   iAdvertisedUpdate,
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
-import { iFilterParams } from "./components.interfaces";
+import { iFilterParams, onOpen } from "./components.interfaces";
+import { iComment, iCommentRequest } from "./comment.interface";
 
 export interface iContextProps {
   children: ReactNode;
@@ -57,4 +58,13 @@ export interface iUserContext {
 export interface iAuthContext {
   login: (data: iLogin) => Promise<void>;
   logout: () => void;
+}
+
+export interface iCommentContext {
+  textAreaField: string;
+  setTextAreaField: Dispatch<string>;
+  checkUserIsLogged: (data: onOpen) => void;
+  createComment: (data: iCommentRequest) => void;
+  currentComments: iComment[];
+  setCurrentComments: Dispatch<iComment[]>;
 }

@@ -1,3 +1,4 @@
+import { iComment } from "./comment.interface";
 import { iUser } from "./user.interfaces";
 
 export interface iAdvertListByUser extends iUser {
@@ -22,6 +23,7 @@ export interface iAdvert {
   is_avaliable: boolean;
   galery: iSellerGalery[];
   user: iUser;
+  comments: iComment[];
 }
 
 export interface iSellerGalery {

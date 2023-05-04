@@ -1,17 +1,28 @@
+import { useCommentContext } from "@/contexts/comments.context";
+import { iOnOpenF } from "@/interfaces/components.interfaces";
 import {
   Box,
   Button,
   Textarea as ChakraTextarea,
   Flex,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
+import { CommentSuggestions } from "../Comment";
+import { iCommentRequest } from "@/interfaces/comment.interface";
+import { FormEvent } from "react";
 
-export const Textarea = () => {
-  const [textareaField, setTextareaField] = useState("");
+export const Textarea = ({ onOpen }: iOnOpenF) => {
+  const { textAreaField, setTextAreaField, checkUserIsLogged, createComment } =
+    useCommentContext();
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    console.log(textareaField.trim());
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const description: iCommentRequest = {
+      description: textAreaField,
+    };
+
+    checkUserIsLogged(onOpen);
+    createComment(description);
   };
 
   return (
@@ -23,8 +34,8 @@ export const Textarea = () => {
         position={"relative"}
       >
         <ChakraTextarea
-          onChange={(e) => setTextareaField(e.target.value)}
-          value={textareaField}
+          value={textAreaField}
+          onChange={(e) => setTextAreaField(e.target.value)}
           placeholder={
             "Carro muito confortável, foi uma ótima experiência de compra..."
           }
@@ -34,70 +45,28 @@ export const Textarea = () => {
           pb={{ base: "8px", md: "50px" }}
         />
         <Button
-          type={textareaField.trim() ? "submit" : "button"}
-          variant={textareaField.trim() ? "brand1" : "disabled"}
+          type={textAreaField ? "submit" : "button"}
+          variant={textAreaField ? "brand1" : "disabled"}
           size={"sm"}
           mt={{ base: "24px", md: "unset" }}
           position={{ base: "unset", md: "absolute" }}
           right={"11px"}
           bottom={"13px"}
+          zIndex={1000}
         >
           Comentar
         </Button>
       </Box>
       <Flex alignItems={"center"} gap={"8px"} flexWrap={"wrap"}>
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Gostei muito!
-        </Button>
-
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Incrível
-        </Button>
-        <Button
-          onClick={(e) => {
-            const target = e.target as HTMLButtonElement;
-            setTextareaField(target.innerText);
-          }}
-          h={"unset"}
-          variant={"unstyled"}
-          fontWeight={"medium"}
-          lineHeight={"24px"}
-          fontSize={"12px"}
-          color={"grey.3"}
-          bgColor={"grey.7"}
-          px={"12px"}
-          borderRadius={"24px"}
-        >
-          Recomendarei para meus amigos!
-        </Button>
+        <CommentSuggestions
+          setTextAreaField={setTextAreaField}
+          texts={[
+            "Gostei muito",
+            "Carro muito confortável!",
+            "ótimo e simpático vendedor!",
+            "Carro muito lindo e conservado!",
+          ]}
+        />
       </Flex>
     </>
   );
