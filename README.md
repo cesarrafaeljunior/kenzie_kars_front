@@ -1,14 +1,14 @@
 <h1 align="center"> Kenzie Kars </h1>
 
 <p align="center">
+   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
+</p>
+
+<p align="center">
    <img src="https://i.postimg.cc/9Vd7FQkk/Site.gif" width='70%'/>
 </p>
 
 <hr>
-
-<p align="center">
-   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
-</p>
 
 ### Tópicos
 
@@ -76,6 +76,7 @@ Além disso, a plataforma oferece recursos para facilitar a compra e venda, como
 <img src="https://i.postimg.cc/KzzGgPFL/Yup.jpg" width="90px"  alt="Yup">
 
 <hr>
+
 ## Instalação
 
 - Clonar o repositório
@@ -95,11 +96,12 @@ Além disso, a plataforma oferece recursos para facilitar a compra e venda, como
   Abra http://localhost:3000 em seu navegador para ver o resultado.
 
 <hr>
+
 ## Api Utilizada
 
 A Api usada para este projeto e sua respectiva documentação pode ser encontrada em https://github.com/grupo20-t13/back_end
 
-  <hr>
+<hr>
 
 ## Desenvolvedores
 
