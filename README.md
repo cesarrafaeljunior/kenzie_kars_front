@@ -4,7 +4,9 @@
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
 </p>
 
-[![Navegando.gif](https://i.postimg.cc/rsFMfm8x/Navegando.gif)](https://postimg.cc/r0bBmqRw)
+<p align="center">
+ <img src="https://i.postimg.cc/xT4nxZYk/Site.gif"/>
+</p>
 
 <hr>
 
@@ -34,23 +36,34 @@ Além disso, a plataforma oferece recursos para facilitar a compra e venda, como
 ## Funcionalidades
 
 - **Pesquisa avançada:** A plataforma oferece uma pesquisa avançada com filtros personalizados que permitem aos usuários encontrar carros de acordo com suas necessidades e preferências. Isso pode incluir filtros como marca, modelo, ano, preço, quilometragem, tipo de combustível, entre outros.
-  [![Filtros.gif](https://i.postimg.cc/YqdhK5Zt/Filtros.gif)](https://postimg.cc/LnZHjbmW)
-  <br>
+
+  [![Site.gif](https://i.postimg.cc/xT4nxZYk/Site.gif)](https://postimg.cc/9rZ6zJDV)
+<br>
+<br>
 
 - **Anúncios de carros:** A plataforma permite que os vendedores anunciem seus carros com fotos e informações detalhadas, como ano de fabricação, quilometragem, modelo, entre outros. Os compradores podem ver os anúncios e entrar em contato com os vendedores.
-  [![Anuncios.gif](https://i.postimg.cc/W3T9Zqnm/Anuncios.gif)](https://postimg.cc/Mc3b2TgX)
-  <br>
+
+  [![Anuncios.gif](https://i.postimg.cc/j2qsyXBy/Anuncios.gif)](https://postimg.cc/TLSM6rdP)
+<br>
+<br>
 
 - **Tabela FIPE:** A plataforma oferece o preenchimento automático do preço atual da tabela FIPE do modelo selecionado, permitindo aos vendedores terem uma base ao escolher o preço. Isso pode ajudar a garantir que os preços estejam justos e competitivos.
-  [![Tabela-FIPE.gif](https://i.postimg.cc/1zJWp5YL/Tabela-FIPE.gif)](https://postimg.cc/06Kdvxvf)
-  <br>
+
+  [![Tabela-FIPE.gif](https://i.postimg.cc/g24SSKwg/Tabela-FIPE.gif)](https://postimg.cc/QF9JV1J7)
+<br>
+<br>
 
 - **Boa compra:** A plataforma mostra aos compradores, através de um badge, quais carros estão com o preço abaixo de 5% quando comparado ao preço da tabela FIPE. Isso pode ajudar os compradores a encontrar boas ofertas e incentivar os vendedores a definir preços mais justos.
-  [![Boa-Compra.gif](https://i.postimg.cc/8zdM6Kn3/Boa-Compra.gif)](https://postimg.cc/HrxrG2m4)
-  <br>
+
+  [![Boa-Compra.gif](https://i.postimg.cc/dtZJKLRR/Boa-Compra.gif)](https://postimg.cc/rKTB1yPz)
+<br>
+<br>
 
 - **Comentários:** A plataforma permite que os compradores façam comentários nos anúncios. Isso pode ajudar a criar uma comunidade engajada e confiável, onde os usuários possam compartilhar informações e experiências sobre os carros anunciados.
-  [![Coment-rios.gif](https://i.postimg.cc/XNy8v84M/Coment-rios.gif)](https://postimg.cc/8sNWKL7w)
+
+  [![Comentarios.gif](https://i.postimg.cc/DwBhrL7T/Comentarios.gif)](https://postimg.cc/cvgPZKK9)
+<br>
+<br>
 
 <hr>
 
