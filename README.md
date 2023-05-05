@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-   <img src="https://i.postimg.cc/9Vd7FQkk/Site.gif" width='70%'/>
+   <img src="https://i.postimg.cc/fTbL8DD7/Site.gif" width='70%'/>
 </p>
 
 <hr>
