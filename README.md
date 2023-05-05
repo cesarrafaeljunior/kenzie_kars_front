@@ -43,7 +43,7 @@ Além disso, a plataforma oferece recursos para facilitar a compra e venda, como
 
 - **Anúncios de carros:** A plataforma permite que os vendedores anunciem seus carros com fotos e informações detalhadas, como ano de fabricação, quilometragem, modelo, entre outros. Os compradores podem ver os anúncios e entrar em contato com os vendedores.
 
-  [![Anuncios.gif](https://i.postimg.cc/y8M52C0v/Anuncios.gif)](https://postimg.cc/G4jqsN7y)
+  [![Anuncios.gif](https://i.postimg.cc/cLrFcx5r/Anuncios.gif)](https://postimg.cc/LJFk9pSp)
 <br>
 <br>
 
