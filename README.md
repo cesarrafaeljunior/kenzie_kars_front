@@ -37,13 +37,13 @@ Além disso, a plataforma oferece recursos para facilitar a compra e venda, como
 
 - **Pesquisa avançada:** A plataforma oferece uma pesquisa avançada com filtros personalizados que permitem aos usuários encontrar carros de acordo com suas necessidades e preferências. Isso pode incluir filtros como marca, modelo, ano, preço, quilometragem, tipo de combustível, entre outros.
 
-  [![Site.gif](https://i.postimg.cc/xT4nxZYk/Site.gif)](https://postimg.cc/9rZ6zJDV)
+  [![Filtros.gif](https://i.postimg.cc/L5dmTCPd/Filtros.gif)](https://postimg.cc/XG8MNgxx)
 <br>
 <br>
 
 - **Anúncios de carros:** A plataforma permite que os vendedores anunciem seus carros com fotos e informações detalhadas, como ano de fabricação, quilometragem, modelo, entre outros. Os compradores podem ver os anúncios e entrar em contato com os vendedores.
 
-  [![Anuncios.gif](https://i.postimg.cc/j2qsyXBy/Anuncios.gif)](https://postimg.cc/TLSM6rdP)
+  [![Anuncios.gif](https://i.postimg.cc/y8M52C0v/Anuncios.gif)](https://postimg.cc/G4jqsN7y)
 <br>
 <br>
 
