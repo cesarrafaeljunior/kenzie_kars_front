@@ -1,6 +1,7 @@
 import {
   iAdvert,
   iAdvertListByUser,
+  iAdvertPaginated,
   iAdvertisedRequest,
   iAdvertisedUpdate,
 } from "@/interfaces/advert.interfaces";
@@ -10,13 +11,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import { iFilterParams } from "@/interfaces/components.interfaces";
 import { useToast } from "@chakra-ui/react";
-import { iComment } from "@/interfaces/comment.interface";
 
 const AdvertContext = createContext<iAdvertContext>({} as iAdvertContext);
 
 export const AdvertProvider = ({ children }: iContextProps) => {
   const [modalVehicleImage, setModalVehicleImage] = useState<string>("");
-  const [advertsList, setAdvertsList] = useState<iAdvert[]>([]);
+  const [advertsList, setAdvertsList] = useState<iAdvertPaginated | null>(null);
   const [brandsList, setBrandsList] = useState<Array<string>>([]);
   const [brandSelect, setBrandSelect] = useState<string>("");
   const [modelList, setModelList] = useState<[]>([]);
@@ -44,6 +44,9 @@ export const AdvertProvider = ({ children }: iContextProps) => {
   const submitAdvertFilter = (key: string, value: string) => {
     const filterObj = filterParams;
     filterObj[key] = value;
+    if (key !== "page") {
+      filterObj["page"] = "1";
+    }
     setFilterParams(filterObj);
     loadAdverts(filterObj);
   };

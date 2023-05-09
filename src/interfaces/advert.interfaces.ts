@@ -26,6 +26,16 @@ export interface iAdvert {
   comments: iComment[];
 }
 
+export interface iAdvertPaginated {
+  count: number;
+  first: string | null;
+  previous: string | null;
+  next: string | null;
+  last: string | null;
+  results: iAdvert[];
+  unpaginatedResults: iAdvert[];
+}
+
 export interface iSellerGalery {
   id: number;
   image: string;
