@@ -104,6 +104,22 @@ export const ButtonStyle: ComponentStyleConfig = {
       bg: "#B0A6F0",
       color: "#ffffff",
     },
+    pageDefault: {
+      borderRadius: 0,
+      fontSize: "20px",
+      borderColor: "#ADB5BD",
+      bg: "transparent",
+      color: "#ADB5BD",
+      _hover: { bg: "#DEE2E6", color: "#4529E6" },
+    },
+    pageSelected: {
+      borderRadius: 0,
+      fontSize: "20px",
+      borderColor: "#ADB5BD",
+      bg: "transparent",
+      color: "#4529E6",
+      _hover: { bg: "#DEE2E6" },
+    },
   },
   defaultProps: {
     size: "md",
