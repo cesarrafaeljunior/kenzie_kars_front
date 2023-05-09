@@ -122,7 +122,7 @@ export default ({ user }: iProfileProps) => {
             />
           ))}
         </List>
-        <PaginationNumbers />
+        {/* <PaginationNumbers /> */}
       </Box>
       <Footer />
     </Box>
