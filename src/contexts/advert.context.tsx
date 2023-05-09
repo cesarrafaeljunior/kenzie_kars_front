@@ -32,9 +32,11 @@ export const AdvertProvider = ({ children }: iContextProps) => {
     isClosable: true,
   });
 
-  const getAdvertiseListByUserId = async (userId: string) => {
+  const getAdvertiseListByUserId = async (userId: string, page?: string) => {
     await api
-      .get<iAdvertListByUser>(`/advertised/users/${userId}`)
+      .get<iAdvertListByUser>(`/advertised/users/${userId}`, {
+        params: { page },
+      })
       .then(({ data }) => {
         setAdvertiseListByUser(data);
       })
