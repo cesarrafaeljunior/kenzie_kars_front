@@ -20,7 +20,7 @@ export interface iAdvertContext {
   modalVehicleImage: string;
   createAdv: (data: iAdvertisedRequest, onOpen: () => void) => Promise<void>;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
-  getAdvertiseListByUserId: (userId: string) => Promise<void>;
+  getAdvertiseListByUserId: (userId: string, page?: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
   advertsList: iAdvertPaginated | null;
   brandsList: string[];

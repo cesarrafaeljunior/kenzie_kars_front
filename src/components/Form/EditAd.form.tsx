@@ -114,7 +114,7 @@ export const EditAd = ({ onOpen }: iOnOpenF) => {
   useEffect(() => {
     handleAddImage();
     if (advertiseListByUser) {
-      const initalAdvert = advertiseListByUser.adverts.find(
+      const initalAdvert = advertiseListByUser.results.find(
         (elem) => elem.id == advertPatchDeleteId
       );
 
