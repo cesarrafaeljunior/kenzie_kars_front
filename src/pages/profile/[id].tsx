@@ -79,7 +79,7 @@ export default ({ seller }: iSellerProfileProps) => {
             <ProductCard key={index} advertData={advert} seller={seller} />
           ))}
         </List>
-        <PaginationNumbers />
+        {/* <PaginationNumbers /> */}
       </Box>
       <Footer />
     </Box>
