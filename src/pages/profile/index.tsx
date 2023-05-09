@@ -20,6 +20,7 @@ import { iProfileProps } from "@/interfaces/pages.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
 import { ModalContainer } from "@/components/Modal";
+
 export default ({ user }: iProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
   const {
@@ -32,9 +33,17 @@ export default ({ user }: iProfileProps) => {
     onOpen: onOpenUpdate,
     onClose: onCloseUpdate,
   } = useDisclosure();
+
   useEffect(() => {
     getAdvertiseListByUserId(user.id);
   }, []);
+
+  const changePage = (key: string, value: string) => {
+    if (key == "page") {
+      getAdvertiseListByUserId(user.id, value);
+    }
+  };
+
   if (!advertiseListByUser) return null;
 
   return (
@@ -113,7 +122,7 @@ export default ({ user }: iProfileProps) => {
           m="0 auto"
           gap={"48px"}
         >
-          {advertiseListByUser.adverts.map((advert, index) => (
+          {advertiseListByUser.results.map((advert, index) => (
             <ProductCard
               key={index}
               advertData={advert}
@@ -122,7 +131,10 @@ export default ({ user }: iProfileProps) => {
             />
           ))}
         </List>
-        <PaginationNumbers />
+        <PaginationNumbers
+          {...advertiseListByUser}
+          callbackToChangePage={changePage}
+        />
       </Box>
       <Footer />
     </Box>
@@ -138,7 +150,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return await api
     .get<iUser>("/users/profile")
     .then(({ data }) => {
-      return { props: { user: data } };
+      return data.is_seller
+        ? { props: { user: data } }
+        : { redirect: { destination: "/", permanent: false } };
     })
     .catch(() => {
       return { redirect: { destination: "/login", permanent: false } };

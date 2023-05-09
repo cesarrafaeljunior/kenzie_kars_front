@@ -15,7 +15,7 @@ export const HomeFilters = () => {
     Ano: { name: "year", values: [] },
   };
 
-  advertsList.forEach((advert) => {
+  advertsList?.unpaginatedResults.forEach((advert) => {
     filterObj.Marca.values.push(advert.brand);
     filterObj.Modelo.values.push(advert.model);
     filterObj.Combustível.values.push(advert.fuel);

@@ -10,7 +10,7 @@ import { Image, Heading, Text, List } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { advertsList, loadAdverts } = useAdvertContext();
+  const { advertsList, loadAdverts, submitAdvertFilter } = useAdvertContext();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function Home() {
             paddingRight={"65px"}
             paddingLeft={{ base: "20px", lg: "0px" }}
           >
-            {advertsList.map((advert, i) => {
+            {advertsList.results.map((advert, i) => {
               return <ProductCard key={i} advertData={advert} />;
             })}
           </List>
@@ -99,9 +99,12 @@ export default function Home() {
               Filtros
             </Button>
           </Center>
-          <PaginationNumbers />
         </Box>
       </Box>
+      <PaginationNumbers
+        callbackToChangePage={submitAdvertFilter}
+        {...advertsList}
+      />
       <Footer />
     </>
   );

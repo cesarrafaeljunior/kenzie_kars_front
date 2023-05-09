@@ -1,38 +1,149 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center"> Kenzie Kars </h1>
 
-## Getting Started
+<p align="center">
+   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
+</p>
 
-First, run the development server:
+<p align="center">
+ <img src="https://i.postimg.cc/xT4nxZYk/Site.gif"/>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+<hr>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tópicos
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- [Descrição do projeto](#descrição-do-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Ferramentas utilizadas](#ferramentas-utilizadas)
+- [Instalação](#instalação)
+- [Api Utilizada](#api-utilizada)
+- [Desenvolvedores](#desenvolvedores)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+<hr>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Descrição do projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<p align="justify">
 
-## Learn More
+Kenzie Kars é uma plataforma online para compra e venda de veículos automotivos, oferecendo opções tanto para carros novos quanto usados. Como cliente, você pode navegar por diversos anúncios de carros e encontrar o veículo que atenda às suas necessidades e orçamento. Já como vendedor, você pode anunciar seu carro e expô-lo a uma ampla audiência de compradores em potencial.
 
-To learn more about Next.js, take a look at the following resources:
+Além disso, a plataforma oferece recursos para facilitar a compra e venda, como uma pesquisa avançada com filtros personalizados e fotos e informações detalhadas sobre os carros. Com sua ampla seleção de anúncios e recursos de pesquisa, os clientes podem encontrar o carro ideal com facilidade, enquanto os vendedores podem encontrar um público mais amplo e fechar negócios mais rapidamente.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<hr>
 
-## Deploy on Vercel
+## Funcionalidades
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Pesquisa avançada:** A plataforma oferece uma pesquisa avançada com filtros personalizados que permitem aos usuários encontrar carros de acordo com suas necessidades e preferências. Isso pode incluir filtros como marca, modelo, ano, preço, quilometragem, tipo de combustível, entre outros.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  [![Filtros.gif](https://i.postimg.cc/L5dmTCPd/Filtros.gif)](https://postimg.cc/XG8MNgxx)
+<br>
+<br>
+
+- **Anúncios de carros:** A plataforma permite que os vendedores anunciem seus carros com fotos e informações detalhadas, como ano de fabricação, quilometragem, modelo, entre outros. Os compradores podem ver os anúncios e entrar em contato com os vendedores.
+
+  [![Anuncio.gif](https://i.postimg.cc/xTZnTdwR/Anuncio.gif)](https://postimg.cc/xcLW69TJ)
+<br>
+<br>
+
+- **Tabela FIPE:** A plataforma oferece o preenchimento automático do preço atual da tabela FIPE do modelo selecionado, permitindo aos vendedores terem uma base ao escolher o preço. Isso pode ajudar a garantir que os preços estejam justos e competitivos.
+
+  [![Tabela-FIPE.gif](https://i.postimg.cc/g24SSKwg/Tabela-FIPE.gif)](https://postimg.cc/QF9JV1J7)
+<br>
+<br>
+
+- **Boa compra:** A plataforma mostra aos compradores, através de um badge, quais carros estão com o preço abaixo de 5% quando comparado ao preço da tabela FIPE. Isso pode ajudar os compradores a encontrar boas ofertas e incentivar os vendedores a definir preços mais justos.
+
+  [![Boa-Compra.gif](https://i.postimg.cc/dtZJKLRR/Boa-Compra.gif)](https://postimg.cc/rKTB1yPz)
+<br>
+<br>
+
+- **Comentários:** A plataforma permite que os compradores façam comentários nos anúncios. Isso pode ajudar a criar uma comunidade engajada e confiável, onde os usuários possam compartilhar informações e experiências sobre os carros anunciados.
+
+  [![Comentarios.gif](https://i.postimg.cc/DwBhrL7T/Comentarios.gif)](https://postimg.cc/cvgPZKK9)
+<br>
+<br>
+
+<hr>
+
+## Ferramentas utilizadas
+
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
+
+<img src="https://i.postimg.cc/DfWKKYm1/Next.jpg" width="90px" alt="Next.js">
+
+<img src="https://i.postimg.cc/qvnCzLRF/Chakra.jpg" width="90px" alt="React">
+
+<img src="https://i.postimg.cc/KzzGgPFL/Yup.jpg" width="90px"  alt="Yup">
+
+<hr>
+
+## Instalação
+
+- Clonar o repositório
+
+  ```
+  git clone git@github.com:grupo20-t13/front_end.git
+  ```
+
+- Use o yarn para instalar as dependencias que estão listadas no package.json
+  ```
+    yarn install
+  ```
+- Iniciar o projeto
+  ```
+    yarn dev
+  ```
+  Abra http://localhost:3000 em seu navegador para ver o resultado.
+
+<hr>
+
+## Api Utilizada
+
+A Api usada para este projeto e sua respectiva documentação pode ser encontrada em https://github.com/grupo20-t13/back_end
+
+<hr>
+
+## Desenvolvedores
+
+- Cesar Rafael da Silva Júnior
+  <br>
+  <a href="https://github.com/cesarrafaeljunior">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://www.linkedin.com/in/cesarrafaeljunior/">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  <br>
+
+- Flavia Monteiro
+  <br>
+  <a href="https://github.com/FlaviaBMonteiro">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://www.linkedin.com/in/flaviamont/">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  <br>
+
+- Matheus Gonçalves
+  <br>
+  <a href="https://github.com/matheuscg13">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://www.linkedin.com/in/matheus-gonçalves13/">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  <br>
+
+- Thomas Schreiner Mello
+  <br>
+  <a href="https://github.com/ThomSchreiner">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://www.linkedin.com/in/thomschreiner/">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>

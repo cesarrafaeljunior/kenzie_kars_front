@@ -7,8 +7,24 @@ import { Header } from "@/components/Header";
 import { iSellerProfileProps } from "@/interfaces/pages.interfaces";
 import { api } from "@/services/api";
 import { iAdvertListByUser } from "@/interfaces/advert.interfaces";
+import { useEffect } from "react";
+import { useAdvertContext } from "@/contexts/advert.context";
 
 export default ({ seller }: iSellerProfileProps) => {
+  const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
+
+  useEffect(() => {
+    getAdvertiseListByUserId(seller.id);
+  }, []);
+
+  const changePage = (key: string, value: string) => {
+    if (key == "page") {
+      getAdvertiseListByUserId(seller.id, value);
+    }
+  };
+
+  seller = advertiseListByUser ? advertiseListByUser : seller;
+
   return (
     <Box
       bgGradient={
@@ -75,11 +91,11 @@ export default ({ seller }: iSellerProfileProps) => {
           m="0 auto"
           gap={"48px"}
         >
-          {seller.adverts.map((advert, index) => (
+          {seller.results.map((advert, index) => (
             <ProductCard key={index} advertData={advert} seller={seller} />
           ))}
         </List>
-        <PaginationNumbers />
+        <PaginationNumbers {...seller} callbackToChangePage={changePage} />
       </Box>
       <Footer />
     </Box>
