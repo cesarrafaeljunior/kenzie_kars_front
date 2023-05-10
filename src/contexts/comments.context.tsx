@@ -1,4 +1,8 @@
-import { iComment, iCommentRequest } from "@/interfaces/comment.interface";
+import {
+  iComment,
+  iCommentRequest,
+  iCommentUpdate,
+} from "@/interfaces/comment.interface";
 import { iOnOpenF, onOpen } from "@/interfaces/components.interfaces";
 import {
   iCommentContext,
@@ -41,6 +45,19 @@ export const CommentProvider = ({ children }: iContextProps) => {
       });
   };
 
+  const updateComment = (description: iCommentUpdate) => {
+    const advertId = router.query;
+
+    api
+      .patch(`/advertised/${advertId}/comments`, description)
+      .then((res) => {
+        setCurrentComments([...currentComments, res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <CommentContext.Provider
       value={{
@@ -50,6 +67,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
         createComment,
         currentComments,
         setCurrentComments,
+        updateComment,
       }}
     >
       {children}

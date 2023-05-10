@@ -73,6 +73,7 @@ export const Comments = () => {
               <Text fontSize={"14px"} color={"grey.2"}>
                 {comment.description}
               </Text>
+              {comment.user == user ? <Button>Editar</Button> : <></>}
             </ListItem>
           ))}
         </List>

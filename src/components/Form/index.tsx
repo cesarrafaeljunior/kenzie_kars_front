@@ -6,6 +6,7 @@ import { EditAd } from "./EditAd.form";
 import { EditAddress } from "./EditAddress.form";
 import { EditProfile } from "./EditProfile.form";
 import { Login } from "./Login.form";
+import { EditComment } from "./EditComment";
 
 export const Form = {
   EditProfile,
@@ -16,4 +17,5 @@ export const Form = {
   Login,
   RecoverySubmitEmail,
   RecoveryPassword,
+  EditComment,
 };

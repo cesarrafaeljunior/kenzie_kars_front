@@ -9,7 +9,7 @@ import {
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
 import { iFilterParams, onOpen } from "./components.interfaces";
-import { iComment, iCommentRequest } from "./comment.interface";
+import { iComment, iCommentRequest, iCommentUpdate } from "./comment.interface";
 
 export interface iContextProps {
   children: ReactNode;
@@ -67,4 +67,5 @@ export interface iCommentContext {
   createComment: (data: iCommentRequest) => void;
   currentComments: iComment[];
   setCurrentComments: Dispatch<SetStateAction<iComment[]>>;
+  updateComment: (description: iCommentUpdate) => void;
 }
