@@ -1,16 +1,9 @@
 import { useUserContext } from "@/contexts/user.context";
 import { iOnOpenF } from "@/interfaces/components.interfaces";
-import { iUserRequest } from "@/interfaces/user.interfaces";
-import { userRequestSchema } from "@/schemas/user.schemas";
-import { apiSearchCEP } from "@/services/api";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Heading,
   Flex,
   Button,
-  InputGroup,
-  InputRightElement,
-  IconButton,
   Box,
   Text,
   Select,
@@ -18,17 +11,13 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Field } from "../Field";
 import { useAdvertContext } from "@/contexts/advert.context";
-import {
-  iAdvertisedRequest,
-  iAdvertisedUpdate,
-} from "@/interfaces/advert.interfaces";
+import { iAdvertisedUpdate } from "@/interfaces/advert.interfaces";
 import { advertisedUpdateSchema } from "@/schemas/ad.schemas";
 import { formatValues } from "@/utils/valuesFormat.util";
-import { string } from "yup";
 
 export const EditAd = ({ onOpen }: iOnOpenF) => {
   const {
