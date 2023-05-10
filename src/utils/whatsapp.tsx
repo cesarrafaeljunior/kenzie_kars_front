@@ -1,10 +1,6 @@
+import { WhatsAppButtonProps } from "@/interfaces/components.interfaces";
 import { Button } from "@chakra-ui/react";
-import React, { ReactNode } from "react";
-
-interface WhatsAppButtonProps {
-  phoneNumber: string;
-  modelName: string;
-}
+import React from "react";
 
 const WhatsAppButton = ({ phoneNumber, modelName }: WhatsAppButtonProps) => {
   const handleWhatsAppClick = () => {
