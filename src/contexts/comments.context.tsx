@@ -1,4 +1,8 @@
-import { iComment, iCommentRequest } from "@/interfaces/comment.interface";
+import {
+  iComment,
+  iCommentRequest,
+  iCommentUpdate,
+} from "@/interfaces/comment.interface";
 import { iOnOpenF, onOpen } from "@/interfaces/components.interfaces";
 import {
   iCommentContext,
@@ -15,6 +19,9 @@ export const CommentProvider = ({ children }: iContextProps) => {
   const router = useRouter();
   const [textAreaField, setTextAreaField] = useState<string>("");
   const [currentComments, setCurrentComments] = useState<iComment[]>([]);
+  const [commentToBeEdited, setCommentToBeEdited] = useState<iComment | null>(
+    null
+  );
 
   const checkUserIsLogged = (onOpen: onOpen) => {
     const cookies = parseCookies();
@@ -41,6 +48,44 @@ export const CommentProvider = ({ children }: iContextProps) => {
       });
   };
 
+  const updateComment = (
+    description: iCommentUpdate,
+    commentId: string,
+    onClose: () => void
+  ) => {
+    const advertId = router.query;
+
+    api
+      .patch(`/advertised/${advertId}/comments/${commentId}`, description)
+      .then((res) => {
+        setCurrentComments(
+          currentComments.map((elem) =>
+            elem.id == commentId ? res.data : elem
+          )
+        );
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteComment = (commentId: string, onClose: () => void) => {
+    const advertId = router.query;
+
+    api
+      .delete(`/advertised/${advertId}/comments/${commentId}`)
+      .then((res) => {
+        setCurrentComments(
+          currentComments.filter((elem) => elem.id != commentId)
+        );
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <CommentContext.Provider
       value={{
@@ -50,6 +95,10 @@ export const CommentProvider = ({ children }: iContextProps) => {
         createComment,
         currentComments,
         setCurrentComments,
+        updateComment,
+        commentToBeEdited,
+        setCommentToBeEdited,
+        deleteComment,
       }}
     >
       {children}
