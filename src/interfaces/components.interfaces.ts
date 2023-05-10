@@ -83,3 +83,8 @@ export interface iUrlImageField {
   errors: string | undefined;
   handleRemoveImage: (index: number) => void;
 }
+
+export interface WhatsAppButtonProps {
+  phoneNumber: string;
+  modelName: string;
+}

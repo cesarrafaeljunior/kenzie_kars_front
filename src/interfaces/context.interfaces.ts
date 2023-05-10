@@ -6,6 +6,7 @@ import {
   iAdvert,
   iAdvertObject,
   iAdvertisedUpdate,
+  iAdvertPaginated,
 } from "./advert.interfaces";
 import { iUser, iUserRequest, iLogin, iUserUpdate } from "./user.interfaces";
 import { iFilterParams, onOpen } from "./components.interfaces";
@@ -19,9 +20,9 @@ export interface iAdvertContext {
   modalVehicleImage: string;
   createAdv: (data: iAdvertisedRequest, onOpen: () => void) => Promise<void>;
   setModalVehicleImage: Dispatch<SetStateAction<string>>;
-  getAdvertiseListByUserId: (userId: string) => Promise<void>;
+  getAdvertiseListByUserId: (userId: string, page?: string) => Promise<void>;
   advertiseListByUser: iAdvertListByUser | null;
-  advertsList: iAdvert[];
+  advertsList: iAdvertPaginated | null;
   brandsList: string[];
   brandSelect: string;
   setBrandSelect: Dispatch<SetStateAction<string>>;

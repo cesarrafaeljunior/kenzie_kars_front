@@ -27,6 +27,7 @@ import { iDetailHomeProps } from "@/interfaces/pages.interfaces";
 import { Comments } from "@/components/Comment";
 import { useCommentContext } from "@/contexts/comments.context";
 import { useEffect } from "react";
+import WhatsAppButton from "@/utils/whatsapp";
 
 export default ({ advert }: iDetailHomeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -108,7 +109,10 @@ export default ({ advert }: iDetailHomeProps) => {
                 {formatValues(advert.price, "BRL")}
               </Text>
             </Flex>
-            <Button size={"sm"}>Comprar</Button>
+            <WhatsAppButton
+              phoneNumber={advert.user.phone_number}
+              modelName={advert.model}
+            />
           </Box>
           <Box
             bgColor={"grey.10"}

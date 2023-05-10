@@ -2,7 +2,12 @@ import { iComment } from "./comment.interface";
 import { iUser } from "./user.interfaces";
 
 export interface iAdvertListByUser extends iUser {
-  adverts: Omit<iAdvert, "user">[];
+  count: string | null;
+  first: string | null;
+  previous: string | null;
+  next: string | null;
+  last: string | null;
+  results: Omit<iAdvert, "user">[];
 }
 
 export interface iAdvert {
@@ -24,6 +29,16 @@ export interface iAdvert {
   galery: iSellerGalery[];
   user: iUser;
   comments: iComment[];
+}
+
+export interface iAdvertPaginated {
+  count: number;
+  first: string | null;
+  previous: string | null;
+  next: string | null;
+  last: string | null;
+  results: iAdvert[];
+  unpaginatedResults: iAdvert[];
 }
 
 export interface iSellerGalery {
