@@ -5,7 +5,7 @@ export const apiSearchCEP = async (cep: string) =>
 
 export const api = axios.create({
   baseURL: "https://motors-shop-back-end.vercel.app",
-  timeout: 5000,
+  timeout: 15000,
 });
 
 export const apiKenzieKars = axios.create({
