@@ -4,9 +4,11 @@ import {
   Button,
   Center,
   Flex,
+  IconButton,
   Img,
   List,
   ListItem,
+  Spacer,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -16,16 +18,33 @@ import { useCommentContext } from "@/contexts/comments.context";
 import { iCommentSuggestions } from "@/interfaces/comment.interface";
 import moment from "moment";
 import "moment/locale/pt-br";
+import { EditIcon } from "@chakra-ui/icons";
 
 export const Comments = () => {
   const { user } = useUserContext();
-  const { currentComments } = useCommentContext();
+  const { currentComments, setCommentToBeEdited } = useCommentContext();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCheckLogin,
+    onOpen: onOpenCheckLogin,
+    onClose: onCloseCheckLogin,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
 
   return (
     <Box as={"section"}>
-      <ModalContainer.ModalCheckLogin isOpen={isOpen} onClose={onClose} />
+      <ModalContainer.ModalCheckLogin
+        isOpen={isOpenCheckLogin}
+        onClose={onCloseCheckLogin}
+      />
+      <ModalContainer.ModalEditComment
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
+      />
       <Box
         bgColor={"grey.10"}
         borderRadius={"4px"}
@@ -69,11 +88,24 @@ export const Comments = () => {
                     ? moment(comment.created_at).startOf("minutes").fromNow()
                     : moment(comment.created_at).startOf("days").fromNow()}
                 </Text>
+                <Spacer />
+                {comment.user.id == user?.id ? (
+                  <IconButton
+                    variant={"unstyled"}
+                    onClick={() => {
+                      onOpenEdit();
+                      setCommentToBeEdited(comment);
+                    }}
+                    aria-label=""
+                    icon={<EditIcon />}
+                  />
+                ) : (
+                  <></>
+                )}
               </Flex>
               <Text fontSize={"14px"} color={"grey.2"}>
                 {comment.description}
               </Text>
-              {comment.user == user ? <Button>Editar</Button> : <></>}
             </ListItem>
           ))}
         </List>
@@ -101,7 +133,7 @@ export const Comments = () => {
             {user?.name || "Usuário"}
           </Text>
         </Flex>
-        <Textarea onOpen={onOpen} />
+        <Textarea onOpen={onOpenCheckLogin} />
       </Box>
     </Box>
   );

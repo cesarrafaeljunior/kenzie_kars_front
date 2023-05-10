@@ -68,5 +68,12 @@ export interface iCommentContext {
   createComment: (data: iCommentRequest) => void;
   currentComments: iComment[];
   setCurrentComments: Dispatch<SetStateAction<iComment[]>>;
-  updateComment: (description: iCommentUpdate) => void;
+  updateComment: (
+    description: iCommentUpdate,
+    commentId: string,
+    onClose: () => void
+  ) => void;
+  setCommentToBeEdited: Dispatch<SetStateAction<iComment | null>>;
+  commentToBeEdited: iComment | null;
+  deleteComment: (commentId: string, onClose: () => void) => void;
 }

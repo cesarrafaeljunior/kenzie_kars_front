@@ -20,7 +20,7 @@ export const ModalEditComment = ({ isOpen, onClose }: iModalProps) => {
           </ModalHeader>
           <ModalCloseButton border={"transparent"} outline={"none"} />
           <ModalBody paddingBottom={"28px"}>
-            <Form.EditComment />
+            <Form.EditComment onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
