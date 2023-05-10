@@ -310,7 +310,7 @@ export const EditAd = ({ onOpen }: iOnOpenF) => {
           value={"true"}
           variant={"outline"}
           _focus={{ bg: "#4529E6", border: "#4529E6", color: "white" }}
-          {...register("is_avaliable")}
+          onClick={() => setValue("is_avaliable", true)}
         >
           Sim
         </Button>

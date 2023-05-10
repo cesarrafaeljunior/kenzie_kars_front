@@ -209,7 +209,7 @@ export const CreateProfile = ({ onOpen }: iOnOpenF) => {
             value={"false"}
             variant={"outline"}
             _focus={{ bg: "#4529E6", border: "#4529E6", color: "white" }}
-            {...register("is_seller")}
+            onClick={() => setValue("is_seller", false)}
           >
             Comprador
           </Button>
@@ -218,7 +218,7 @@ export const CreateProfile = ({ onOpen }: iOnOpenF) => {
             value={"true"}
             variant={"outline"}
             _focus={{ bg: "#4529E6", border: "#4529E6", color: "white" }}
-            {...register("is_seller")}
+            onClick={() => setValue("is_seller", true)}
           >
             Anunciante
           </Button>
