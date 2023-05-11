@@ -1,8 +1,5 @@
+import { iMessage } from "@/interfaces/components.interfaces";
 import { Text } from "@chakra-ui/react";
-
-interface iMessage {
-  message: string;
-}
 
 export const MessageNoAd = ({ message }: iMessage) => {
   return (
