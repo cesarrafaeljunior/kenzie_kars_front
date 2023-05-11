@@ -23,6 +23,7 @@ export const EditProfile = ({ onClose }: iCloseF) => {
       const { id } = user;
       console.log(id);
       await updateUser(data, id);
+      onClose();
     }
   };
 

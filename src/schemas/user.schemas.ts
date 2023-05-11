@@ -26,16 +26,30 @@ const ensureIfIsLegalAge = (birthdate: Date | undefined) => {
 export const userUpdateSchema: ObjectSchema<iUserUpdate> = yup
   .object()
   .shape({
-    name: yup.string().max(100),
-    email: yup.string().email().max(100),
-    cpf: yup.string().max(11),
-    phone_number: yup.string().max(11),
+    name: yup
+      .string()
+      .max(100)
+      .transform((value) => (value ? value : undefined)),
+    email: yup
+      .string()
+      .email()
+      .max(100)
+      .transform((value) => (value ? value : undefined)),
+    cpf: yup
+      .string()
+      .max(11)
+      .transform((value) => (value ? value : undefined)),
+    phone_number: yup
+      .string()
+      .max(11)
+      .transform((value) => (value ? value : undefined)),
     birthdate: yup
       .date()
 
-      .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge),
+      .test("Legal age", "Come back when you're 18 years", ensureIfIsLegalAge)
+      .transform((value) => (value ? value : undefined)),
     description: yup.string(),
-    password: yup.string(),
+    password: yup.string().transform((value) => (value ? value : undefined)),
   })
   .partial();
 
