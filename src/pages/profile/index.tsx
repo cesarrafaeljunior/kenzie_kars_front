@@ -20,6 +20,7 @@ import { iProfileProps } from "@/interfaces/pages.interfaces";
 import { iUser } from "@/interfaces/user.interfaces";
 import { api } from "@/services/api";
 import { ModalContainer } from "@/components/Modal";
+import { MessageNoAd } from "@/components/MessageNoAd";
 
 export default ({ user }: iProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
@@ -122,14 +123,18 @@ export default ({ user }: iProfileProps) => {
           m="0 auto"
           gap={"48px"}
         >
-          {advertiseListByUser.results.map((advert, index) => (
-            <ProductCard
-              key={index}
-              advertData={advert}
-              isSeller={advertiseListByUser.is_seller}
-              onOpen={onOpenUpdate}
-            />
-          ))}
+          {advertiseListByUser.results.length > 0 ? (
+            advertiseListByUser.results.map((advert, index) => (
+              <ProductCard
+                key={index}
+                advertData={advert}
+                isSeller={advertiseListByUser.is_seller}
+                onOpen={onOpenUpdate}
+              />
+            ))
+          ) : (
+            <MessageNoAd message="Não existem anúncios cadastrados desse usuário" />
+          )}
         </List>
         <PaginationNumbers
           {...advertiseListByUser}
