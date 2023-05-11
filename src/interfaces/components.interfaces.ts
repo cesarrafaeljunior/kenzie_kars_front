@@ -93,3 +93,7 @@ export interface WhatsAppButtonProps {
   phoneNumber: string;
   modelName: string;
 }
+
+export interface iMessage {
+  message: string;
+}
