@@ -47,7 +47,6 @@ export const UserProvider = ({ children }: iContextProps) => {
         onOpen();
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.response.data.message });
       });
   };
@@ -60,7 +59,6 @@ export const UserProvider = ({ children }: iContextProps) => {
         toast({ status: "success", title: "Usuário atualizado com sucesso!" });
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.response.data.message });
       });
   };
@@ -74,7 +72,6 @@ export const UserProvider = ({ children }: iContextProps) => {
         logout();
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.response.data.message });
       });
   };
@@ -86,7 +83,6 @@ export const UserProvider = ({ children }: iContextProps) => {
         toast({ status: "success", title: "Endereço atualizado com sucesso!" });
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.response.data.message });
       });
   };

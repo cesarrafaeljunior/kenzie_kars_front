@@ -9,6 +9,7 @@ import {
   iContextProps,
 } from "@/interfaces/context.interfaces";
 import { api } from "@/services/api";
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { createContext, useContext, useState } from "react";
@@ -22,6 +23,12 @@ export const CommentProvider = ({ children }: iContextProps) => {
   const [commentToBeEdited, setCommentToBeEdited] = useState<iComment | null>(
     null
   );
+
+  const toast = useToast({
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
 
   const checkUserIsLogged = (onOpen: onOpen) => {
     const cookies = parseCookies();
@@ -43,7 +50,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
         setCurrentComments([...currentComments, res.data]);
       })
       .catch((err) => {
-        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
       });
   };
 
@@ -65,7 +72,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
         onClose();
       })
       .catch((err) => {
-        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
       });
   };
 
@@ -81,7 +88,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
         onClose();
       })
       .catch((err) => {
-        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
       });
   };
 
