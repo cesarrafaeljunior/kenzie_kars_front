@@ -35,8 +35,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
   };
 
   const createComment = (description: iCommentRequest) => {
-    const advertId = router.query;
-
+    const { id: advertId } = router.query;
     api
       .post(`/advertised/${advertId}/comments`, description)
       .then((res) => {
