@@ -8,6 +8,7 @@ import {
 import { UseFormRegisterReturn } from "react-hook-form";
 import { iAdvert } from "./advert.interfaces";
 import { iUser } from "./user.interfaces";
+import { iComment } from "./comment.interface";
 
 export interface iInput {
   label: string;
@@ -82,4 +83,17 @@ export interface iUrlImageField {
   register: UseFormRegisterReturn;
   errors: string | undefined;
   handleRemoveImage: (index: number) => void;
+}
+
+export interface iCommentProp {
+  comment: iComment;
+}
+
+export interface WhatsAppButtonProps {
+  phoneNumber: string;
+  modelName: string;
+}
+
+export interface iMessage {
+  message: string;
 }

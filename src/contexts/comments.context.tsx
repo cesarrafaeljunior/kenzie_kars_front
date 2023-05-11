@@ -1,10 +1,15 @@
-import { iComment, iCommentRequest } from "@/interfaces/comment.interface";
+import {
+  iComment,
+  iCommentRequest,
+  iCommentUpdate,
+} from "@/interfaces/comment.interface";
 import { iOnOpenF, onOpen } from "@/interfaces/components.interfaces";
 import {
   iCommentContext,
   iContextProps,
 } from "@/interfaces/context.interfaces";
 import { api } from "@/services/api";
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { createContext, useContext, useState } from "react";
@@ -15,6 +20,15 @@ export const CommentProvider = ({ children }: iContextProps) => {
   const router = useRouter();
   const [textAreaField, setTextAreaField] = useState<string>("");
   const [currentComments, setCurrentComments] = useState<iComment[]>([]);
+  const [commentToBeEdited, setCommentToBeEdited] = useState<iComment | null>(
+    null
+  );
+
+  const toast = useToast({
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
 
   const checkUserIsLogged = (onOpen: onOpen) => {
     const cookies = parseCookies();
@@ -28,8 +42,7 @@ export const CommentProvider = ({ children }: iContextProps) => {
   };
 
   const createComment = (description: iCommentRequest) => {
-    const advertId = router.query;
-
+    const { id: advertId } = router.query;
     api
       .post(`/advertised/${advertId}/comments`, description)
       .then((res) => {
@@ -37,7 +50,45 @@ export const CommentProvider = ({ children }: iContextProps) => {
         setCurrentComments([...currentComments, res.data]);
       })
       .catch((err) => {
-        console.log(err);
+        toast({ status: "error", description: err.request.data.message });
+      });
+  };
+
+  const updateComment = (
+    description: iCommentUpdate,
+    commentId: string,
+    onClose: () => void
+  ) => {
+    const advertId = router.query;
+
+    api
+      .patch(`/advertised/${advertId}/comments/${commentId}`, description)
+      .then((res) => {
+        setCurrentComments(
+          currentComments.map((elem) =>
+            elem.id == commentId ? res.data : elem
+          )
+        );
+        onClose();
+      })
+      .catch((err) => {
+        toast({ status: "error", description: err.request.data.message });
+      });
+  };
+
+  const deleteComment = (commentId: string, onClose: () => void) => {
+    const advertId = router.query;
+
+    api
+      .delete(`/advertised/${advertId}/comments/${commentId}`)
+      .then((res) => {
+        setCurrentComments(
+          currentComments.filter((elem) => elem.id != commentId)
+        );
+        onClose();
+      })
+      .catch((err) => {
+        toast({ status: "error", description: err.request.data.message });
       });
   };
 
@@ -50,6 +101,10 @@ export const CommentProvider = ({ children }: iContextProps) => {
         createComment,
         currentComments,
         setCurrentComments,
+        updateComment,
+        commentToBeEdited,
+        setCommentToBeEdited,
+        deleteComment,
       }}
     >
       {children}

@@ -13,6 +13,12 @@ export interface iComment {
   user: Omit<iUser, "address">;
 }
 
+export interface iCommentRequest {
+  description: string;
+}
+
+export type iCommentUpdate = Partial<iCommentRequest>;
+
 export interface iCommentSuggestions {
   texts: string[];
   setTextAreaField: Dispatch<SetStateAction<string>>;

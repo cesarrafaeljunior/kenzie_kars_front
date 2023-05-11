@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { HomeFilters } from "@/components/HomeFilter/HomeFilter";
+import { MessageNoAd } from "@/components/MessageNoAd";
 import { ModalContainer } from "@/components/Modal";
 import { PaginationNumbers } from "@/components/PaginationNumbers";
 import { ProductCard } from "@/components/ProductCard";
@@ -84,9 +85,13 @@ export default function Home() {
             paddingRight={"65px"}
             paddingLeft={{ base: "20px", lg: "0px" }}
           >
-            {advertsList.results.map((advert, i) => {
-              return <ProductCard key={i} advertData={advert} />;
-            })}
+            {advertsList.results.length > 0 ? (
+              advertsList.results.map((advert, i) => {
+                return <ProductCard key={i} advertData={advert} />;
+              })
+            ) : (
+              <MessageNoAd message="Não existem anúncios relacionados a sua pesquisa." />
+            )}
           </List>
           <Center>
             <Button

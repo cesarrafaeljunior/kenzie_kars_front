@@ -9,7 +9,7 @@ import { ModalSuccessAccount } from "./ModalSuccessAccount.modal";
 import { ModalSuccessAd } from "./ModalSuccessAd.modal";
 import { ModalVehicleImage } from "./ModalVehicleImage.modal";
 import { ModalCheckLogin } from "./ModalCheckLogin.modal";
-
+import { ModalEditComment } from "./ModalEditComment";
 export const ModalContainer = {
   ModalVehicleImage,
   ModalSuccessAccount,
@@ -22,4 +22,5 @@ export const ModalContainer = {
   ModalRecoverPassword,
   ModalEditProfile,
   ModalCheckLogin,
+  ModalEditComment,
 };

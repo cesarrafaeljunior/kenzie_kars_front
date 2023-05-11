@@ -96,7 +96,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         onOpen();
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.data.message });
       });
   };
@@ -115,7 +114,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         onOpen();
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.request.data.message });
       });
   };
@@ -134,7 +132,6 @@ export const AdvertProvider = ({ children }: iContextProps) => {
         toast({ status: "success", title: "Anúncio deletado com sucesso!" });
       })
       .catch((err) => {
-        console.log(err);
         toast({ status: "error", description: err.request.data.message });
       });
   };

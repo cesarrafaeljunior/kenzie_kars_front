@@ -48,7 +48,15 @@ export const RecoveryPassword = ({ token }: iTokenProps) => {
         destroyCookie(null, "ms.resetToken");
         router.push("/login");
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        toast({
+          position: "top",
+          description: err.data.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      );
   };
 
   return (
