@@ -99,7 +99,7 @@ export default ({ seller }: iSellerProfileProps) => {
               <ProductCard key={index} advertData={advert} seller={seller} />
             ))
           ) : (
-            <MessageNoAd message="Não existem anúncios cadastrados desse usuário" />
+            <MessageNoAd message="Não existem anúncios cadastrados desse usuário." />
           )}
         </List>
         <PaginationNumbers {...seller} callbackToChangePage={changePage} />

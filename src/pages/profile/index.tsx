@@ -133,7 +133,7 @@ export default ({ user }: iProfileProps) => {
               />
             ))
           ) : (
-            <MessageNoAd message="Não existem anúncios cadastrados desse usuário" />
+            <MessageNoAd message="Não existem anúncios cadastrados desse usuário." />
           )}
         </List>
         <PaginationNumbers
