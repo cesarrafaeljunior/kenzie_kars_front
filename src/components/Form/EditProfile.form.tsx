@@ -21,7 +21,6 @@ export const EditProfile = ({ onClose }: iCloseF) => {
   const onSubmit = async (data: iUserUpdate) => {
     if (user) {
       const { id } = user;
-      console.log(id);
       await updateUser(data, id);
       onClose();
     }
