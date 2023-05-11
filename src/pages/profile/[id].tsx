@@ -9,6 +9,7 @@ import { api } from "@/services/api";
 import { iAdvertListByUser } from "@/interfaces/advert.interfaces";
 import { useEffect } from "react";
 import { useAdvertContext } from "@/contexts/advert.context";
+import { MessageNoAd } from "@/components/MessageNoAd";
 
 export default ({ seller }: iSellerProfileProps) => {
   const { getAdvertiseListByUserId, advertiseListByUser } = useAdvertContext();
@@ -91,9 +92,13 @@ export default ({ seller }: iSellerProfileProps) => {
           m="0 auto"
           gap={"48px"}
         >
-          {seller.results.map((advert, index) => (
-            <ProductCard key={index} advertData={advert} seller={seller} />
-          ))}
+          {seller.results.length > 0 ? (
+            seller.results.map((advert, index) => (
+              <ProductCard key={index} advertData={advert} seller={seller} />
+            ))
+          ) : (
+            <MessageNoAd message="Não existem anúncios cadastrados desse usuário" />
+          )}
         </List>
         <PaginationNumbers {...seller} callbackToChangePage={changePage} />
       </Box>
