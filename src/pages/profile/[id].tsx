@@ -24,7 +24,9 @@ export default ({ seller }: iSellerProfileProps) => {
     }
   };
 
-  seller = advertiseListByUser ? advertiseListByUser : seller;
+  if (advertiseListByUser && advertiseListByUser?.id == seller.id) {
+    seller = advertiseListByUser;
+  }
 
   return (
     <Box
